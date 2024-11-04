@@ -1,0 +1,7 @@
+- hosts: k3s_main
+  tasks:
+    - name: Install Raspberry Pi Imager
+      become: yes
+      apt:
+        name: rpi-imager
+        state: present
