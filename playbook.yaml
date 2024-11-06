@@ -4,4 +4,4 @@
       become: yes
       apt:
         name: rpi-imager
-        state: present
+        state: absent
