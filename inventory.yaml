@@ -1,7 +1,0 @@
-k3s_main:
-  hosts:
-    ross:
-
-k3s_worker:
-  hosts:
-    monica:
