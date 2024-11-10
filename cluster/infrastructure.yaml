@@ -12,3 +12,5 @@ spec:
     name: flux-system
   path: infrastructure
   prune: true
+  dependsOn:
+    - name: 1password
