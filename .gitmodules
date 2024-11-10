@@ -1,3 +1,3 @@
-[submodule "k3s/provisioning/.k3s-ansible"]
-	path = k3s/provisioning/.k3s-ansible
+[submodule "provisioning/.k3s-ansible"]
+	path = provisioning/.k3s-ansible
 	url = git@github.com:techno-tim/k3s-ansible.git
