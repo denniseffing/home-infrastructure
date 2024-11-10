@@ -27,3 +27,8 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: nginx-ingress
+  values:
+    controller:
+      service:
+        annotations:
+          kube-vip.io/forwardUPNP: true
