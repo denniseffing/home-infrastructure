@@ -23,6 +23,7 @@ terraform {
 resource "flux_bootstrap_git" "this" {
   embedded_manifests = true
   path               = "cluster"
+  kustomization_override = file("${path.root}/resources/flux-kustomization-patch.yaml")
 }
 
 data "onepassword_item" "flux_deploy_key" {
