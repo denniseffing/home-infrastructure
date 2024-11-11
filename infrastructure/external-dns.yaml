@@ -51,6 +51,8 @@ spec:
     interval: 5m
     provider:
       name: ovh
+    serviceMonitor:
+      enabled: true
     sources:
       - ingress
 ---
