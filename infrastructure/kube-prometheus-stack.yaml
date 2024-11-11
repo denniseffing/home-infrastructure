@@ -30,6 +30,17 @@ spec:
   values:
     prometheus:
       prometheusSpec:
+        retention: 10d
+        retentionSize: 7.5GiB
         serviceMonitorSelectorNilUsesHelmValues: false
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: local-path
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Gi
   install:
     crds: CreateReplace
