@@ -65,7 +65,7 @@ k3s_token: !vault |
 k3s_node_ip: "{{ ansible_facts[(cilium_iface | default(calico_iface | default(flannel_iface)))]['ipv4']['address'] }}"
 
 # Disable the taint manually by setting: k3s_master_taint = false
-k3s_master_taint: "{{ true if groups['node'] | default([]) | length >= 1 else false }}"
+k3s_master_taint: "{{ true if groups['node'] | default([]) | length >= 3 else false }}"
 
 # these arguments are recommended for servers as well as agents:
 extra_args: >-
