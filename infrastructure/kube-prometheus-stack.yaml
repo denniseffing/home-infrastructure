@@ -40,6 +40,22 @@ spec:
               - alertmanager.internal.denniseffing.de
             secretName: alertmanager-ingress-tls
     grafana:
+      extraSecretMounts:
+        - name: grafana-github-auth-secret-mount
+          secretName: grafana-github-auth-secret
+          defaultMode: 0440
+          mountPath: /etc/secrets/auth_github
+          readOnly: true
+      grafana.ini:
+        auth.github:
+          enabled: true
+          client_id: "$__file{/etc/secrets/auth_github/client_id}"
+          client_secret: "$__file{/etc/secrets/auth_github/client_secret}"
+          allow_assign_grafana_admin: true
+          role_attribute_path: "[login=='denniseffing'][0] && 'GrafanaAdmin'"
+          role_attribute_strict: true
+        server:
+          root_url: "https://%(domain)s"
       ingress:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -76,3 +92,11 @@ spec:
                   storage: 10Gi
   install:
     crds: CreateReplace
+---
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: grafana-github-auth-secret
+  namespace: monitoring
+spec:
+  itemPath: "vaults/Home Cluster/items/grafana-github-oauth-app"
