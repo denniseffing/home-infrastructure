@@ -10,12 +10,22 @@ brew install ansible kubeseal terraform
 ```
 
 ```bash
-# Configure 1Password Account ID
-echo "OP_ACCOUNT=$(op account get --format json | jq ".id")" > .env
+# Provision cluster
+ansible-playbook -i provisioning/inventory.yaml provisioning/cluster.yaml
+cilium install
+cilium hubble enable --ui
 ```
 
-> ℹ️ Use IntelliJ run configurations to provision & bootstrap the cluster.
-> Everything else is automated by Flux.
+```bash
+# Configure 1Password Account ID for bootstrap
+echo "OP_ACCOUNT=$(op account get --format json | jq ".id")" > .env
+
+# Create namespace for bootstrap
+kubectl create namespace flux-system
+```
+
+Now use the IntelliJ run configuration to bootstrap the cluster.
+Afterward, Flux is doing the heavy lifting for you.
 
 ## ⭐ Overview
 

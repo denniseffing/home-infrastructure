@@ -1,0 +1,19 @@
+---
+- name: Build a cluster with a single control node and Cilium CNI
+  hosts: k3s_cluster
+  vars:
+    k3s_become: true
+    k3s_state: installed
+    k3s_registration_address: 192.168.178.40
+    k3s_server_manifests_templates:
+      - manifests/kube-vip.yaml
+      - manifests/kube-vip-cloud-controller.yaml
+    k3s_server:
+      cluster-cidr: 10.52.0.0/16
+      flannel-backend: "none"
+      disable-network-policy: true
+      disable:
+        - traefik
+        - servicelb
+  roles:
+    - role: xanmanning.k3s
