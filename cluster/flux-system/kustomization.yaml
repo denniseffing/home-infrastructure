@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - gotk-components.yaml
   - gotk-sync.yaml
-  - capacitor.yaml
 patches:
   - patch: |
       - op: add
