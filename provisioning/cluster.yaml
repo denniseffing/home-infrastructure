@@ -1,4 +1,21 @@
 ---
+- name: Prepare nodes
+  hosts: k3s_cluster
+  become: true
+  tasks:
+    - name: Configure DNS server
+      community.general.nmcli:
+        conn_name: "Wired connection 1"
+        type: ethernet
+        ifname: eth0
+        dns4:
+          - 1.1.1.1
+          - 8.8.8.8
+        state: present
+    - name: Restart NetworkManager
+      ansible.builtin.systemd:
+        name: NetworkManager
+        state: restarted
 - name: Build a cluster with a single control node and Cilium CNI
   hosts: k3s_cluster
   vars:
