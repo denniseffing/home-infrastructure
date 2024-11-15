@@ -51,7 +51,7 @@ spec:
             name: oauth2-proxy-oauth-app
             key: cookie_secret
       - name: OAUTH2_PROXY_GITHUB_USERS
-        value: denniseffing
+        value: denniseffing,feltenj
     ingress:
       enabled: true
       annotations:

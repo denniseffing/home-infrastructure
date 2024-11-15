@@ -54,7 +54,7 @@ spec:
           client_id: "$__file{/etc/secrets/auth_github/client_id}"
           client_secret: "$__file{/etc/secrets/auth_github/client_secret}"
           allow_assign_grafana_admin: true
-          role_attribute_path: "[login=='denniseffing'][0] && 'GrafanaAdmin'"
+          role_attribute_path: "[login=='denniseffing'][0] && 'GrafanaAdmin' || [login=='feltenj'][0] && 'Admin'"
           role_attribute_strict: true
         server:
           root_url: "https://%(domain)s"
