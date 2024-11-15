@@ -49,6 +49,8 @@ spec:
           mountPath: /etc/secrets/auth_github
           readOnly: true
       grafana.ini:
+        auth:
+          disable_login_form: true
         auth.github:
           enabled: true
           client_id: "$__file{/etc/secrets/auth_github/client_id}"
