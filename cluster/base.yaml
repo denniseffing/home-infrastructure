@@ -5,13 +5,14 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
+  path: base/sealed-secrets
+  prune: true
   retryInterval: 1m
-  timeout: 5m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: base/sealed-secrets
-  prune: true
+  timeout: 5m
+  wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -19,13 +20,14 @@ metadata:
   name: 1password
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: sealed-secrets
   interval: 10m
+  path: base/1password
+  prune: true
   retryInterval: 1m
-  timeout: 5m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: base/1password
-  prune: true
-  dependsOn:
-    - name: sealed-secrets
+  timeout: 5m
+  wait: true
