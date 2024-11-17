@@ -39,6 +39,7 @@ spec:
       service:
         annotations:
           kube-vip.io/forwardUPNP: true
+        externalTrafficPolicy: Local
     fullnameOverride: nginx-ingress-controller-external
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -71,5 +72,6 @@ spec:
       service:
         annotations:
           kube-vip.io/forwardUPNP: false
+        externalTrafficPolicy: Local
       watchIngressWithoutClass: true
     fullnameOverride: nginx-ingress-controller-internal
