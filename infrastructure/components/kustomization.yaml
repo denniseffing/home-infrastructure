@@ -4,7 +4,6 @@ resources:
   - capacitor.yaml
   - cert-manager.yaml
   - external-dns.yaml
-  - github-commit-status.yaml
   - internal-dns.yaml
   - nginx-ingress.yaml
   - oauth2-proxy.yaml

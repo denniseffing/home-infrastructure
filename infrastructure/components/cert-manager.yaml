@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  interval: 24h
+  url: https://charts.jetstack.io
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  interval: 24h
+  releaseName: cert-manager
+  chart:
+    spec:
+      chart: cert-manager
+      version: 1.16.*
+      sourceRef:
+        kind: HelmRepository
+        name: cert-manager
+  values:
+    crds:
+      enabled: true
+    prometheus:
+      servicemonitor:
+        enabled: true
+  install:
+    crds: CreateReplace
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: cert-manager-webhook-ovh
+  namespace: cert-manager
+spec:
+  interval: 24h
+  url: https://aureq.github.io/cert-manager-webhook-ovh/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cert-manager-webhook-ovh
+  namespace: cert-manager
+spec:
+  interval: 24h
+  releaseName: cert-manager-webhook-ovh
+  chart:
+    spec:
+      chart: cert-manager-webhook-ovh
+      version: 0.7.*
+      sourceRef:
+        kind: HelmRepository
+        name: cert-manager-webhook-ovh
+  values:
+    configVersion: 0.0.1
+    groupName: acme.denniseffing.de
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cert-manager-webhook-ovh:secret-reader
+  namespace: cert-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cert-manager-webhook-ovh:secret-reader
+subjects:
+  - apiGroup: ""
+    kind: ServiceAccount
+    name: cert-manager-webhook-ovh
+    namespace: cert-manager
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cert-manager-webhook-ovh:secret-reader
+  namespace: cert-manager
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "watch"]
+    resourceNames:
+      - ovh-credentials
