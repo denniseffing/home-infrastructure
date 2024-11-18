@@ -6,3 +6,6 @@ k3s_cluster:
     monica:
       ansible_user: denniseffing
       ansible_python_interpreter: /usr/bin/python3
+    rachel:
+      ansible_user: dennis
+      ansible_python_interpreter: /usr/bin/python
