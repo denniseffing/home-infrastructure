@@ -5,5 +5,6 @@ resources:
   - cert-manager.yaml
   - external-dns.yaml
   - internal-dns.yaml
+  - longhorn.yaml
   - nginx-ingress.yaml
   - oauth2-proxy.yaml

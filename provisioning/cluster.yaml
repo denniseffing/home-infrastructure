@@ -2,6 +2,8 @@
 - name: Prepare nodes
   hosts: k3s_cluster
   become: true
+  vars:
+    longhorn_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' }}"
   tasks:
     - name: Configure DNS server
       community.general.nmcli:
@@ -14,6 +16,22 @@
         state: present
       notify:
         - Restart NetworkManager
+    - name: Enable dm_crypt kernel module
+      modprobe:
+        name: dm_crypt
+        state: present
+        persistent: present
+    - name: Install packages required by Longhorn
+      package:
+        name:
+          - open-iscsi
+          - cryptsetup
+        state: present
+    - name: Start services required by Longhorn
+      service:
+        name: iscsid
+        enabled: true
+        state: started
   handlers:
     - name: Restart NetworkManager
       ansible.builtin.systemd:
