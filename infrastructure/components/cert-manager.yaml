@@ -60,6 +60,8 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cert-manager-webhook-ovh
+  dependsOn:
+    - name: cert-manager
   values:
     configVersion: 0.0.1
     groupName: acme.denniseffing.de
