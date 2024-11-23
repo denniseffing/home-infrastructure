@@ -1,0 +1,191 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: plex-media-server
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: plex
+  namespace: plex-media-server
+spec:
+  interval: 6h
+  url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: plex-media-server
+  namespace: plex-media-server
+spec:
+  chart:
+    spec:
+      chart: plex-media-server
+      sourceRef:
+        kind: HelmRepository
+        name: plex
+  interval: 5m
+  values:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - rachel
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      enabled: true
+      ingressClassName: nginx-external
+      url: https://plex.denniseffing.de
+    initContainer:
+      script: |-
+        #!/bin/sh
+        echo "waiting for pre-existing pms database to uploaded..."
+
+        if [ -d "/config/Library" ]; then
+          echo "PMS library already exists, exiting."
+          exit 0
+        fi
+
+        # wait for the database archive to be manually copied to the server
+        while [ ! -f /pms.tgz ]; do sleep 2; done;
+
+        tar -xvzf /pms.tgz -C /config
+        rm pms.tgz
+
+        echo "Done."
+    extraVolumes:
+      - name: tv-shows
+        persistentVolumeClaim:
+          claimName: tv-shows
+      - name: movies
+        persistentVolumeClaim:
+          claimName: movies
+      - name: music
+        persistentVolumeClaim:
+          claimName: music
+    extraVolumeMounts:
+      - name: tv-shows
+        mountPath: "/mnt/NAS/TV Shows"
+      - name: movies
+        mountPath: "/mnt/NAS/Movies"
+      - name: music
+        mountPath: "/mnt/NAS/Music"
+    pms:
+      configStorage: 40Gi
+      storageClassName: longhorn
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tv-shows
+  namespace: plex-media-server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Ti
+  volumeName: tv-shows
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tv-shows
+  namespace: plex-media-server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Ti
+  local:
+    path: "/mnt/NAS/TV Shows"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - rachel
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: movies
+  namespace: plex-media-server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Ti
+  volumeName: movies
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: movies
+  namespace: plex-media-server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Ti
+  local:
+    path: "/mnt/NAS/Movies"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - rachel
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: music
+  namespace: plex-media-server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Ti
+  volumeName: music
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: music
+  namespace: plex-media-server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Ti
+  local:
+    path: "/mnt/NAS/Music"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - rachel
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
