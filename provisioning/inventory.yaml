@@ -3,9 +3,12 @@ k3s_cluster:
     ross:
       ansible_user: denniseffing
       ansible_python_interpreter: /usr/bin/python3
+      k3s_control_node: true
     monica:
       ansible_user: denniseffing
       ansible_python_interpreter: /usr/bin/python3
+      k3s_control_node: true
     rachel:
       ansible_user: dennis
       ansible_python_interpreter: /usr/bin/python
+      k3s_control_node: true
