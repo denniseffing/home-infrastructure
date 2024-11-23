@@ -12,6 +12,9 @@
           - 1.1.1.1
           - 8.8.8.8
         state: present
+      notify:
+        - Restart NetworkManager
+  handlers:
     - name: Restart NetworkManager
       ansible.builtin.systemd:
         name: NetworkManager
