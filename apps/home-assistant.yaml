@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: home-assistant
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: pajikos
+  namespace: home-assistant
+spec:
+  interval: 6h
+  url: https://pajikos.github.io/home-assistant-helm-chart/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+spec:
+  chart:
+    spec:
+      chart: home-assistant
+      sourceRef:
+          kind: HelmRepository
+          name: pajikos
+      version: 0.2.*
+  interval: 5m
+  values:
+    additionalMounts:
+      - mountPath: /var/run/dbus
+        name: bluetooth
+    additionalVolumes:
+      - hostPath:
+          path: /var/run/dbus
+        name: bluetooth
+    configuration:
+      enabled: true
+      forceInit: true
+      trusted_proxies:
+        - 192.168.178.0/24
+    hostNetwork: true
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      className: nginx-internal
+      enabled: true
+      hosts:
+        - host: home.internal.denniseffing.de
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - home.internal.denniseffing.de
+          secretName: home-assistant-ingress-tls
+    persistence:
+      accessMode: ReadWriteOnce
+      enabled: true
+      size: 20Gi
+      storageClass: longhorn
+    securityContext:
+      privileged: true
+    serviceMonitor:
+      enabled: true
