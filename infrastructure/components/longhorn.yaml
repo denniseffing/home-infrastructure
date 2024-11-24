@@ -42,4 +42,4 @@ spec:
       replicas: 1
     persistence:
       defaultClass: false
-      defaultClassReplicaCount: 2
+      defaultClassReplicaCount: 1
