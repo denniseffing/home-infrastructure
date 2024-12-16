@@ -73,3 +73,82 @@ spec:
       privileged: true
     serviceMonitor:
       enabled: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: matter-server
+  namespace: home-assistant
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - ross
+                      - monica
+      containers:
+        - name: matter-server
+          image: ghcr.io/home-assistant-libs/python-matter-server:stable
+          ports:
+            - containerPort: 5580
+              name: websocket
+          securityContext:
+            appArmorProfile:
+              type: Unconfined
+            privileged: true
+          volumeMounts:
+            - mountPath: /var/run/dbus
+              name: bluetooth
+              readOnly: true
+            - mountPath: /data
+              name: data
+      hostNetwork: true
+      volumes:
+        - name: bluetooth
+          hostPath:
+            path: /var/run/dbus
+        - name: data
+          persistentVolumeClaim:
+            claimName: matter-server
+    metadata:
+      labels:
+        app.kubernetes.io/name: matter-server
+        app.kubernetes.io/instance: matter-server
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: matter-server
+      app.kubernetes.io/instance: matter-server
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matter-server
+  namespace: home-assistant
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: longhorn
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: matter-server
+  namespace: home-assistant
+spec:
+  type: ClusterIP
+  ports:
+    - name: websocket
+      port: 5580
+      targetPort: websocket
+  selector:
+    app.kubernetes.io/name: matter-server
+    app.kubernetes.io/instance: matter-server

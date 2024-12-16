@@ -32,6 +32,15 @@
         name: iscsid
         enabled: true
         state: started
+    - name: Configure IPv6 prerequisites for Matter Controller
+      sysctl:
+        name: '{{ item.key }}'
+        value: '{{ item.value }}'
+        reload: true
+        state: present
+      with_dict:
+        net.ipv6.conf.eth0.accept_ra: 1
+        net.ipv6.conf.eth0.accept_ra_rt_info_max_plen: 64
   handlers:
     - name: Restart NetworkManager
       ansible.builtin.systemd:
