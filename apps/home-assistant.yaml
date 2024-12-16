@@ -34,6 +34,16 @@ spec:
       - hostPath:
           path: /var/run/dbus
         name: bluetooth
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - ross
+                    - monica
     configuration:
       enabled: true
       forceInit: true
