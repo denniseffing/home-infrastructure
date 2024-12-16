@@ -49,6 +49,7 @@ spec:
       forceInit: true
       trusted_proxies:
         - 192.168.178.0/24
+    dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     ingress:
       annotations:
