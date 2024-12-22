@@ -34,6 +34,23 @@ spec:
       - hostPath:
           path: /var/run/dbus
         name: bluetooth
+    addons:
+      codeserver:
+        enabled: true
+        ingress:
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+          className: nginx-internal
+          enabled: true
+          hosts:
+            - host: home-config.internal.denniseffing.de
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - home-config.internal.denniseffing.de
+              secretName: home-assistant-config-ingress-tls
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
