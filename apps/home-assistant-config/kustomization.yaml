@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: home-assistant
+configMapGenerator:
+  - files:
+      - automations.yaml
+    name: home-assistant-gitops-config
+    options:
+      disableNameSuffixHash: true
