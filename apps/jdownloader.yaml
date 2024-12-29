@@ -83,6 +83,8 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.oauth2-proxy.svc.cluster.local/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.internal.denniseffing.de/oauth2/start?rd=https://$host$uri"
   name: jdownloader
   namespace: jdownloader
 spec:
