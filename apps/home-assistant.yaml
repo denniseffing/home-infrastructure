@@ -72,6 +72,7 @@ spec:
       trusted_proxies:
         - 192.168.178.0/24
       automation gitops: !include gitops/automations.yaml # matches mount path of gitops-config config map
+      group gitops: !include gitops/groups.yaml # matches mount path of gitops-config config map
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     ingress:

@@ -4,6 +4,7 @@ namespace: home-assistant
 configMapGenerator:
   - files:
       - automations.yaml
+      - groups.yaml
     name: home-assistant-gitops-config
     options:
       disableNameSuffixHash: true

@@ -1,0 +1,5 @@
+family:
+  name: Familie
+  entities:
+    - person.dennis_effing
+    - person.janine_felten
