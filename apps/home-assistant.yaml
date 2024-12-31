@@ -71,8 +71,27 @@ spec:
       forceInit: true
       trusted_proxies:
         - 192.168.178.0/24
-      automation gitops: !include gitops/automations.yaml # matches mount path of gitops-config config map
-      group gitops: !include gitops/groups.yaml # matches mount path of gitops-config config map
+      templateConfig: |-
+        # Loads default set of integrations. Do not remove.
+        default_config:
+
+        {{- if .Values.ingress.enabled }}
+        http:
+          use_x_forwarded_for: true
+          trusted_proxies:
+            {{- range .Values.configuration.trusted_proxies }}
+            - {{ . }}
+            {{- end }}
+        {{- end}}
+        # Load frontend themes from the themes folder
+        frontend:
+          themes: !include_dir_merge_named themes
+
+        automation: !include automations.yaml
+        script: !include scripts.yaml
+        scene: !include scenes.yaml
+        automation gitops: !include gitops/automations.yaml # matches mount path of gitops-config config map
+        group gitops: !include gitops/groups.yaml # matches mount path of gitops-config config map
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     ingress:
