@@ -29,6 +29,16 @@ spec:
         name: nginx-ingress
   values:
     controller:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - ross
+                      - monica
       ingressClassResource:
         controllerValue: k8s.io/ingress-nginx-external
         name: nginx-external
@@ -59,6 +69,16 @@ spec:
         name: nginx-ingress
   values:
     controller:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - ross
+                      - monica
       config:
         whitelist-source-range: 192.168.0.0/16
       ingressClassResource:
