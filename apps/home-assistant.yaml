@@ -155,7 +155,7 @@ spec:
                       - monica
       containers:
         - name: matter-server
-          image: ghcr.io/home-assistant-libs/python-matter-server:stable
+          image: ghcr.io/home-assistant-libs/python-matter-server:7.0.1
           ports:
             - containerPort: 5580
               name: websocket
