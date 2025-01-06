@@ -3,15 +3,6 @@ kind: Namespace
 metadata:
   name: oauth2-proxy
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: oauth2-proxy
-  namespace: oauth2-proxy
-spec:
-  interval: 24h
-  url: https://oauth2-proxy.github.io/manifests
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -27,6 +18,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: oauth2-proxy
+        namespace: flux-system
   values:
     extraEnv:
       - name: OAUTH2_PROXY_PROVIDER

@@ -3,15 +3,6 @@ kind: Namespace
 metadata:
   name: cert-manager
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: cert-manager
-  namespace: cert-manager
-spec:
-  interval: 24h
-  url: https://charts.jetstack.io
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -26,7 +17,8 @@ spec:
       version: 1.16.*
       sourceRef:
         kind: HelmRepository
-        name: cert-manager
+        name: jetstack
+        namespace: flux-system
   values:
     crds:
       enabled: true
@@ -35,15 +27,6 @@ spec:
         enabled: true
   install:
     crds: CreateReplace
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: cert-manager-webhook-ovh
-  namespace: cert-manager
-spec:
-  interval: 24h
-  url: https://aureq.github.io/cert-manager-webhook-ovh/
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -60,6 +43,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cert-manager-webhook-ovh
+        namespace: flux-system
   dependsOn:
     - name: cert-manager
   values:

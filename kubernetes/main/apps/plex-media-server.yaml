@@ -3,15 +3,6 @@ kind: Namespace
 metadata:
   name: plex-media-server
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: plex
-  namespace: plex-media-server
-spec:
-  interval: 6h
-  url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -24,6 +15,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: plex
+        namespace: flux-system
   interval: 5m
   values:
     affinity:
