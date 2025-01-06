@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: infrastructure/components
+  path: kubernetes/main/infrastructure/components
   prune: true
   dependsOn:
     - name: 1password
@@ -27,7 +27,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: infrastructure/configuration
+  path: kubernetes/main/infrastructure/configuration
   prune: true
   dependsOn:
     - name: infrastructure-components

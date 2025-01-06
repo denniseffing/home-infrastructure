@@ -132,7 +132,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: apps/home-assistant-config
+  path: kubernetes/main/apps/home-assistant-config
   prune: true
 ---
 apiVersion: apps/v1

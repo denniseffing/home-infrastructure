@@ -30,7 +30,7 @@ Afterward, Flux is doing the heavy lifting for you.
 ## ⭐ Overview
 
 * [`provisioning`](./provisioning) – Ansible configuration to provision the k3s cluster
-* [`bootstrap`](./bootstrap) – Terraform configuration to bootstrap the k3s cluster setup
-* [`cluster`](./cluster) – Flux cluster configuration entrypoint
-* [`infrastructure`](./infrastructure) – Manifests for infrastructure components
-* [`apps`](./apps) – Manifests for apps
+* [`kubernetes/main/bootstrap`](./kubernetes/main/bootstrap) – Terraform configuration to bootstrap the k3s cluster setup
+* [`kubernetes/main/cluster`](./kubernetes/main/cluster) – Flux cluster configuration entrypoint
+* [`kubernetes/main/infrastructure`](./kubernetes/main/infrastructure) – Manifests for infrastructure components
+* [`kubernetes/main/apps`](./kubernetes/main/apps) – Manifests for apps

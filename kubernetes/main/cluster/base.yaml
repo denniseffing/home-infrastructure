@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: base/sealed-secrets
+  path: kubernetes/main/base/sealed-secrets
   prune: true
   retryInterval: 1m
   sourceRef:
@@ -23,7 +23,7 @@ spec:
   dependsOn:
     - name: sealed-secrets
   interval: 10m
-  path: base/1password
+  path: kubernetes/main/base/1password
   prune: true
   retryInterval: 1m
   sourceRef:
@@ -41,7 +41,7 @@ spec:
   dependsOn:
     - name: 1password
   interval: 10m
-  path: base/kube-prometheus-stack
+  path: kubernetes/main/base/kube-prometheus-stack
   prune: true
   retryInterval: 1m
   sourceRef:
