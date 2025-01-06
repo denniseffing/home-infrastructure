@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tv-shows
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Ti
+  volumeName: tv-shows
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tv-shows
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Ti
+  local:
+    path: "/mnt/NAS/TV Shows"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - rachel
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: movies
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Ti
+  volumeName: movies
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: movies
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Ti
+  local:
+    path: "/mnt/NAS/Movies"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - rachel
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: music
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Ti
+  volumeName: music
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: music
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Ti
+  local:
+    path: "/mnt/NAS/Music"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - rachel
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
