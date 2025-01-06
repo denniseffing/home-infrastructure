@@ -1,22 +1,15 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: home-assistant
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: home-assistant
-  namespace: home-assistant
 spec:
   chart:
     spec:
       chart: home-assistant
       sourceRef:
-          kind: HelmRepository
-          name: home-assistant
-          namespace: flux-system
-      version: 0.2.*
+        kind: HelmRepository
+        name: home-assistant
+        namespace: flux-system
   interval: 5m
   values:
     additionalMounts:
@@ -87,6 +80,9 @@ spec:
         automation gitops: !include gitops/automations.yaml # matches mount path of gitops-config config map
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2025.1
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -110,98 +106,3 @@ spec:
       privileged: true
     serviceMonitor:
       enabled: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: home-assistant-gitops-config
-  namespace: home-assistant
-spec:
-  interval: 5m
-  retryInterval: 1m
-  timeout: 5m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  path: kubernetes/main/apps/home-assistant-config
-  prune: true
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: matter-server
-  namespace: home-assistant
-spec:
-  template:
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - ross
-                      - monica
-      containers:
-        - name: matter-server
-          image: ghcr.io/home-assistant-libs/python-matter-server:7.0.1
-          ports:
-            - containerPort: 5580
-              name: websocket
-          securityContext:
-            appArmorProfile:
-              type: Unconfined
-            privileged: true
-          volumeMounts:
-            - mountPath: /var/run/dbus
-              name: bluetooth
-              readOnly: true
-            - mountPath: /data
-              name: data
-      hostNetwork: true
-      volumes:
-        - name: bluetooth
-          hostPath:
-            path: /var/run/dbus
-        - name: data
-          persistentVolumeClaim:
-            claimName: matter-server
-    metadata:
-      labels:
-        app.kubernetes.io/name: matter-server
-        app.kubernetes.io/instance: matter-server
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: matter-server
-      app.kubernetes.io/instance: matter-server
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: matter-server
-  namespace: home-assistant
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 3Gi
-  storageClassName: longhorn
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: matter-server
-  namespace: home-assistant
-spec:
-  type: ClusterIP
-  ports:
-    - name: websocket
-      port: 5580
-      targetPort: websocket
-  selector:
-    app.kubernetes.io/name: matter-server
-    app.kubernetes.io/instance: matter-server

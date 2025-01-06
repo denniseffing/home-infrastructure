@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant-matter-server
+  labels: &labels
+    app.kubernetes.io/name: home-assistant
+    app.kubernetes.io/instance: home-assistant
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - ross
+                      - monica
+      containers:
+        - name: matter-server
+          image: ghcr.io/home-assistant-libs/python-matter-server:7.0.1
+          ports:
+            - containerPort: 5580
+              name: websocket
+          securityContext:
+            appArmorProfile:
+              type: Unconfined
+            privileged: true
+          volumeMounts:
+            - mountPath: /var/run/dbus
+              name: bluetooth
+              readOnly: true
+            - mountPath: /data
+              name: data
+      hostNetwork: true
+      volumes:
+        - name: bluetooth
+          hostPath:
+            path: /var/run/dbus
+        - name: data
+          persistentVolumeClaim:
+            claimName: home-assistant-matter-server
+    metadata:
+      labels:
+        <<: *labels
+  selector:
+    matchLabels:
+      <<: *labels
