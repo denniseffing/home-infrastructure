@@ -56,6 +56,7 @@ spec:
       forceInit: true
       trusted_proxies:
         - 192.168.178.0/24
+        - 10.0.0.0/16
       templateConfig: |-
         # Loads default set of integrations. Do not remove.
         default_config:
