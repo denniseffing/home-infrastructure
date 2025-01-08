@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - 1password
   - cert-manager
+  - external-dns
   - longhorn
   - sealed-secrets
