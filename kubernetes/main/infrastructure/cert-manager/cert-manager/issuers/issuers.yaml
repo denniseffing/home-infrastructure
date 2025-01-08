@@ -70,10 +70,3 @@ spec:
           dnsZones:
             - denniseffing.de
 ---
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
-metadata:
-  name: ovh-credentials
-  namespace: cert-manager
-spec:
-  itemPath: "vaults/Home Cluster/items/cert-manager-ovh-credentials"
