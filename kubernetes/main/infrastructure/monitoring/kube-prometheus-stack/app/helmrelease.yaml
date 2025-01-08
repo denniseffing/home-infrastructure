@@ -13,16 +13,22 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
+  dependsOn:
+    - name: kube-prometheus-stack-crds
+      namespace: monitoring
   install:
     crds: Skip
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: Skip
     remediation:
       strategy: rollback
       retries: 3
   values:
+    crds:
+      enabled: false
     alertmanager:
       ingress:
         annotations:
