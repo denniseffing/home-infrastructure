@@ -27,6 +27,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: longhorn
   path: ./kubernetes/main/apps/default/home-assistant/addons/matter-server
   prune: true
   sourceRef:
