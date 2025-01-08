@@ -1,24 +1,26 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: oauth2-proxy
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: oauth2-proxy
-  namespace: oauth2-proxy
 spec:
   interval: 24h
   releaseName: oauth2-proxy
   chart:
     spec:
       chart: oauth2-proxy
-      version: 7.*
+      version: 7.9.0
       sourceRef:
         kind: HelmRepository
         name: oauth2-proxy
         namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     extraEnv:
       - name: OAUTH2_PROXY_PROVIDER
@@ -58,11 +60,3 @@ spec:
     metrics:
       serviceMonitor:
         enabled: true
----
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
-metadata:
-  name: oauth2-proxy-oauth-app
-  namespace: oauth2-proxy
-spec:
-  itemPath: "vaults/Home Cluster/items/oauth2-proxy-oauth-app"
