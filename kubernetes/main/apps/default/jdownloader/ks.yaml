@@ -7,6 +7,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: longhorn
   path: ./kubernetes/main/apps/default/jdownloader/app
   prune: true
   sourceRef:
