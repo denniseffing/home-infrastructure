@@ -1,23 +1,24 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: sealed-secrets
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: sealed-secrets
-  namespace: sealed-secrets
 spec:
-  interval: 24h
+  interval: 30m
   releaseName: sealed-secrets-controller
   chart:
     spec:
       chart: sealed-secrets
-      version: 2.x
+      version: 2.17.0
       sourceRef:
         kind: HelmRepository
         name: sealed-secrets
         namespace: flux-system
   install:
     crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
