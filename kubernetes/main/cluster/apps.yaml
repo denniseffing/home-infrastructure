@@ -12,5 +12,3 @@ spec:
     name: flux-system
   path: kubernetes/main/apps
   prune: true
-  dependsOn:
-    - name: 1password
