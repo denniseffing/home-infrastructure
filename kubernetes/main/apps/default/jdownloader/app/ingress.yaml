@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.oauth2-proxy.svc.cluster.local/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.internal.denniseffing.de/oauth2/start?rd=https://$host$uri"
+  name: jdownloader
+spec:
+  rules:
+    - host: jdownloader.internal.denniseffing.de
+      http:
+        paths:
+          - backend:
+              service:
+                name: jdownloader
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - jdownloader.internal.denniseffing.de
+      secretName: jdownloader-ingress-tls

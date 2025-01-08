@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jdownloader
+  labels: &labels
+    app.kubernetes.io/name: jdownloader
+spec:
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - rachel
+      containers:
+        - name: jdownloader
+          image: jlesage/jdownloader-2:v24.12.1
+          ports:
+            - containerPort: 5800
+              name: http
+              protocol: TCP
+          env:
+            - name: USER_ID
+              value: "1000"
+          volumeMounts:
+            - mountPath: /config
+              name: config
+            - mountPath: /output
+              name: output
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: jdownloader-config
+        - name: output
+          hostPath:
+            path: /mnt/NAS
+  selector:
+    matchLabels:
+      <<: *labels
