@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - 1password.yaml
+  - bjw-s.yaml
   - cert-manager-webhook-ovh.yaml
   - external-dns.yaml
   - home-asssistant.yaml
