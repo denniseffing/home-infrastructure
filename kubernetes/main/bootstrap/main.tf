@@ -21,7 +21,6 @@ terraform {
 }
 
 resource "flux_bootstrap_git" "this" {
-  components_extra = ["image-reflector-controller", "image-automation-controller"]
   embedded_manifests = true
   path               = "kubernetes/main/cluster"
   kustomization_override = file("${path.root}/resources/flux-kustomization-patch.yaml")
