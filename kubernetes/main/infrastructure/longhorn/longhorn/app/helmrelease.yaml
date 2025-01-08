@@ -11,6 +11,9 @@ spec:
         name: longhorn
         namespace: flux-system
       version: 1.7.2
+  dependsOn:
+    - name: kube-prometheus-stack-crds
+      namespace: monitoring
   interval: 5m
   values:
     defaultSettings:
@@ -26,6 +29,9 @@ spec:
       tlsSecret: longhorn-ingress-tls
     longhornUI:
       replicas: 1
+    metrics:
+      serviceMonitor:
+        enabled: true
     persistence:
       defaultClass: false
       defaultClassReplicaCount: 1

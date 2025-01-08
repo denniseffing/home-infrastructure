@@ -10,6 +10,19 @@ spec:
         kind: HelmRepository
         name: home-assistant
         namespace: flux-system
+  dependsOn:
+    - name: kube-prometheus-stack-crds
+      namespace: monitoring
+    - name: longhorn
+      namespace: longhorn
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   interval: 5m
   values:
     additionalMounts:
