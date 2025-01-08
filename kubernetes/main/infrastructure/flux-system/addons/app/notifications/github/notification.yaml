@@ -21,11 +21,3 @@ spec:
   eventSources:
     - kind: Kustomization
       name: "*"
----
-apiVersion: onepassword.com/v1
-kind: OnePasswordItem
-metadata:
-  name: github-commit-status
-  namespace: flux-system
-spec:
-  itemPath: "vaults/Home Cluster/items/github-commit-status-token"

@@ -4,6 +4,7 @@ resources:
   - 1password
   - cert-manager
   - external-dns
+  - flux-system
   - longhorn
   - nginx-ingress
   - monitoring
