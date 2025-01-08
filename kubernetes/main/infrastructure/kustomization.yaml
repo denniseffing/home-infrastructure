@@ -6,4 +6,5 @@ resources:
   - external-dns
   - longhorn
   - nginx-ingress
+  - monitoring
   - sealed-secrets
