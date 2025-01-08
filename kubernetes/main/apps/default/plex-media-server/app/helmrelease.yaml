@@ -10,6 +10,7 @@ spec:
         kind: HelmRepository
         name: plex
         namespace: flux-system
+      version: 0.8.0
   driftDetection:
     mode: enabled
   install:
