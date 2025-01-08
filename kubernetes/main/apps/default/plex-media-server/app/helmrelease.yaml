@@ -33,6 +33,7 @@ spec:
                   values:
                     - rachel
     image:
+      repository: plexinc/pms-docker
       tag: 1.41.3.9314-a0bfb8370
     ingress:
       annotations:
