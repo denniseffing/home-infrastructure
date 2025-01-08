@@ -27,5 +27,5 @@ spec:
     configVersion: 0.0.1
     groupName: acme.denniseffing.de
     image:
-      repository: baarde/cert-manager-webhook-ovh
-      tag: 0.3.1
+      repository: ghcr.io/aureq/cert-manager-webhook-ovh
+      tag: 0.7.3
