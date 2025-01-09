@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kube-prometheus-stack
+  name: &app external-secrets
   namespace: flux-system
 spec:
   commonMetadata:
@@ -9,13 +9,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: onepassword
-  path: ./kubernetes/main/infrastructure/monitoring/kube-prometheus-stack/app
+  path: kubernetes/main/infrastructure/external-secrets/external-secrets/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: monitoring
+  targetNamespace: external-secrets
   wait: true
   interval: 30m
   timeout: 5m
@@ -23,19 +23,21 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kube-prometheus-stack-crds
+  name: &app external-secrets-stores
   namespace: flux-system
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/infrastructure/monitoring/kube-prometheus-stack/crds
-  prune: false
+  dependsOn:
+    - name: external-secrets
+  path: kubernetes/main/infrastructure/external-secrets/external-secrets/stores
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: monitoring
-  wait: true
+  targetNamespace: external-secrets
+  wait: false
   interval: 30m
   timeout: 5m

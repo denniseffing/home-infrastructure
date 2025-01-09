@@ -52,7 +52,7 @@ spec:
   dependsOn:
     - name: cert-manager
     - name: cert-manager-ovh-webhook
-    - name: 1password
+    - name: onepassword
   path: ./kubernetes/main/infrastructure/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
