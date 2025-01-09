@@ -37,6 +37,10 @@ spec:
                     values:
                       - ross
                       - monica
+      config:
+        force-ssl-redirect: "true"
+      extraArgs:
+        default-ssl-certificate: nginx-ingress/denniseffing-de-tls
       ingressClassResource:
         controllerValue: k8s.io/ingress-nginx-external
         name: nginx-external
