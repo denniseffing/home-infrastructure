@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: webhook-receiver
+spec:
+  ingressClassName: nginx-external
+  rules:
+    - host: flux-webhook.denniseffing.de
+      http:
+        paths:
+          - path: /hook/
+            pathType: Prefix
+            backend:
+              service:
+                name: webhook-receiver
+                port:
+                  number: 80
+  tls:
+    - secretName: webhook-receiver-ingress-tls
+      hosts:
+        - flux-webhook.denniseffing.de
