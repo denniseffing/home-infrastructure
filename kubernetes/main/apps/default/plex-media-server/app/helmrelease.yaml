@@ -59,22 +59,22 @@ spec:
 
         echo "Done."
     extraVolumes:
-      - name: tv-shows
+      - name: tv-shows-1
         persistentVolumeClaim:
-          claimName: tv-shows
-      - name: movies
+          claimName: tv-shows-1
+      - name: movies-1
         persistentVolumeClaim:
-          claimName: movies
-      - name: music
+          claimName: movies-1
+      - name: music-1
         persistentVolumeClaim:
-          claimName: music
+          claimName: music-1
     extraVolumeMounts:
-      - name: tv-shows
-        mountPath: "/mnt/NAS/TV Shows"
-      - name: movies
-        mountPath: "/mnt/NAS/Movies"
-      - name: music
-        mountPath: "/mnt/NAS/Music"
+      - name: tv-shows-1
+        mountPath: "/mnt/tv-shows-1"
+      - name: movies-1
+        mountPath: "/mnt/movies-1"
+      - name: music-1
+        mountPath: "/mnt/music-1"
     pms:
       configStorage: 40Gi
       storageClassName: longhorn
