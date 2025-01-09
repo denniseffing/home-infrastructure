@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tv-shows
+  name: tv-shows-1
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 3Ti
-  volumeName: tv-shows
+  volumeName: tv-shows-1
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: tv-shows
+  name: tv-shows-1
 spec:
   accessModes:
     - ReadWriteOnce
@@ -36,19 +36,19 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: movies
+  name: movies-1
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 3Ti
-  volumeName: movies
+  volumeName: movies-1
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: movies
+  name: movies-1
 spec:
   accessModes:
     - ReadWriteOnce
@@ -71,19 +71,19 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: music
+  name: music-1
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 3Ti
-  volumeName: music
+  volumeName: music-1
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: music
+  name: music-1
 spec:
   accessModes:
     - ReadWriteOnce
