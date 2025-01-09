@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app 1password
+  name: &app onepassword
   namespace: flux-system
 spec:
   commonMetadata:
@@ -9,13 +9,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: sealed-secrets
-  path: ./kubernetes/main/infrastructure/1password/1password/app
-  prune: false
+  path: kubernetes/main/infrastructure/external-secrets/onepassword-connect/app
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: 1password
+  targetNamespace: external-secrets
   wait: true
   interval: 30m
   timeout: 5m

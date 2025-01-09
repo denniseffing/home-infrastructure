@@ -8,7 +8,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: 1password
+    - name: onepassword
   path: ./kubernetes/main/infrastructure/external-dns/k8s-gateway/app
   prune: true
   sourceRef:
