@@ -68,6 +68,9 @@ spec:
       - name: music-1
         persistentVolumeClaim:
           claimName: music-1
+      - name: metube-1
+        persistentVolumeClaim:
+          claimName: plex-metube-1
     extraVolumeMounts:
       - name: tv-shows-1
         mountPath: "/mnt/tv-shows-1"
@@ -75,6 +78,8 @@ spec:
         mountPath: "/mnt/movies-1"
       - name: music-1
         mountPath: "/mnt/music-1"
+      - name: metube-1
+        mountPath: "/mnt/metube-1"
     pms:
       configStorage: 40Gi
       storageClassName: longhorn
