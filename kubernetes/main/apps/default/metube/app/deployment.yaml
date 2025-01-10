@@ -17,25 +17,37 @@ spec:
       labels:
         <<: *labels
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - rachel
       containers:
         - name: *app
           env:
             - name: DOWNLOAD_DIR
               value: /downloads-1
+            - name: STATE_DIR
+              value: /state
+            - name: TEMP_DIR
+              value: /downloads-1
             - name: GID
               value: "1000"
             - name: UID
               value: "1000"
-          image: ghcr.io/alexta69/metube:2024-12-29
+            - name: YTDL_OPTIONS
+              value: '{"cookiefile":"/cookies/cookies.txt"}'
+          image: ghcr.io/alexta69/metube:2024-08-07
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop: [ "ALL" ]
             readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsGroup: 1000
-            runAsUser: 1000
           ports:
             - containerPort: 8081
               name: http
@@ -44,6 +56,15 @@ spec:
               mountPath: /cookies
             - name: downloads-1
               mountPath: /downloads-1
+            - name: state
+              mountPath: /state
+            - name: temp
+              mountPath: /tmp
+      securityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        runAsGroup: 1000
+        runAsUser: 1000
       volumes:
         - name: cookies
           secret:
@@ -51,3 +72,8 @@ spec:
         - name: downloads-1
           persistentVolumeClaim:
             claimName: metube-downloads-1
+        - name: state
+          persistentVolumeClaim:
+            claimName: metube-state
+        - name: temp
+          emptyDir: {}

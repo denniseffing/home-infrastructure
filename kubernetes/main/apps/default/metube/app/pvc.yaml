@@ -1,6 +1,21 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: metube-state
+  labels:
+    app.kubernetes.io/name: metube
+    app.kubernetes.io/instance: metube
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: longhorn
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: metube-downloads-1
   labels:
     app.kubernetes.io/name: metube
