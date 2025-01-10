@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &app metube
+  labels: &labels
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *labels
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      containers:
+        - name: *app
+          env:
+            - name: DOWNLOAD_DIR
+              value: /downloads-1
+            - name: GID
+              value: "1000"
+            - name: UID
+              value: "1000"
+          image: ghcr.io/alexta69/metube:2024-12-29
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ "ALL" ]
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsGroup: 1000
+            runAsUser: 1000
+          ports:
+            - containerPort: 8081
+              name: http
+          volumeMounts:
+            - name: cookies
+              mountPath: /cookies
+            - name: downloads-1
+              mountPath: /downloads-1
+      volumes:
+        - name: cookies
+          secret:
+            secretName: metube-patreon-cookies
+        - name: downloads-1
+          persistentVolumeClaim:
+            claimName: metube-downloads-1

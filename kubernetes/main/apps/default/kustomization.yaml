@@ -4,4 +4,5 @@ resources:
   - namespace.yaml
   - home-assistant/ks.yaml
   - jdownloader/ks.yaml
+  - metube/ks.yaml
   - plex-media-server/ks.yaml
