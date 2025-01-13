@@ -50,7 +50,7 @@ spec:
                   "embedthumbnail": true,
                   "writethumbnail": true
                 }
-          image: ghcr.io/alexta69/metube:2024-08-07
+          image: ghcr.io/alexta69/metube:2024-12-29
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
