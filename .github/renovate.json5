@@ -13,6 +13,7 @@
     "github>denniseffing/home-infrastructure//.github/renovate/clusters.json5",
     "github>denniseffing/home-infrastructure//.github/renovate/groups.json5",
     "github>denniseffing/home-infrastructure//.github/renovate/labels.json5",
+    "github>denniseffing/home-infrastructure//.github/renovate/package-rules.json5",
     "github>denniseffing/home-infrastructure//.github/renovate/semantic-commits.json5"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
