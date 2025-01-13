@@ -40,7 +40,16 @@ spec:
             - name: UID
               value: "1000"
             - name: YTDL_OPTIONS
-              value: '{"cookiefile":"/cookies/cookies.txt"}'
+              # language=json
+              value: |
+                {
+                  "cookiefile": "/cookies/cookies.txt",
+                  "convertthumbnails": "png",
+                  "embedchapters": true,
+                  "embedmetadata": true,
+                  "embedthumbnail": true,
+                  "writethumbnail": true
+                }
           image: ghcr.io/alexta69/metube:2024-08-07
           imagePullPolicy: IfNotPresent
           securityContext:
