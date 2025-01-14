@@ -44,10 +44,17 @@ spec:
               value: |
                 {
                   "cookiefile": "/cookies/cookies.txt",
+                  "postprocessors": [
+                    {
+                      "key": "FFmpegMetadata",
+                      "add_metadata": true,
+                      "add_chapters":true
+                    },
+                    {
+                      "key":"EmbedThumbnail"
+                  }
+                  ],
                   "convertthumbnails": "png",
-                  "embedchapters": true,
-                  "embedmetadata": true,
-                  "embedthumbnail": true,
                   "writethumbnail": true
                 }
           image: ghcr.io/alexta69/metube:2025-01-13
