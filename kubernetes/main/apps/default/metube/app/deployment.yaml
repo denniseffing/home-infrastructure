@@ -31,6 +31,10 @@ spec:
           env:
             - name: DOWNLOAD_DIR
               value: /downloads-1
+            - name: OUTPUT_TEMPLATE
+              value: "%(playlist_title)s.S00E%(playlist_index)s.%(title)s.%(ext)s"
+            - name: OUTPUT_TEMPLATE_PLAYLIST
+              value: "%(playlist_title)s.S00E%(playlist_index)s.%(title)s.%(ext)s"
             - name: STATE_DIR
               value: /state
             - name: TEMP_DIR
