@@ -41,7 +41,7 @@ spec:
         force-ssl-redirect: "true"
         whitelist-source-range: 192.168.0.0/16
       extraArgs:
-        default-ssl-certificate: nginx-ingress/denniseffing-de-tls
+        default-ssl-certificate: nginx-ingress/internal-denniseffing-de-tls
       ingressClassResource:
         controllerValue: k8s.io/ingress-nginx-internal
         default: true
