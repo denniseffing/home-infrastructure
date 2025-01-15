@@ -18,7 +18,3 @@ spec:
                   name: http
             path: /
             pathType: Prefix
-  tls:
-    - hosts:
-        - jdownloader.internal.denniseffing.de
-      secretName: jdownloader-ingress-tls
