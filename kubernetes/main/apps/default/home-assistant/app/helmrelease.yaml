@@ -112,4 +112,4 @@ spec:
     securityContext:
       privileged: true
     serviceMonitor:
-      enabled: true
+      enabled: false
