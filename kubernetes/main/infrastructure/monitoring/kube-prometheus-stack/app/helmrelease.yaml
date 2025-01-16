@@ -63,3 +63,11 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+    kubeApiServer:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
