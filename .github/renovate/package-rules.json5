@@ -4,6 +4,12 @@
       matchDatasources: ["docker"],
       matchPackageNames: ["ghcr.io/alexta69/metube"],
       versioning: "loose"
+    },
+    {
+      matchPackageNames: ["longhorn"],
+      matchUpdateTypes: ["major", "minor"],
+      automerge: false,
+      automergeType: "pr"
     }
   ]
 }
