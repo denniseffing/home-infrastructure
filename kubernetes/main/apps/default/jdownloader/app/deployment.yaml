@@ -40,7 +40,7 @@ spec:
             claimName: jdownloader-config
         - name: output
           hostPath:
-            path: /mnt/NAS
+            path: /mnt/storage-2/plex
   selector:
     matchLabels:
       <<: *labels
