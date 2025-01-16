@@ -18,7 +18,3 @@ spec:
                 name: webhook-receiver
                 port:
                   number: 80
-  tls:
-    - secretName: webhook-receiver-ingress-tls
-      hosts:
-        - flux-webhook.denniseffing.de

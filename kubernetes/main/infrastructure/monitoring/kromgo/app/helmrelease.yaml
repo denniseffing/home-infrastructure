@@ -83,10 +83,6 @@ spec:
                 service:
                   identifier: app
                   port: http
-        tls:
-          - secretName: kromgo-ingress-tls
-            hosts:
-              - "kromgo.denniseffing.de"
     persistence:
       config-file:
         type: configMap

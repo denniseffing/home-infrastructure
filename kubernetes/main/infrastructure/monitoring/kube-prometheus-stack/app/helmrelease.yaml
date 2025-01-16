@@ -38,10 +38,6 @@ spec:
         enabled: true
         hosts:
           - alertmanager.internal.denniseffing.de
-        tls:
-          - hosts:
-              - alertmanager.internal.denniseffing.de
-            secretName: alertmanager-ingress-tls
     grafana:
       extraSecretMounts:
         - name: grafana-github-auth-secret-mount
@@ -67,10 +63,6 @@ spec:
         enabled: true
         hosts:
           - grafana.internal.denniseffing.de
-        tls:
-          - hosts:
-              - grafana.internal.denniseffing.de
-            secretName: grafana-ingress-tls
     prometheus:
       ingress:
         annotations:
@@ -80,10 +72,6 @@ spec:
         enabled: true
         hosts:
           - prometheus.internal.denniseffing.de
-        tls:
-          - hosts:
-              - prometheus.internal.denniseffing.de
-            secretName: prometheus-ingress-tls
       prometheusSpec:
         retention: 10d
         retentionSize: 7.5GiB

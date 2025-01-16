@@ -18,7 +18,3 @@ spec:
                 port:
                   name: http
             pathType: ImplementationSpecific
-  tls:
-    - hosts:
-        - metube.internal.denniseffing.de
-      secretName: metube-ingress-tls

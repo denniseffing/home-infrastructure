@@ -56,10 +56,6 @@ spec:
       className: nginx-internal
       hosts:
         - oauth2-proxy.internal.denniseffing.de
-      tls:
-        - hosts:
-            - oauth2-proxy.internal.denniseffing.de
-          secretName: oauth2-proxy-ingress-tls
     metrics:
       serviceMonitor:
         enabled: true

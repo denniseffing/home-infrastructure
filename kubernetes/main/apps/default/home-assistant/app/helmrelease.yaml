@@ -51,10 +51,6 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-          tls:
-            - hosts:
-                - home-config.internal.denniseffing.de
-              secretName: home-assistant-config-ingress-tls
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -108,10 +104,6 @@ spec:
           paths:
             - path: /
               pathType: Prefix
-      tls:
-        - hosts:
-            - home.internal.denniseffing.de
-          secretName: home-assistant-ingress-tls
     persistence:
       accessMode: ReadWriteOnce
       enabled: true
