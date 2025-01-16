@@ -17,6 +17,7 @@ spec:
   interval: 5m
   values:
     defaultSettings:
+      defaultDataLocality: best-effort
       defaultReplicaCount: 1
     ingress:
       annotations:
@@ -34,3 +35,7 @@ spec:
     persistence:
       defaultClass: false
       defaultClassReplicaCount: 1
+      defaultDataLocality: best-effort
+      reclaimPolicy: Retain
+    preUpgradeChecker:
+      jobEnabled: false
