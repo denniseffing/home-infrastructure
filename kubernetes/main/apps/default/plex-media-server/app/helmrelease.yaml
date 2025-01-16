@@ -59,27 +59,17 @@ spec:
 
         echo "Done."
     extraVolumes:
-      - name: tv-shows-1
+      - name: storage-1
         persistentVolumeClaim:
-          claimName: tv-shows-1
-      - name: movies-1
+          claimName: plex-storage-1
+      - name: storage-2
         persistentVolumeClaim:
-          claimName: movies-1
-      - name: music-1
-        persistentVolumeClaim:
-          claimName: music-1
-      - name: metube-1
-        persistentVolumeClaim:
-          claimName: plex-metube-1
+          claimName: plex-storage-2
     extraVolumeMounts:
-      - name: tv-shows-1
-        mountPath: "/mnt/tv-shows-1"
-      - name: movies-1
-        mountPath: "/mnt/movies-1"
-      - name: music-1
-        mountPath: "/mnt/music-1"
-      - name: metube-1
-        mountPath: "/mnt/metube-1"
+      - name: storage-1
+        mountPath: "/mnt/storage-1"
+      - name: storage-2
+        mountPath: "/mnt/storage-2"
     pms:
       configStorage: 40Gi
       storageClassName: longhorn

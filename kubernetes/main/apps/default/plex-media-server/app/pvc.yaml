@@ -1,26 +1,26 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tv-shows-1
+  name: plex-storage-1
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 3Ti
-  volumeName: tv-shows-1
+  volumeName: plex-storage-1
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: tv-shows-1
+  name: plex-storage-1
 spec:
   accessModes:
     - ReadWriteOnce
   capacity:
     storage: 3Ti
   local:
-    path: "/mnt/NAS/TV Shows"
+    path: "/mnt/storage-1/plex"
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -36,96 +36,26 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: movies-1
+  name: plex-storage-2
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 3Ti
-  volumeName: movies-1
+      storage: 12Ti
+  volumeName: plex-storage-2
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: movies-1
+  name: plex-storage-2
 spec:
   accessModes:
     - ReadWriteOnce
   capacity:
-    storage: 3Ti
+    storage: 12Ti
   local:
-    path: "/mnt/NAS/Movies"
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - rachel
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-path
-  volumeMode: Filesystem
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: music-1
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 3Ti
-  volumeName: music-1
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: music-1
-spec:
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 3Ti
-  local:
-    path: "/mnt/NAS/Music"
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - rachel
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-path
-  volumeMode: Filesystem
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: plex-metube-1
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 3Ti
-  volumeName: plex-metube-1
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: plex-metube-1
-spec:
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 3Ti
-  local:
-    path: "/mnt/NAS/metube"
+    path: "/mnt/storage-2/plex"
   nodeAffinity:
     required:
       nodeSelectorTerms:
