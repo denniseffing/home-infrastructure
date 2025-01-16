@@ -39,30 +39,8 @@ spec:
         hosts:
           - alertmanager.internal.denniseffing.de
     grafana:
-      extraSecretMounts:
-        - name: grafana-github-auth-secret-mount
-          secretName: grafana-github-auth-secret
-          defaultMode: 0440
-          mountPath: /etc/secrets/auth_github
-          readOnly: true
-      grafana.ini:
-        auth:
-          disable_login_form: true
-        auth.github:
-          enabled: true
-          client_id: "$__file{/etc/secrets/auth_github/client_id}"
-          client_secret: "$__file{/etc/secrets/auth_github/client_secret}"
-          allow_assign_grafana_admin: true
-          role_attribute_path: "[login=='denniseffing'][0] && 'GrafanaAdmin' || [login=='feltenj'][0] && 'Admin'"
-          role_attribute_strict: true
-        server:
-          root_url: "https://%(domain)s"
-      ingress:
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        enabled: true
-        hosts:
-          - grafana.internal.denniseffing.de
+      enabled: false
+      forceDeployDashboards: true
     prometheus:
       ingress:
         annotations:
