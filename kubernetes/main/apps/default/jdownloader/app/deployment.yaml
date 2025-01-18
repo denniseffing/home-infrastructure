@@ -10,15 +10,6 @@ spec:
       labels:
         <<: *labels
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                      - rachel
       containers:
         - name: jdownloader
           image: jlesage/jdownloader-2:v24.12.1
@@ -32,15 +23,22 @@ spec:
           volumeMounts:
             - mountPath: /config
               name: config
-            - mountPath: /output
-              name: output
+            - mountPath: /data/storage-1
+              name: storage-1
+            - mountPath: /data/storage-2
+              name: storage-2
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: jdownloader-config
-        - name: output
-          hostPath:
-            path: /mnt/storage-2/plex
+        - name: storage-1
+          nfs:
+            path: /nfs/storage-1/plex
+            server: 192.168.178.52
+        - name: storage-2
+          nfs:
+            path: /nfs/storage-2/plex
+            server: 192.168.178.52
   selector:
     matchLabels:
       <<: *labels
