@@ -98,6 +98,6 @@ spec:
         type: emptyDir
       media:
         type: hostPath
-        hostPath: /mnt/storage-2/plex/downloads/usenet
+        hostPath: /mnt/storage-2/plex
         globalMounts:
           - path: /media
