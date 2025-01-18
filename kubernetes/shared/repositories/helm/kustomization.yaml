@@ -10,6 +10,7 @@ resources:
   - grafana.yaml
   - home-asssistant.yaml
   - ingress-nginx.yaml
+  - jellyseerr.yaml
   - jetstack.yaml
   - k8s-gateway.yaml
   - longhorn.yaml
