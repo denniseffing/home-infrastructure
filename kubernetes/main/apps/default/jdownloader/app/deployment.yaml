@@ -36,13 +36,11 @@ spec:
           persistentVolumeClaim:
             claimName: jdownloader-config
         - name: storage-1
-          nfs:
-            path: /nfs/storage-1/plex
-            server: 192.168.178.52
+          hostPath:
+            path: /mnt/storage-1/plex
         - name: storage-2
-          nfs:
-            path: /nfs/storage-2/plex
-            server: 192.168.178.52
+          hostPath:
+            path: /mnt/storage-1/plex
   selector:
     matchLabels:
       <<: *labels
