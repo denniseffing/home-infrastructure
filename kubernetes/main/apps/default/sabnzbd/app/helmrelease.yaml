@@ -97,7 +97,6 @@ spec:
       media:
         type: nfs
         server: 192.168.178.52
-        path: /nfs/storage-2
+        path: /nfs/storage-2/plex/downloads/usenet
         globalMounts:
-          - path: /media/Downloads/sabnzbd
-            subPath: Downloads/sabnzbd
+          - path: /media
