@@ -67,7 +67,7 @@ spec:
                 cpu: 100m
     defaultPodOptions:
       nodeSelector:
-        beta.kubernetes.io/arch: amd64
+        kubernetes.io/hostname: rachel
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -97,8 +97,7 @@ spec:
       tmp:
         type: emptyDir
       media:
-        type: nfs
-        server: 192.168.178.52
-        path: /nfs/storage-2/plex/downloads/usenet
+        type: hostPath
+        hostPath: /mnt/storage-2/plex/downloads/usenet
         globalMounts:
           - path: /media
