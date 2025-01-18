@@ -1,9 +1,7 @@
 ---
-- name: Prepare nodes
+- name: Configure DNS
   hosts: k3s_cluster
   become: true
-  vars:
-    longhorn_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' }}"
   tasks:
     - name: Configure DNS server
       community.general.nmcli:
@@ -15,6 +13,17 @@
         state: present
       notify:
         - Restart NetworkManager
+  handlers:
+    - name: Restart NetworkManager
+      ansible.builtin.systemd:
+        name: NetworkManager
+        state: restarted
+- name: Prepare nodes for longhorn
+  hosts: k3s_cluster
+  become: true
+  vars:
+    longhorn_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' }}"
+  tasks:
     - name: Enable dm_crypt kernel module
       modprobe:
         name: dm_crypt
@@ -31,6 +40,10 @@
         name: iscsid
         enabled: true
         state: started
+- name: Prepare nodes for matter-controller
+  hosts: k3s_cluster
+  become: true
+  tasks:
     - name: Configure IPv6 prerequisites for Matter Controller
       sysctl:
         name: '{{ item.key }}'
@@ -41,12 +54,7 @@
         net.ipv6.conf.all.forwarding: 0
         net.ipv6.conf.eth0.accept_ra: 1
         net.ipv6.conf.eth0.accept_ra_rt_info_max_plen: 64
-  handlers:
-    - name: Restart NetworkManager
-      ansible.builtin.systemd:
-        name: NetworkManager
-        state: restarted
-- name: Build a cluster with a single control node and Cilium CNI
+- name: Set up k3s cluster
   hosts: k3s_cluster
   vars:
     k3s_become: true
