@@ -116,3 +116,5 @@
       tls-san: 192.168.178.40
   roles:
     - role: xanmanning.k3s
+      vars:
+        k3s_cgroup_subsys: []
