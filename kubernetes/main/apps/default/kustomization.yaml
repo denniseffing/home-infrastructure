@@ -6,4 +6,5 @@ resources:
   - jdownloader/ks.yaml
   - metube/ks.yaml
   - plex-media-server/ks.yaml
+  - sabnzbd/ks.yaml
   - sonarr/ks.yaml
