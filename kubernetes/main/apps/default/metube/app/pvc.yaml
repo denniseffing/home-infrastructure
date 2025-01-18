@@ -41,7 +41,7 @@ spec:
   capacity:
     storage: 3T
   local:
-    path: "/mnt/NAS/metube"
+    path: "/mnt/storage-1/plex/metube"
   nodeAffinity:
     required:
       nodeSelectorTerms:
