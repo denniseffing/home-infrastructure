@@ -66,6 +66,8 @@ spec:
               requests:
                 cpu: 100m
     defaultPodOptions:
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
