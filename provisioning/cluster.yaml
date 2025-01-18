@@ -1,4 +1,46 @@
 ---
+- name: Configure NFS share on rachel
+  hosts: rachel
+  become: true
+  tasks:
+    - name: Install NFS server
+      package:
+        name: nfs-utils
+        state: present
+    - name: Create NFS root
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - /nfs/storage-1
+        - /nfs/storage-2
+    - name: Configure bind mounts
+      mount:
+        src: "{{ item.source }}"
+        path: "{{ item.destination }}"
+        fstype: none
+        opts: bind
+        state: mounted
+      loop:
+        - { source: /mnt/storage-1, destination: /nfs/storage-1 }
+        - { source: /mnt/storage-2, destination: /nfs/storage-2 }
+    - name: Export NFS shares
+      lineinfile:
+        path: /etc/exports
+        line: "{{ item }} 192.168.0.0/16(rw,sync,no_subtree_check)"
+        create: yes
+      loop:
+        - /nfs/storage-1
+        - /nfs/storage-2
+      notify:
+        - Restart NFS server
+  handlers:
+    - name: Restart NFS server
+      service:
+        name: nfs-server
+        state: restarted
+        enabled: true
 - name: Configure DNS
   hosts: k3s_cluster
   become: true
