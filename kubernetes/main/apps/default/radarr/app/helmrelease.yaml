@@ -1,0 +1,112 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: radarr
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn
+  values:
+    controllers:
+      radarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/radarr-develop
+              tag: 5.17.2.9580@sha256:67f345c91d1e0eab27f73044702892b01228b2425562de6110777a7ea4712e34
+            env:
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: auto
+              RADARR__AUTH__METHOD: External
+              RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 80
+              RADARR__UPDATE__BRANCH: develop
+              TZ: Europe/Berlin
+            envFrom:
+              - secretRef:
+                  name: radarr
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 20
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+                requests: 128Mi
+              limits:
+                memory: 4Gi
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: rachel
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: radarr
+        ports:
+          http:
+            port: *port
+    ingress:
+      app:
+        annotations:
+          nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.nginx-ingress.svc.cluster.local/oauth2/auth"
+          nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.internal.denniseffing.de/oauth2/start?rd=https://$host$uri"
+        className: nginx-internal
+        hosts:
+          - host: "radarr.internal.denniseffing.de"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: radarr-config
+      cache:
+        existingClaim: radarr-cache
+        globalMounts:
+          - path: /config/MediaCover
+      tmp:
+        type: emptyDir
+      media:
+        type: hostPath
+        hostPath: /mnt/storage-2/plex
+        globalMounts:
+          - path: /media
