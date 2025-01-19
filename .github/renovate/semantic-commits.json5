@@ -30,7 +30,7 @@
       "semanticCommitType": "chore",
       "semanticCommitScope": "container",
       "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentDigestShort}} → {{newDigestShort}} )"
+      "commitMessageExtra": "({{currentDigestShort}} → {{newDigestShort}})"
     },
     {
       "matchDatasources": ["helm"],
