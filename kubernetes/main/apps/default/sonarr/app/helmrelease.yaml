@@ -39,6 +39,7 @@ spec:
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
               SONARR__SERVER__PORT: &port 80
+              SONARR__UPDATE__BRANCH: develop
               TZ: Europe/Berlin
             envFrom:
               - secretRef:
