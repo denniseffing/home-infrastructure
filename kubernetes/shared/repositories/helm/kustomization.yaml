@@ -11,6 +11,7 @@ resources:
   - home-asssistant.yaml
   - ingress-nginx.yaml
   - jellyseerr.yaml
+  - jellyseerr-fallback.yaml
   - jetstack.yaml
   - k8s-gateway.yaml
   - longhorn.yaml

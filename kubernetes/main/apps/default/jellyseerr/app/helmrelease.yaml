@@ -5,10 +5,10 @@ metadata:
 spec:
   chart:
     spec:
-      chart: jellyseerr-chart
+      chart: jellyseerr
       sourceRef:
         kind: HelmRepository
-        name: jellyseerr
+        name: jellyseerr-fallback
         namespace: flux-system
       version: 2.1.0
   dependsOn:
