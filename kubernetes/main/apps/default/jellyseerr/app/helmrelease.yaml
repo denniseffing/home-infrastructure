@@ -28,9 +28,10 @@ spec:
   values:
     config:
       persistence:
-        size: 5Gi
+        size: 2Gi
         accessModes:
           - ReadWriteOnce
+        storageClass: longhorn
     image:
       registry: ghcr.io
       repository: fallenbagel/jellyseerr
