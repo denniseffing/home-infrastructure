@@ -65,6 +65,8 @@ spec:
             resources:
               requests:
                 cpu: 100m
+              limits:
+                cpu: 700m
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/hostname: rachel
