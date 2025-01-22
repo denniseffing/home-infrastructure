@@ -68,8 +68,6 @@ spec:
               limits:
                 memory: 1Gi
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/hostname: rachel
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
