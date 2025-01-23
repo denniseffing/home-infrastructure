@@ -17,6 +17,9 @@
     "github>denniseffing/home-infrastructure//.github/renovate/semantic-commits.json5"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "reviewers": [
+    "denniseffing"
+  ],
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "flux": {
     "fileMatch": [
