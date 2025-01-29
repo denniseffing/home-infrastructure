@@ -73,3 +73,8 @@ spec:
     pms:
       configStorage: 40Gi
       storageClassName: longhorn
+    tolerations:
+      - key: nas
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
