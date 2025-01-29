@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - onepassword.yaml
+  - bitnami.yaml
   - bjw-s.yaml
   - cert-manager-webhook-ovh.yaml
   - external-dns.yaml
