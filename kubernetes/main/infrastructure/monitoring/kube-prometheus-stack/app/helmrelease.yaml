@@ -63,6 +63,12 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+    prometheus-node-exporter:
+      tolerations:
+        - key: nas
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
     kubelet:
       enabled: true
       serviceMonitor:
