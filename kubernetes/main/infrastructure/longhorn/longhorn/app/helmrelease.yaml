@@ -19,6 +19,7 @@ spec:
     defaultSettings:
       defaultDataLocality: best-effort
       defaultReplicaCount: 1
+      taintToleration: nas=true:NoSchedule
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -29,6 +30,18 @@ spec:
       tls: false
     longhornUI:
       replicas: 1
+    longhornManager:
+      tolerations:
+        - key: nas
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+    longhornDriver:
+      tolerations:
+        - key: nas
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
     metrics:
       serviceMonitor:
         enabled: true
