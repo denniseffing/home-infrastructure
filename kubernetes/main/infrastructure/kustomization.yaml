@@ -5,6 +5,7 @@ resources:
   - external-dns
   - external-secrets
   - flux-system
+  - github-actions-runner
   - longhorn
   - nginx-ingress
   - monitoring
