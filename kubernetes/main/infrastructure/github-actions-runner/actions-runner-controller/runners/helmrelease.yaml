@@ -38,7 +38,7 @@ spec:
       valuesKey: ACTION_RUNNER_CONTROLLER_GITHUB_PRIVATE_KEY
   values:
     githubConfigUrl: https://github.com/denniseffing/home-infrastructure
-    minRunners: 1
+    minRunners: 0
     maxRunners: 3
     containerMode:
       type: kubernetes
