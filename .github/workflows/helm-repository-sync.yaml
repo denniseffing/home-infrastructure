@@ -21,6 +21,7 @@ jobs:
   sync:
     name: Helm Repository Sync
     runs-on: ["home-infrastructure-runner"]
+    if: github.event_name == 'workflow_dispatch' || github.event.pusher.name == 'renovate[bot]'
     steps:
       - name: ⬇️ Checkout
         uses: actions/checkout@v4
