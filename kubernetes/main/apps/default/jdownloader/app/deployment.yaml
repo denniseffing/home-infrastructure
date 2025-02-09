@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: jdownloader
-          image: jlesage/jdownloader-2:v24.12.1
+          image: jlesage/jdownloader-2:v25.02.1
           ports:
             - containerPort: 5800
               name: http
