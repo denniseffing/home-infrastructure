@@ -95,7 +95,7 @@ spec:
     hostNetwork: true
     image:
       repository: ghcr.io/home-assistant/home-assistant
-      tag: 2025.2
+      tag: 2025.2.0
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
