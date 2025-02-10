@@ -4,7 +4,6 @@ resources:
   - namespace.yaml
   - bazarr/ks.yaml
   - home-assistant/ks.yaml
-  - jdownloader/ks.yaml
   - jellyseerr/ks.yaml
   - metube/ks.yaml
   - paperless-ngx/ks.yaml
