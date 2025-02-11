@@ -38,3 +38,12 @@ task bootstrap:infrastructure
 * [`kubernetes/main/cluster`](./kubernetes/main/cluster) – Flux cluster configuration entrypoint
 * [`kubernetes/main/infrastructure`](./kubernetes/main/infrastructure) – Manifests for infrastructure components
 * [`kubernetes/main/apps`](./kubernetes/main/apps) – Manifests for apps
+
+## ❤️ Thanks
+
+Thanks to all the awesome people in the [Home Operations](https://discord.gg/home-operations) 
+Discord community and the [k8s-at-home](https://github.com/topics/k8s-at-home) GitHub topic for
+providing inspiration and guidance.
+Special thanks to [@onedr0p](https://github.com/onedr0p) for maintaining awesome
+[rootless container images](https://github.com/onedr0p/containers) and his genius 
+[home-ops](https://github.com/onedr0p/home-ops) setup!
