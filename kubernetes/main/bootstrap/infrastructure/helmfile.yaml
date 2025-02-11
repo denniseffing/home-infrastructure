@@ -7,8 +7,12 @@ helmDefaults:
 repositories:
   - name: cilium
     url: https://helm.cilium.io
+  - name: incubator
+    url: https://charts.helm.sh/incubator
   - name: jetstack
     url: https://charts.jetstack.io
+  - name: sealed-secrets
+    url: https://bitnami-labs.github.io/sealed-secrets
 
 hooks:
   - events: ['prepare']
@@ -21,3 +25,54 @@ releases:
     chart: cilium/cilium
     version: 1.17.0
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/kube-system/cilium/app/helm-values.yaml']
+
+  - name: sealed-secrets-controller
+    namespace: sealed-secrets
+    chart: sealed-secrets/sealed-secrets
+    version: 2.17.1
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/sealed-secrets/sealed-secrets/app/helm-values.yaml']
+
+  - name: github-deploy-key
+    chart: incubator/raw
+    values:
+      - resources:
+          - apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: flux-system
+          - apiVersion: bitnami.com/v1alpha1
+            kind: SealedSecret
+            metadata:
+              name: github-deploy-key
+              namespace: flux-system
+            spec:
+              encryptedData:
+                identity: AgAE5leF78EVyHjAKWaTadteCZ4vy4cbqKO9mUEtxzeuvz8af1K29wXtyvybPqknkw3YN/DpUfrAT/BzS3xe8kzfCfUmshKxfVZ31gSpYfPvipZO8NfIDRgIeyQULmZ29jQYKGawAgf1dky6ZWGRr0fcMuGRH7PYGuZcmqb1BhcfvgUpwNtM2NtoqBLK3sNSZVp5/TzgNk/zA3O/kIzYPnNUx9h9R+gjRNIkUg9kbRv+yYgO6OdcLGVKASKSxZhPAvDoC9aiPH8Uy17DoybHDrFFG3DVX4qsPjn69tJT6KP+o9ZxFWlbOk1kS+YH3O6O9SrzzCpItl5Fm44kU6Bhvcj18VJFAn69DOymqTNNC2I+y0fQIh4rdjNIzuKOZg25XGkR4PEyE4rfp9GX0oXyFaCxwS4f31IkazIju9U4kF5bYPbMhPEzSNCpbQJKBde9Apnl5ox6OAzEYq9tE5oc56OtwaVY4wmfWY3o4iyVgfID+cY+ToHsA/16vt1A4kmpiGNfw1Nfn8IQf30lGex21UAuaAKRS/TGB0uUi8P0ayCjRzSYGpVsA7B5fRGvbytcsp/Xsv1PTNhZcmhcsCDw5oNvqZ8xJx2hpjCryY7DbV/8MyDCN8V60IzGM6Wec07PPzt75UO6RQqHa1qOZSfedwiQMBOPvbopt+nC7fwu0lhM1QTyDgXa3Hzxz//ykDYclVp1l+A9tbfMHO4XfyU7457aWJ2xihXKIWmVy3KR9bl2S066g0qag5iXkQZVJIp7QCc0U3ZLh8JMwtU+YDWNsl331mGkQHYieBUu3PHGqSU3p0jESnJoB172Ur52XYPhJsK6CYJVHVmu+REv3gH19tc2daicSnLZVq/Pwx6GPAqlmb23AV8AB+6FZIlEzpHgqWuaJqCT7GmMr3n4Ee43/vKfpQEBS/2AkmM0yOfa5r3mjaEgcT4QIXBAsv87ZLxP9XTL6S6nGKw1fz+adjzR1+sdyofScgG2zLNlpgv6dzRnF/5HPEFUHCTraaz9bziXyeTXuybgkP8KPCM/qVc7GITkHLisD6z8oUj0LlnPwi2Vj9p68vPaxmzfie84fVLoKmZnbNbcU6xcj/CglKxltIOcZxqgWFDgWuXIkfh8HAHpql40xZ6fRMQLWNQFJ4E8sjQxCIpdqlpMPFk8E+n+QJF/FXv0Cw8aQfZQwostfQhX3Srs2yshluV/rh5VkFNT2iYQi4U=
+                identity.pub: AgCEvdgF94wfduA43Jf9iUlVpFq4+nIKtkYuWH+80R7N1soiI+k7JPbEc9RcJ5eIFKDsVHoY3zatRSziLcsWFaiGza3XCD8Ia0uGJidMV9j3HNkJX4kE7N0hqw2x8u6FKik5igZ45emq/fVyljWVWuEIKorP8I7vgXbSNr6M9HxNYxK5SwZ8kNyyAcb2kX+8KBy2tkc+xDrO3ZuzbQ68CCw2Mu7bm/Np2RJw3OdBnmauccC9ruXMU7bLX+y50AesUBo63UfM/mcaX5xiF+Y8PrhCu21dzDlHzUXSanatn9zkUmn6pYGiC75KXTNaxRcwATY8sapf/cfxJbZrZkmLUQwvpRlTFsYlTmxbwH4rdYz92anwuJy4/fgLFB2A8t5g9IniVDq9q7Kc2zv6miGeqS5urFEFgbzImhyTCMrWLLZC7WulOQH5bS0GYe+0B5YfeUj0iej1ox1l20Sh3/PUkl1Rm8O8Bs+X5k8mjKbi2ZcHXYBaKU4UgTiKYIpRGJgXamIl4ekWdczcTRQnWHX8qHrUdcTlkSBwLr7ppeUFvwLTxHmnvZAMDwR4TzFLQvW9hFJNGnMT+7SOgmbe0qflC/aj+TKKiDx9LsLwB6VtHGJNGz+jA70BWCBgYmBl7+D0GmCng2QrLWf0tPKR7sl1vAiSEkqqLH+RHYOFdNY0Z8Y86IpewA5o2PBt5gKst5cENBASUZRHqOJYb7YW2H+P5KweMOMCw9AsLOpoyThiwskGOI2/+9yNzcNiXtuPc/hNkIzT0PzAfEJ8sfu9pgcPWEv+GXMWvpGpDASxBHBkc/eX49w=
+                known_hosts: AgAaP7B4AeQBsOebm2fZE21smj1b7xCm6nQUoiwDU711IbIYl6RpA06veKsVfCmUtoYtZYTAQFMBDBXPzoIdwGt/FLJiXKHH9e9rmq5fpKssY2XbTJpvNC1s3Gg2HACvdGk/K9+Dxkz6Y4ErnY0OitBkayWn9ljBeNWRjYMOXDAdP9OHbSco9Jn1cypr/g6T1XoPq4quICnJGey9iVPwg0a/YJXpG0gtS4P/YRzD9xZZh4Ys2QD5fheQYBm2+8Jd63hXDpjljqJf2zRPNX05e4tFZxL5wmF5geo3txog2/t3u4IMx6baz97beNqc/IWBbtjBwxU6oXQOkVz7HcRlCXV5EI+S9Hdx/QHo+6sPjEQ+IrBv7ap99iskWBCAIdWsanKGULxihEa/6+UHd0WfhYSDfXjFHhKraUJyaH0Wl8xzs18tihJ5zllPrVB72afjs5VgqtkEBd+YxvddQg4f7g3jUFP6m/PNrxDj5ZZW6BGIZUKJ/8f9AfHQ6Jjwqvd/iB0tTvHqAc0fem0NhfERX3iCVsSNqd1u6CdWQZ08DyZdIWvXZWs+xYNddU7cMZ5dshP+35ZQh9aE/p7ylhWw2YFRHXywdwx3dtn3iv558UPNY7iy93X9E/HkK9en9UvS1ShGiK7xqxh5jX+lGW0xDLfvND+lWQdcZLJaZNv5eRAEFzlnI3rE9ornfKEMgId9AQdwKEybJ/8DGIs1rWYh+oJRFkGUr4ofAbZPpiOAhTxwLaWkHm3ra0tjHqEW8Ed+9IGAVYJIyv4fEJzPUpauGQyxCgeA6J+v4PvbsOarz9vc8Dvj16m89wd/3tTH/9Z+sy0o+p6QpLx5qMCcSkIoUpHwE+gb3geyTzjKjg+iJVrKRToTRLHfMq/Pz2u3GDbYlj0f3OmMStc5+fSiGY94yeqnaPsny+IOxAo5DIs=
+              template:
+                metadata:
+                  name: github-deploy-key
+                  namespace: flux-system
+    needs: ['sealed-secrets/sealed-secrets-controller']
+
+  - name: cert-manager
+    namespace: cert-manager
+    chart: jetstack/cert-manager
+    version: v1.17.0
+    values: [ '{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/cert-manager/cert-manager/app/helm-values.yaml' ]
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.13.0
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/flux-system/flux-operator/app/helm-values.yaml']
+    needs: ['cert-manager/cert-manager']
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.13.0
+    wait: false
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/flux-system/flux-operator/instance/helm-values.yaml']
+    needs: ['flux-system/flux-operator']

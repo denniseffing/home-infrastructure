@@ -26,25 +26,15 @@ mise trust && mise install
 ```bash
 # Provision cluster
 task bootstrap:k3s
+
 # Bootstrap infrastructure components on cluster
 task bootstrap:infrastructure
 ```
 
-```bash
-# Configure 1Password Account ID for bootstrap
-echo "OP_ACCOUNT=$(op account get --format json | jq ".id")" > .env
-
-# Create namespace for bootstrap
-kubectl create namespace flux-system
-```
-
-Now use the IntelliJ run configuration to bootstrap the cluster.
-Afterward, Flux is doing the heavy lifting for you.
-
 ## ⭐ Overview
 
-* [`provisioning`](./provisioning) – Ansible configuration to provision the k3s cluster
-* [`kubernetes/main/bootstrap`](./kubernetes/main/bootstrap) – Terraform configuration to bootstrap the k3s cluster setup
+* [`kubernetes/main/bootstrap/k3s`](./provisioning) – Ansible configuration to provision the k3s cluster
+* [`kubernetes/main/bootstrap/infrastructure`](./kubernetes/main/bootstrap) – Helmfile configuration to bootstrap infrastructure components
 * [`kubernetes/main/cluster`](./kubernetes/main/cluster) – Flux cluster configuration entrypoint
 * [`kubernetes/main/infrastructure`](./kubernetes/main/infrastructure) – Manifests for infrastructure components
 * [`kubernetes/main/apps`](./kubernetes/main/apps) – Manifests for apps
