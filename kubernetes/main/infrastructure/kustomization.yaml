@@ -6,6 +6,7 @@ resources:
   - external-secrets
   - flux-system
   - github-actions-runner
+  - kube-system
   - longhorn
   - nginx-ingress
   - monitoring

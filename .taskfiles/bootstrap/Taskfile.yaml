@@ -9,3 +9,12 @@ tasks:
       OP_ACCOUNT: HROTQCZ2CJBCRGUOJ6EJKIT7XU
     cmds:
       - op run --env-file .secrets.env --no-masking -- ansible-playbook -i inventory.yaml cluster.yaml
+    preconditions:
+      - op user get --me
+
+  infrastructure:
+    desc: Boostrap infrastructure components into the k3s cluster
+    cmds:
+      - helmfile --file {{.KUBERNETES_DIR}}/bootstrap/infrastructure/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+    preconditions:
+      - which helmfile

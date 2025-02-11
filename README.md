@@ -26,8 +26,8 @@ mise trust && mise install
 ```bash
 # Provision cluster
 task bootstrap:k3s
-cilium install
-cilium hubble enable --ui
+# Bootstrap infrastructure components on cluster
+task bootstrap:infrastructure
 ```
 
 ```bash

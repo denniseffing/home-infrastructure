@@ -1,0 +1,23 @@
+helmDefaults:
+  timeout: 600
+  force: true
+  wait: true
+  waitForJobs: true
+
+repositories:
+  - name: cilium
+    url: https://helm.cilium.io
+  - name: jetstack
+    url: https://charts.jetstack.io
+
+hooks:
+  - events: ['prepare']
+    command: '{{ requiredEnv "KUBERNETES_DIR" }}/bootstrap/infrastructure/hooks/bootstrap.sh'
+    showlogs: true
+
+releases:
+  - name: cilium
+    namespace: kube-system
+    chart: cilium/cilium
+    version: 1.17.0
+    values: ['{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/kube-system/cilium/app/helm-values.yaml']
