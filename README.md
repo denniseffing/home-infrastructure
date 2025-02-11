@@ -25,7 +25,7 @@ mise trust && mise install
 
 ```bash
 # Provision cluster
-ansible-playbook -i provisioning/inventory.yaml provisioning/cluster.yaml
+task bootstrap:k3s
 cilium install
 cilium hubble enable --ui
 ```
