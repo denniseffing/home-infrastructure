@@ -20,7 +20,7 @@ _Infrastructure as code repository for my home_
 
 ```bash
 # Install prerequisites
-brew install ansible kubeseal terraform
+mise trust && mise install
 ```
 
 ```bash
