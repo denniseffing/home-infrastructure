@@ -59,7 +59,7 @@ releases:
   - name: cert-manager
     namespace: cert-manager
     chart: jetstack/cert-manager
-    version: v1.17.0
+    version: v1.17.1
     values: [ '{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/cert-manager/cert-manager/app/helm-values.yaml' ]
 
   - name: flux-operator
