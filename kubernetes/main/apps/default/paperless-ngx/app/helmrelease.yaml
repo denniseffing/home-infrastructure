@@ -77,6 +77,8 @@ spec:
             port: *port
     ingress:
       app:
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: 100m
         className: nginx-internal
         hosts:
           - host: "paperless.internal.denniseffing.de"
