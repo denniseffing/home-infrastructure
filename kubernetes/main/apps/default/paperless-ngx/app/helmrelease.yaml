@@ -89,29 +89,20 @@ spec:
                   port: http
     persistence:
       consume:
-        accessMode: ReadWriteOnce
         existingClaim: paperless-ngx-consume
         globalMounts:
           - path: /usr/src/paperless/consume
-        size: 5Gi
-        storageClass: longhorn
       data:
-        accessMode: ReadWriteOnce
         existingClaim: paperless-ngx-data
         globalMounts:
           - path: /usr/src/paperless/data
-        size: 5Gi
-        storageClass: longhorn
       export:
         type: emptyDir
         globalMounts:
           - path: /usr/src/paperless/export
       media:
-        accessMode: ReadWriteOnce
         existingClaim: paperless-ngx-media
         globalMounts:
           - path: /usr/src/paperless/media
-        size: 10Gi
-        storageClass: longhorn
       tmp:
         type: emptyDir
