@@ -80,6 +80,15 @@ spec:
                 service:
                   identifier: app
                   port: http
+      app-external:
+        className: nginx-external
+        hosts:
+          - host: requests.denniseffing.de
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: jellyseerr-config
