@@ -10,7 +10,7 @@ spec:
         kind: HelmRepository
         name: jellyseerr
         namespace: flux-system
-      version: 2.1.0
+      version: 2.1.1
   dependsOn:
     - name: longhorn
       namespace: longhorn
