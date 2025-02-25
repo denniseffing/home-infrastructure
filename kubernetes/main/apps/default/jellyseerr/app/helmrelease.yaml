@@ -37,7 +37,7 @@ spec:
     image:
       registry: ghcr.io
       repository: fallenbagel/jellyseerr
-      tag: develop
+      tag: 2.3.0
     ingress:
       enabled: true
       ingressClassName: nginx-internal
