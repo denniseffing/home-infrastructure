@@ -3,19 +3,15 @@ kind: HelmRelease
 metadata:
   name: jellyseerr
 spec:
+  interval: 30m
   chart:
     spec:
-      chart: jellyseerr-chart
+      chart: app-template
+      version: 3.7.1
       sourceRef:
         kind: HelmRepository
-        name: jellyseerr
+        name: bjw-s
         namespace: flux-system
-      version: 2.1.1
-  dependsOn:
-    - name: longhorn
-      namespace: longhorn
-  driftDetection:
-    mode: disabled
   install:
     remediation:
       retries: 3
@@ -24,29 +20,78 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  interval: 5m
   values:
-    fullnameOverride: jellyseerr
-    config:
-      persistence:
-        size: 2Gi
-        accessModes:
-          - ReadWriteOnce
-        storageClass: longhorn
-        volumeName: pvc-a3b7093c-4758-4919-9008-9a93015fe65f
-    image:
-      registry: ghcr.io
-      repository: fallenbagel/jellyseerr
-      tag: 2.3.0
+    controllers:
+      jellyseerr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/fallenbagel/jellyseerr
+              tag: 2.3.0@sha256:df53a7b06006e9da117a7072a55cf5d8b2071a6272f6bb329d8ca62b6f5c08a6
+            env:
+              TZ: Europe/Berlin
+              LOG_LEVEL: "info"
+              PORT: &port 80
+            envFrom:
+              - secretRef:
+                  name: jellyseerr
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/status
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: jellyseerr
+        ports:
+          http:
+            port: *port
     ingress:
-      enabled: true
-      ingressClassName: nginx-internal
-      hosts:
-        - host: jellyseerr.internal.denniseffing.de
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-    resources:
-      requests:
-        cpu: 500m
-        memory: 256Mi
+      app-internal:
+        className: nginx-internal
+        hosts:
+          - host: jellyseerr.internal.denniseffing.de
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: jellyseerr-config
+        globalMounts:
+          - path: /app/config
+      config-cache:
+        existingClaim: jellyseerr-cache
+        globalMounts:
+          - path: /app/config/cache
+      config-logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config/logs
+      tmp:
+        type: emptyDir

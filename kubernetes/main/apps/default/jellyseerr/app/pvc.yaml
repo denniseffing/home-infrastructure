@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyseerr-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: longhorn
+  volumeName: pvc-a3b7093c-4758-4919-9008-9a93015fe65f
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyseerr-cache
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: longhorn
