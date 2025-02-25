@@ -33,7 +33,7 @@ spec:
         accessModes:
           - ReadWriteOnce
         storageClass: longhorn
-        name: pvc-a3b7093c-4758-4919-9008-9a93015fe65f
+        volumeName: pvc-a3b7093c-4758-4919-9008-9a93015fe65f
     image:
       registry: ghcr.io
       repository: fallenbagel/jellyseerr
