@@ -58,7 +58,7 @@ spec:
         emptyDir: {}
     addons:
       codeserver:
-        enabled: true
+        enabled: false
         ingress:
           annotations:
             cert-manager.io/cluster-issuer: letsencrypt-prod
