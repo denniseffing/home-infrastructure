@@ -29,6 +29,7 @@ spec:
       enabled: true
       existingSecret: redis-credentials
       existingSecretPasswordKey: password
+      usePasswordFiles: false
     image:
       repository: bitnami/redis
       tag: 7.4.2-debian-12-r5
