@@ -21,23 +21,41 @@ spec:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    timeout: 1m
     remediation:
       strategy: rollback
       retries: 3
   interval: 5m
   values:
     additionalMounts:
-      - mountPath: /var/run/dbus
-        name: bluetooth
-      - mountPath: /config/gitops
-        name: gitops-config
+      - name: bluetooth
+        mountPath: /var/run/dbus
+      - name: gitops-config
+        mountPath: /config/gitops
+      - name: config-cache
+        mountPath: /config/.venv
+      - name: config-logs
+        mountPath: /config/logs
+      - name: config-tts
+        mountPath: /config/tts
+      - name: tmp
+        mountPath: /tmp
     additionalVolumes:
-      - hostPath:
+      - name: bluetooth
+        hostPath:
           path: /var/run/dbus
-        name: bluetooth
-      - configMap:
+      - name: gitops-config
+        configMap:
           name: home-assistant-gitops-config
-        name: gitops-config
+      - name: config-cache
+        persistentVolumeClaim:
+          claimName: home-assistant-cache
+      - name: config-logs
+        emptyDir: {}
+      - name: config-tts
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
     addons:
       codeserver:
         enabled: true
@@ -66,6 +84,20 @@ spec:
     configuration:
       enabled: true
       forceInit: true
+      initContainer:
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsUser: 1000
+          runAsGroup: 1000
+        volumeMounts:
+          - name: init-volume
+            mountPath: /mnt/init/init.sh
+            subPath: init.sh
+          - name: config-volume
+            mountPath: /config-templates
+          - name: tmp
+            mountPath: /tmp
       trusted_proxies:
         - 192.168.178.0/24
         - 10.0.0.0/16
@@ -94,7 +126,7 @@ spec:
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     image:
-      repository: ghcr.io/home-assistant/home-assistant
+      repository: ghcr.io/denniseffing/home-assistant
       tag: 2025.2.5
     ingress:
       annotations:
@@ -111,7 +143,14 @@ spec:
       enabled: true
       size: 20Gi
       storageClass: longhorn
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
     securityContext:
-      privileged: true
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
     serviceMonitor:
       enabled: false
