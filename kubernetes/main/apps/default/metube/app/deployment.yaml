@@ -61,7 +61,7 @@ spec:
                   "convertthumbnails": "png",
                   "writethumbnail": true
                 }
-          image: ghcr.io/alexta69/metube:2025-03-06
+          image: ghcr.io/alexta69/metube:2025-03-07
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
