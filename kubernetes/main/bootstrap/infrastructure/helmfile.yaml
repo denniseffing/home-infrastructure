@@ -29,7 +29,7 @@ releases:
   - name: sealed-secrets-controller
     namespace: sealed-secrets
     chart: sealed-secrets/sealed-secrets
-    version: 2.17.1
+    version: 2.17.2
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/sealed-secrets/sealed-secrets/app/helm-values.yaml']
 
   - name: github-deploy-key
