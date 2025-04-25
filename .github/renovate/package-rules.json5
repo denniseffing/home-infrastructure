@@ -10,6 +10,11 @@
       matchUpdateTypes: ["major", "minor"],
       automerge: false,
       automergeType: "pr"
+    },
+    {
+      enabled: false,
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/paperless-ngx/paperless-ngx"],
     }
   ]
 }
