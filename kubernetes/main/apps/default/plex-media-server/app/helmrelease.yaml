@@ -71,7 +71,7 @@ spec:
       - name: storage-2
         mountPath: "/mnt/storage-2"
     pms:
-      configStorage: 40Gi
+      configStorage: 100Gi
       storageClassName: longhorn
     tolerations:
       - key: nas
