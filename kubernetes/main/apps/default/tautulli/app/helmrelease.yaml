@@ -31,8 +31,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/tautulli
-              tag: 2.15.1@sha256:74468ecce40f44c449675ec7fcb7c86ebff89961572d141ad743b8ccbdde3c98
+              repository: ghcr.io/home-operations/tautulli
+              tag: 2.15.2@sha256:882f5b2a89e3da25716af3f3a293bf93a0111056548e37a55c918cf7789bbb78
             env:
               TZ: Europe/Berlin
               TAUTULLI__PORT: &port 80

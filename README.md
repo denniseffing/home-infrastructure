@@ -45,5 +45,5 @@ Thanks to all the awesome people in the [Home Operations](https://discord.gg/hom
 Discord community and the [k8s-at-home](https://github.com/topics/k8s-at-home) GitHub topic for
 providing inspiration and guidance.
 Special thanks to [@onedr0p](https://github.com/onedr0p) for maintaining awesome
-[rootless container images](https://github.com/onedr0p/containers) and his genius 
+[rootless container images](https://github.com/home-operations/containers) and his genius 
 [home-ops](https://github.com/onedr0p/home-ops) setup!
