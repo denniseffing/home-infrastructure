@@ -35,5 +35,6 @@
     "fileMatch": [
       "(^|/)kubernetes/.+\\.ya?ml$"
     ]
-  }
+  },
+  "timezone": "Europe/Berlin"
 }
