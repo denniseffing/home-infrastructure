@@ -34,7 +34,7 @@ spec:
                     - rachel
     image:
       repository: plexinc/pms-docker
-      tag: 1.41.3.9314-a0bfb8370
+      tag: 1.41.6.9685-d301f511a
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
