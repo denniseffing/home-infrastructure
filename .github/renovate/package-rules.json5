@@ -15,6 +15,11 @@
       enabled: false,
       matchDatasources: ["docker"],
       matchPackageNames: ["ghcr.io/paperless-ngx/paperless-ngx"],
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["plexinc/pms-docker"],
+      versioning: "loose",
     }
   ]
 }
