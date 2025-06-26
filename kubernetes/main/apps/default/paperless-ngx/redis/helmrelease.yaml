@@ -32,7 +32,7 @@ spec:
       usePasswordFiles: false
     image:
       repository: bitnami/redis
-      tag: 8.0.2-debian-12-r3
+      tag: 8.0.2-debian-12-r4
     master:
       count: 1
       resourcesPreset: micro
