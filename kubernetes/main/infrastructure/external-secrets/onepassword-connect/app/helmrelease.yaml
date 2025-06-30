@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: connect
-      version: 1.17.1
+      version: 2.0.0
       sourceRef:
         kind: HelmRepository
         name: onepassword
@@ -31,7 +31,6 @@ spec:
         httpPort: 80
       credentialsName: onepassword-connect
       credentialsKey: credentials
-      serviceType: ClusterIP
     operator:
       create: true
       token:
