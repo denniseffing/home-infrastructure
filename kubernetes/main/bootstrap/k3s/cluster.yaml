@@ -103,7 +103,7 @@
     k3s_etcd_datastore: true
     k3s_state: installed
     k3s_registration_address: 192.168.178.40
-    k3s_release_version: v1.31.5+k3s1
+    k3s_release_version: v1.32.5+k3s1
     k3s_server_manifests_templates:
       - manifests/kube-vip.yaml
       - manifests/kube-vip-cloud-controller.yaml
