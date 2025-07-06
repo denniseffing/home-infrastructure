@@ -123,6 +123,19 @@ spec:
         group: !include gitops/groups.yaml # matches mount path of gitops-config config map
         
         automation gitops: !include gitops/automations.yaml # matches mount path of gitops-config config map
+        
+        # Activate Bubble card module store & editor
+        template:
+          - trigger:
+              - trigger: event
+                event_type: bubble_card_update_modules
+            sensor:
+              - name: "Bubble Card Modules"
+                state: "saved"
+                icon: "mdi:puzzle"
+                attributes:
+                  modules: {{ `"{{ trigger.event.data.modules }}" `}}
+                  last_updated: {{ `"{{ trigger.event.data.last_updated }}" `}}
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     image:
