@@ -31,6 +31,8 @@ spec:
       auth_enabled: false
       analytics:
         reporting_enabled: false
+      image:
+        tag: 3.5.1
       server:
         log_level: info
       commonConfig:
