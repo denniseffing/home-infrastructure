@@ -22,7 +22,13 @@ jobs:
       - name: Run flux-local test
         uses: docker://ghcr.io/allenporter/flux-local:v7.5.6
         with:
-          args: test --enable-helm --all-namespaces --path /github/workspace/kubernetes/main/cluster -v
+          args: >-
+            test
+            --enable-helm
+            --all-namespaces
+            --path /github/workspace/kubernetes/main/cluster
+            --sources "flux-system"
+            -v
 
   diff:
     name: 🆚 Diff
