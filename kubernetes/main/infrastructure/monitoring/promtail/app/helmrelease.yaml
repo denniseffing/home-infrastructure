@@ -26,3 +26,13 @@ spec:
         - url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
     serviceMonitor:
       enabled: true
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+      - key: nas
+        operator: Exists
+        effect: NoSchedule
