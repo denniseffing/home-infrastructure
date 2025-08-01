@@ -107,7 +107,7 @@ spec:
               value: 192.168.178.40
             - name: prometheus_server
               value: :2112
-          image: ghcr.io/kube-vip/kube-vip:v0.9.2
+          image: ghcr.io/kube-vip/kube-vip:v1.0.0
           imagePullPolicy: IfNotPresent
           name: kube-vip
           resources: {}
@@ -180,7 +180,7 @@ spec:
               value: "1"
             - name: prometheus_server
               value: :2113
-          image: ghcr.io/kube-vip/kube-vip:v0.9.2
+          image: ghcr.io/kube-vip/kube-vip:v1.0.0
           imagePullPolicy: IfNotPresent
           name: kube-vip
           resources: {}
