@@ -14,3 +14,12 @@ spec:
     name: aws-trust-anchor
     kind: ClusterIssuer
     group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: aws-trusted-issuer
+  namespace: aws
+spec:
+  ca:
+    secretName: aws-trust-anchor-cert
