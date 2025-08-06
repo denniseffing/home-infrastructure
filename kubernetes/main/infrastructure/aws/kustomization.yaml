@@ -2,4 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
-  - certificate-authority.yaml
+  - ack-s3-controller/ks.yaml
+  - certificate-authority/ks.yaml

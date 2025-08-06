@@ -7,3 +7,19 @@ spec:
   type: oci
   interval: 30m
   url: oci://public.ecr.aws/aws-controllers-k8s
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: aws-controllers-fork
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/denniseffing/s3-controller
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/helm/

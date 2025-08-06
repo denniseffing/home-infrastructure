@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: aws-trust-anchor
+  namespace: aws
+spec:
+  isCA: true
+  commonName: home-aws-trust-anchor
+  secretName: aws-trust-anchor-cert
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+  issuerRef:
+    name: aws-trust-anchor
+    kind: ClusterIssuer
+    group: cert-manager.io
