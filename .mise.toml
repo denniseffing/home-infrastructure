@@ -1,6 +1,7 @@
 [env]
 OP_ACCOUNT="HROTQCZ2CJBCRGUOJ6EJKIT7XU"
 AWS_PROFILE = "home"
+AWS_REGION = "eu-central-1"
 
 [tools]
 python = "3.13"
