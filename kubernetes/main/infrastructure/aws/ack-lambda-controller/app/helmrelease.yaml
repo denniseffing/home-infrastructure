@@ -1,16 +1,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: ack-s3-controller
+  name: ack-lambda-controller
 spec:
   interval: 30m
-  releaseName: ack-s3-controller
+  releaseName: ack-lambda-controller
   chart:
     spec:
       chart: "./helm"
       sourceRef:
         kind: GitRepository
-        name: aws-s3-controller-fork
+        name: aws-lambda-controller-fork
         namespace: flux-system
   install:
     remediation:
@@ -25,7 +25,7 @@ spec:
         patches:
           - target:
               kind: Deployment
-              name: ack-s3-controller
+              name: ack-lambda-controller
             patch: |
               - op: add
                 path: /spec/template/spec/containers/-
@@ -36,9 +36,9 @@ spec:
                     - name: TRUST_ANCHOR_ARN
                       value: "arn:aws:rolesanywhere:eu-central-1:514266269969:trust-anchor/74a9e9cd-97a2-4b99-a51f-2c79109e8dc0"
                     - name: PROFILE_ARN
-                      value: "arn:aws:rolesanywhere:eu-central-1:514266269969:profile/2311625a-f826-4a84-a359-35a22953058f"
+                      value: "arn:aws:rolesanywhere:eu-central-1:514266269969:profile/5e740b06-5314-49e1-8f8b-8cd91160f649"
                     - name: ROLE_ARN
-                      value: "arn:aws:iam::514266269969:role/ack-s3-controller"
+                      value: "arn:aws:iam::514266269969:role/ack-lambda-controller"
                   securityContext:
                     allowPrivilegeEscalation: false
                     privileged: false
@@ -58,7 +58,7 @@ spec:
                       cpu: "50m"
                       memory: "64Mi"
   values:
-    fullnameOverride: ack-s3-controller
+    fullnameOverride: ack-lambda-controller
     aws:
       region: eu-central-1
     deployment:
@@ -81,4 +81,4 @@ spec:
               csi.cert-manager.io/fs-group: "1000"
     serviceAccount:
       create: true
-      name: ack-s3-controller
+      name: ack-lambda-controller

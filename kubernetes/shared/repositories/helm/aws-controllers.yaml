@@ -11,11 +11,27 @@ spec:
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: aws-controllers-fork
+  name: aws-s3-controller-fork
   namespace: flux-system
 spec:
   interval: 1m
   url: https://github.com/denniseffing/s3-controller
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/helm/
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: aws-lambda-controller-fork
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/denniseffing/lambda-controller
   ref:
     branch: main
   ignore: |
