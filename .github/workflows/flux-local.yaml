@@ -28,6 +28,7 @@ jobs:
             --all-namespaces
             --path /github/workspace/kubernetes/main/cluster
             --sources "flux-system"
+            --label-selector "flux.local/enabled=true"
             -v
 
   diff:

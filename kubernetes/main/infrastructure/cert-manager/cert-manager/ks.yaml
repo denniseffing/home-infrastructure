@@ -2,6 +2,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cert-manager
+  labels:
+    flux.local/enabled: "true"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -22,6 +24,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cert-manager-csi-driver
+  labels:
+    flux.local/enabled: "true"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -44,6 +48,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cert-manager-ovh-webhook
+  labels:
+    flux.local/enabled: "true"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -66,6 +72,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app cert-manager-issuers
+  labels:
+    flux.local/enabled: "true"
   namespace: flux-system
 spec:
   commonMetadata:

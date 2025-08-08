@@ -2,6 +2,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app grafana
+  labels:
+    flux.local/enabled: "true"
   namespace: flux-system
 spec:
   targetNamespace: monitoring

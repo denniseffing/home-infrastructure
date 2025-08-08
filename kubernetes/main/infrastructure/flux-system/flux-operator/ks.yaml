@@ -2,6 +2,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app flux-operator
+  labels:
+    flux.local/enabled: "true"
   namespace: flux-system
 spec:
   targetNamespace: flux-system
@@ -21,6 +23,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app flux-instance
+  labels:
+    flux.local/enabled: "true"
   namespace: &namespace flux-system
 spec:
   commonMetadata:
