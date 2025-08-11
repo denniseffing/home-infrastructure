@@ -136,6 +136,15 @@ spec:
                 attributes:
                   modules: {{ `"{{ trigger.event.data.modules }}" `}}
                   last_updated: {{ `"{{ trigger.event.data.last_updated }}" `}}
+        
+        # Activate Amazon Alexa integration
+        alexa:
+          smart_home:
+            locale: de-DE
+            filter:
+              include_entities:
+                - "switch.bett"
+                - "vacuum.roborock_s7"
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     image:
