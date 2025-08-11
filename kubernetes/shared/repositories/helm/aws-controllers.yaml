@@ -39,3 +39,19 @@ spec:
     /*
     # include charts directory
     !/helm/
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: aws-iam-controller-fork
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://github.com/denniseffing/iam-controller.git
+  ref:
+    branch: main
+  ignore: |
+    # exclude all
+    /*
+    # include charts directory
+    !/helm/
