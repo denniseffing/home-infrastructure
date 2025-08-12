@@ -30,6 +30,12 @@ spec:
     crds:
       enabled: false
     alertmanager:
+      config:
+        receivers:
+          - name: home-assistant
+            webhookConfigs:
+              - url: "replaced-from-secret"
+                sendResolved: true
       ingress:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
