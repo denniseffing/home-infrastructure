@@ -30,6 +30,13 @@ spec:
     crds:
       enabled: false
     alertmanager:
+      config:
+        receivers:
+          - name: "null"
+          - name: home-assistant
+            webhook_configs:
+              - url: "http://home-assistant.default.svc.cluster.local:8080/api/webhook/-0vlh45jwAWYCeXeCweVaPitY"
+                send_resolved: true
       ingress:
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-prod
