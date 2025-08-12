@@ -147,6 +147,7 @@ spec:
                 - "switch.bett"
                 - "vacuum.roborock_s7"
                 - "switch.pc"
+                - "switch.buero_stern"
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     image:
