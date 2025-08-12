@@ -10,14 +10,25 @@ data:
     {
       "annotations": {
         "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
         ]
       },
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 1,
+      "id": 18,
       "links": [],
-      "liveNow": false,
       "panels": [
         {
           "collapsed": false,
@@ -41,9 +52,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "Count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -52,6 +67,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -74,7 +90,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -100,19 +116,37 @@ data:
                 "min"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "sum by (controller) (increase(controller_runtime_reconcile_total[150s])/150*120)",
+              "expr": "sum by (controller) (increase(controller_runtime_reconcile_total{namespace=\"$namespace\"}[150s])/150*120)",
               "interval": "",
               "legendFormat": "{{controller}}",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -128,9 +162,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "Count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -139,6 +177,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -161,7 +200,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -187,17 +226,34 @@ data:
                 "min"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "increase(controller_runtime_reconcile_errors_total[150s])/150*120",
+              "expr": "increase(controller_runtime_reconcile_errors_total{namespace=\"$namespace\"}[150s])/150*120",
               "format": "time_series",
               "instant": false,
               "interval": "",
@@ -216,9 +272,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -227,6 +287,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -249,7 +310,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -276,19 +337,37 @@ data:
                 "min"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "histogram_quantile(0.9, rate(controller_runtime_reconcile_time_seconds_bucket[150s]))*1000",
+              "expr": "histogram_quantile(0.9, rate(controller_runtime_reconcile_time_seconds_bucket{namespace=\"$namespace\"}[150s]))*1000",
               "interval": "",
               "legendFormat": "{{controller}}",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -303,9 +382,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -314,6 +397,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -336,7 +420,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -363,19 +447,37 @@ data:
                 "min"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "histogram_quantile(1.0, rate(controller_runtime_reconcile_time_seconds_bucket[150s]))*1000",
+              "expr": "histogram_quantile(1.0, rate(controller_runtime_reconcile_time_seconds_bucket{namespace=\"$namespace\"}[150s]))*1000",
               "interval": "",
               "legendFormat": "{{controller}}",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -390,9 +492,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -401,6 +507,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -423,7 +530,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -448,19 +555,37 @@ data:
                 "max"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "increase(workqueue_retries_total{job=\"ack-controller\"}[150s])/150*120",
+              "expr": "increase(workqueue_retries_total{namespace=\"$namespace\"}[150s])/150*120",
               "interval": "",
               "legendFormat": "{{name}}",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -476,9 +601,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
@@ -487,6 +616,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineStyle": {
                   "fill": "solid"
@@ -512,7 +642,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   }
                 ]
               }
@@ -532,15 +662,31 @@ data:
                 "max"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
+          "pluginVersion": "12.1.0",
           "targets": [
             {
-              "datasource": "$datasource",
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
               "exemplar": true,
               "expr": "apiserver_storage_objects{resource=~\".*\\\\.services\\\\.k8s\\\\.aws\"} / on(instance) group_left topk(1, group by (instance) (apiserver_storage_objects))",
               "interval": "",
@@ -552,8 +698,15 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": "Loki",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
           "description": "Controller log messages containing \"ERROR\"",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
           "gridPos": {
             "h": 10,
             "w": 24,
@@ -563,6 +716,7 @@ data:
           "id": 38,
           "options": {
             "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
             "enableLogDetails": true,
             "prettifyLogMessage": false,
             "showCommonLabels": false,
@@ -571,10 +725,17 @@ data:
             "sortOrder": "Descending",
             "wrapLogMessage": false
           },
+          "pluginVersion": "12.1.0",
           "targets": [
             {
-              "datasource": "Loki",
-              "expr": "{namespace=\"ack-system\"} |= \"ERROR\"",
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "{namespace=\"aws\"} |~ \"(error|ERROR)\"",
+              "queryType": "range",
               "refId": "A"
             }
           ],
@@ -603,9 +764,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "Count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
@@ -614,6 +779,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -636,7 +802,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -663,20 +829,38 @@ data:
                 "sum"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "increase(ack_outbound_api_requests_total[150s])/150*120",
+              "expr": "increase(ack_outbound_api_requests_total{namespace=\"$namespace\"}[150s])/150*120",
               "hide": false,
               "interval": "",
               "legendFormat": "{{op_id}}",
+              "range": true,
               "refId": "B"
             }
           ],
@@ -692,9 +876,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "Count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -703,6 +891,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -725,7 +914,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -752,19 +941,37 @@ data:
                 "sum"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "increase(ack_outbound_api_requests_error_total{status_code=~'4..'}[150s])/150*120",
+              "expr": "increase(ack_outbound_api_requests_error_total{namespace=\"$namespace\", status_code=~'4..'}[150s])/150*120",
               "interval": "",
               "legendFormat": "[{{op_id}} - {{status_code}}]",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -780,9 +987,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "Net Count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -791,6 +1002,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -813,7 +1025,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -839,19 +1051,37 @@ data:
                 "min"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "increase(ack_outbound_api_requests_error_total{status_code=~'5..'}[150s])/150*120",
+              "expr": "increase(ack_outbound_api_requests_error_total{namespace=\"$namespace\", status_code=~'5..'}[150s])/150*120",
               "interval": "",
               "legendFormat": "[{{op_id}} - {{status_code}}]",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -879,9 +1109,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -890,6 +1124,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -912,7 +1147,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -937,19 +1172,37 @@ data:
                 "max"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "go_memstats_heap_objects{job=\"ack-controller\"}",
+              "expr": "go_memstats_heap_objects{namespace=\"$namespace\"}",
               "interval": "",
               "legendFormat": "{{job}}",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -964,9 +1217,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -975,6 +1232,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -997,7 +1255,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -1022,19 +1280,37 @@ data:
                 "max"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "go_threads{job=\"ack-controller\"}",
+              "expr": "go_threads{namespace=\"$namespace\"}",
               "interval": "",
               "legendFormat": "{{job}}",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -1049,9 +1325,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "usage",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -1060,6 +1340,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1082,7 +1363,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -1107,19 +1388,37 @@ data:
                 "max"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "process_open_fds{job=\"ack-controller\"}/process_max_fds{job=\"ack-controller\"}*100",
+              "expr": "process_open_fds{namespace=\"$namespace\"}/process_max_fds{namespace=\"$namespace\"}*100",
               "interval": "",
               "legendFormat": "open",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -1134,9 +1433,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "count",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -1145,6 +1448,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1167,7 +1471,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -1190,19 +1494,37 @@ data:
             "legend": {
               "calcs": [],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "increase(go_gc_duration_seconds_count{job=\"ack-controller\"}[150s])/150*120",
+              "expr": "increase(go_gc_duration_seconds_count{namespace=\"$namespace\"}[150s])/150*120",
               "interval": "",
               "legendFormat": "{{job}}",
+              "range": true,
               "refId": "A"
             }
           ],
@@ -1217,9 +1539,13 @@ data:
                 "mode": "palette-classic"
               },
               "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 10,
                 "gradientMode": "none",
@@ -1228,6 +1554,7 @@ data:
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1250,7 +1577,7 @@ data:
                 "steps": [
                   {
                     "color": "green",
-                    "value": null
+                    "value": 0
                   },
                   {
                     "color": "red",
@@ -1275,35 +1602,83 @@ data:
                 "max"
               ],
               "displayMode": "list",
-              "placement": "bottom"
+              "placement": "bottom",
+              "showLegend": true
             },
             "tooltip": {
-              "mode": "single"
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "8.3.5",
+          "pluginVersion": "12.1.0",
           "targets": [
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "go_gc_duration_seconds{quantile=\"0.5\", job=\"ack-controller\"}",
+              "expr": "go_gc_duration_seconds{quantile=\"0.5\", namespace=\"$namespace\"}",
               "interval": "",
               "legendFormat": "p50",
+              "range": true,
               "refId": "A"
             },
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "go_gc_duration_seconds{quantile=\"0.75\", job=\"ack-controller\"}",
+              "expr": "go_gc_duration_seconds{quantile=\"0.75\", namespace=\"$namespace\"}",
               "hide": false,
               "interval": "",
               "legendFormat": "p75",
+              "range": true,
               "refId": "B"
             },
             {
+              "datasource": {
+                "0": "$",
+                "1": "d",
+                "2": "a",
+                "3": "t",
+                "4": "a",
+                "5": "s",
+                "6": "o",
+                "7": "u",
+                "8": "r",
+                "9": "c",
+                "10": "e"
+              },
+              "editorMode": "code",
               "exemplar": true,
-              "expr": "go_gc_duration_seconds{quantile=\"1\", job=\"ack-controller\"}",
+              "expr": "go_gc_duration_seconds{quantile=\"1\", namespace=\"$namespace\"}",
               "hide": false,
               "interval": "",
               "legendFormat": "p100",
+              "range": true,
               "refId": "C"
             }
           ],
@@ -1311,9 +1686,9 @@ data:
           "type": "timeseries"
         }
       ],
+      "preload": false,
       "refresh": "30s",
-      "schemaVersion": 34,
-      "style": "dark",
+      "schemaVersion": 41,
       "tags": [],
       "templating": {
         "list": [
@@ -1322,15 +1697,25 @@ data:
               "text": "default",
               "value": "default"
             },
-            "hide": 0,
             "label": "Data Source",
             "name": "datasource",
-            "options": [
-            ],
+            "options": [],
             "query": "prometheus",
             "refresh": 1,
             "regex": "",
             "type": "datasource"
+          },
+          {
+            "current": {
+              "text": "aws",
+              "value": "aws"
+            },
+            "description": "",
+            "hide": 2,
+            "name": "namespace",
+            "query": "aws",
+            "skipUrlSync": true,
+            "type": "constant"
           }
         ]
       },
@@ -1342,6 +1727,5 @@ data:
       "timezone": "",
       "title": "ACK Dashboard",
       "uid": "ack-soak-test",
-      "version": 1,
-      "weekStart": ""
+      "version": 1
     }
