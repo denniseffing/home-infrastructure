@@ -1,0 +1,4 @@
+- platform: wake_on_lan
+  name: "PC"
+  mac: "10:FF:E0:CD:E0:1B"
+  host: "192.168.178.3"
