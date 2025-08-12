@@ -54,6 +54,7 @@ spec:
         retention: 10d
         retentionSize: 7.5GiB
         serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
         storageSpec:
           volumeClaimTemplate:
             spec:
