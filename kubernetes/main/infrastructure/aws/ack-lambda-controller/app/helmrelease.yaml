@@ -58,6 +58,7 @@ spec:
                       cpu: "50m"
                       memory: "64Mi"
   values:
+    nameOverride: ack-lambda-controller
     fullnameOverride: ack-lambda-controller
     aws:
       region: eu-central-1

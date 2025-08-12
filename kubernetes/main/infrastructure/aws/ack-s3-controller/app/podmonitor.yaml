@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: ack-s3-controller
+  labels:
+    app.kubernetes.io/name: ack-s3-controller
+    app.kubernetes.io/instance: ack-s3-controller
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ack-s3-controller
+  podMetricsEndpoints:
+    - path: /metrics
+      port: http

@@ -58,6 +58,7 @@ spec:
                       cpu: "50m"
                       memory: "64Mi"
   values:
+    nameOverride: ack-iam-controller
     fullnameOverride: ack-iam-controller
     aws:
       region: eu-central-1

@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: ack-iam-controller
+  labels:
+    app.kubernetes.io/name: ack-iam-controller
+    app.kubernetes.io/instance: ack-iam-controller
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ack-iam-controller
+  podMetricsEndpoints:
+    - path: /metrics
+      port: http
