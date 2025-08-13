@@ -47,4 +47,4 @@ spec:
       image:
         registry: docker.io
         repository: bitnami/redis-exporter
-        tag: 1.75.0-debian-12-r0
+        tag: 1.75.0-debian-12-r1
