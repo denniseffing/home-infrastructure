@@ -31,6 +31,9 @@ spec:
       enabled: false
     alertmanager:
       config:
+        route:
+          group_by: [ "alertname" ]
+          receiver: "home-assistant"
         receivers:
           - name: "null"
           - name: home-assistant
