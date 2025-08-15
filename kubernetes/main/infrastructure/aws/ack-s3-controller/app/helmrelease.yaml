@@ -13,10 +13,12 @@ spec:
         name: aws-s3-controller-fork
         namespace: flux-system
   install:
+    disableSchemaValidation: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    disableSchemaValidation: true
     remediation:
       strategy: rollback
       retries: 3
@@ -80,6 +82,13 @@ spec:
               csi.cert-manager.io/is-ca: "false"
               csi.cert-manager.io/key-usages: "client auth, server auth, digital signature"
               csi.cert-manager.io/fs-group: "1000"
+    resources:
+      requests:
+        cpu: "10m"
+        memory: "100Mi"
+      limits:
+        cpu: null
+        memory: "100Mi"
     serviceAccount:
       create: true
       name: ack-s3-controller
