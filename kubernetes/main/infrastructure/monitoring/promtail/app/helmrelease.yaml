@@ -24,6 +24,12 @@ spec:
     config:
       clients:
         - url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+    resources:
+      requests:
+        cpu: 50m
+        memory: 150Mi
+      limits:
+        memory: 150Mi
     serviceMonitor:
       enabled: true
     tolerations:
