@@ -62,3 +62,8 @@ spec:
         memory: 64Mi
       limits:
         memory: 64Mi
+    tolerations:
+      - key: nas
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
