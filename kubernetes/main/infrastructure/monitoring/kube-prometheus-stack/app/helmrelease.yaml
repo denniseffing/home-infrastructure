@@ -32,8 +32,13 @@ spec:
     alertmanager:
       config:
         route:
-          group_by: [ "alertname" ]
-          receiver: "home-assistant"
+          group_by:
+            - alertname
+          receiver: "null"
+          routes:
+            - matchers:
+              - severity="critical"
+              receiver: home-assistant
         receivers:
           - name: "null"
           - name: home-assistant
