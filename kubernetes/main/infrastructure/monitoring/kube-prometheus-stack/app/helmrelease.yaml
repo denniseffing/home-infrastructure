@@ -30,6 +30,13 @@ spec:
     crds:
       enabled: false
     alertmanager:
+      alertmanagerSpec:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            memory: 50Mi
       config:
         route:
           group_by:
@@ -66,6 +73,12 @@ spec:
         hosts:
           - prometheus.internal.denniseffing.de
       prometheusSpec:
+        resources:
+          requests:
+            cpu: 235m
+            memory: 1800Mi
+          limits:
+            memory: 1800Mi
         retention: 10d
         retentionSize: 7.5GiB
         serviceMonitorSelectorNilUsesHelmValues: false
@@ -79,6 +92,20 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+    prometheusOperator:
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 40Mi
+          limits:
+            memory: 40Mi
+      resources:
+        requests:
+          cpu: 90m
+          memory: 80Mi
+        limits:
+          memory: 80Mi
     prometheus-node-exporter:
       tolerations:
         - key: nas
@@ -117,3 +144,12 @@ spec:
       enabled: false
     kubeProxy:
       enabled: false
+    kubeStateMetrics:
+      enabled: true
+    kube-state-metrics:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 190Mi
+        limits:
+          memory: 190Mi
