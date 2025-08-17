@@ -56,8 +56,21 @@ spec:
               period: 24h
       limits_config:
         retention_period: 14d
+    sidecar:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 150Mi
+        limits:
+          memory: 150Mi
     singleBinary:
       replicas: 1
+      resources:
+        requests:
+          cpu: 10m
+          memory: 330Mi
+        limits:
+          memory: 330Mi
       persistence:
         enabled: true
         enableStatefulSetAutoDeletePVC: false
