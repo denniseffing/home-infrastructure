@@ -31,5 +31,11 @@ spec:
                   values:
                     - ross
     domain: internal.denniseffing.de
+    resources:
+      requests:
+        cpu: 10m
+        memory: 80Mi
+      limits:
+        memory: 80Mi
     watchedResources:
       - Ingress
