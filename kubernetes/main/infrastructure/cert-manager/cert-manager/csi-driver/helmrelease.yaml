@@ -23,7 +23,42 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: DaemonSet
+              name: cert-manager-csi-driver
+            patch: |
+              - op: test
+                path: /spec/template/spec/containers/0/name
+                value: node-driver-registrar
+              - op: add
+                path: /spec/template/spec/containers/0/resources
+                value:
+                  requests:
+                    cpu: 10m
+                    memory: 32Mi
+                  limits:
+                    memory: 32Mi
+              - op: test
+                path: /spec/template/spec/containers/1/name
+                value: liveness-probe
+              - op: add
+                path: /spec/template/spec/containers/1/resources
+                value:
+                  requests:
+                    cpu: 10m
+                    memory: 32Mi
+                  limits:
+                    memory: 32Mi
   values:
     metrics:
       podmonitor:
         enabled: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 64Mi

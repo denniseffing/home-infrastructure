@@ -29,3 +29,9 @@ spec:
     image:
       repository: ghcr.io/aureq/cert-manager-webhook-ovh
       tag: 0.7.5
+    resources:
+      requests:
+        cpu: 110m
+        memory: 80Mi
+      limits:
+        memory: 80Mi
