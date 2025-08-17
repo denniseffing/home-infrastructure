@@ -69,6 +69,12 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
+      resources:
+        requests:
+          cpu: 70m
+          memory: 190Mi
+        limits:
+          memory: 190Mi
       service:
         annotations:
           kube-vip.io/forwardUPNP: true
