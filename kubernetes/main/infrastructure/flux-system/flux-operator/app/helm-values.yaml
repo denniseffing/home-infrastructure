@@ -1,2 +1,10 @@
+resources:
+  requests:
+    cpu: 10m
+    memory: 190Mi
+  limits:
+    cpu: null
+    memory: 190Mi
+
 serviceMonitor:
   create: true

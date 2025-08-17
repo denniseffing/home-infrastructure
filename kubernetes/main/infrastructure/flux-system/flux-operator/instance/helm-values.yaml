@@ -12,10 +12,66 @@ instance:
     path: kubernetes/main/cluster
   kustomize:
     patches:
-      - patch: |
+      - target:
+          kind: Deployment
+          name: "(kustomize-controller|helm-controller|source-controller)"
+        patch: |
           - op: add
             path: /spec/template/spec/containers/0/args/-
             value: --requeue-dependency=5s
-        target:
+      - target:
           kind: Deployment
-          name: "(kustomize-controller|helm-controller|source-controller)"
+          name: "kustomize-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              resources:
+                requests:
+                  cpu: 12m
+                  memory: 90Mi
+                limits:
+                  cpu: null
+                  memory: 90Mi
+      - target:
+          kind: Deployment
+          name: "helm-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              resources:
+                requests:
+                  cpu: 21m
+                  memory: 200Mi
+                limits:
+                  cpu: null
+                  memory: 200Mi
+      - target:
+          kind: Deployment
+          name: "source-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 170Mi
+                limits:
+                  cpu: null
+                  memory: 170Mi
+      - target:
+          kind: Deployment
+          name: "notification-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 90Mi
+                limits:
+                  cpu: null
+                  memory: 90Mi

@@ -29,11 +29,30 @@ spec:
     connect:
       api:
         httpPort: 80
+        resources:
+          requests:
+            cpu: 14m
+            memory: 50Mi
+          limits:
+            memory: 50Mi
       credentialsName: onepassword-connect
       credentialsKey: credentials
       serviceType: ClusterIP
+      sync:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 30Mi
+          limits:
+            memory: 30Mi
     operator:
       create: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 240Mi
+        limits:
+          memory: 240Mi
       token:
         name: onepassword-connect
         key: token
