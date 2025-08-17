@@ -178,6 +178,12 @@ spec:
           datasource: Prometheus
     dashboardsConfigMaps:
       custom: grafana-custom-dashboards
+    resources:
+      requests:
+        cpu: 200m
+        memory: 260Mi
+      limits:
+        memory: 260Mi
     sidecar:
       dashboards:
         enabled: true
@@ -191,6 +197,12 @@ spec:
         enabled: true
         searchNamespace: ALL
         labelValue: ""
+      resources:
+        requests:
+          cpu: 120m
+          memory: 150Mi
+        limits:
+          memory: 150Mi
     serviceMonitor:
       enabled: true
     ingress:
