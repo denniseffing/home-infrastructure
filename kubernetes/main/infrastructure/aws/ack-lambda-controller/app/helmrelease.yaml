@@ -55,10 +55,10 @@ spec:
                   resources:
                     requests:
                       cpu: "10m"
-                      memory: "16Mi"
+                      memory: "32Mi"
                     limits:
-                      cpu: "50m"
-                      memory: "64Mi"
+                      cpu: null
+                      memory: "32Mi"
   values:
     nameOverride: ack-lambda-controller
     fullnameOverride: ack-lambda-controller
@@ -85,10 +85,10 @@ spec:
     resources:
       requests:
         cpu: "10m"
-        memory: "100Mi"
+        memory: "64Mi"
       limits:
         cpu: null
-        memory: "100Mi"
+        memory: "64Mi"
     serviceAccount:
       create: true
       name: ack-lambda-controller
