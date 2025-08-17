@@ -48,6 +48,12 @@ spec:
     interval: 5m
     provider:
       name: ovh
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 64Mi
     serviceMonitor:
       enabled: true
     sources:
