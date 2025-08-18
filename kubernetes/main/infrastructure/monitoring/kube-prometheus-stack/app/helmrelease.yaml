@@ -107,6 +107,12 @@ spec:
         limits:
           memory: 80Mi
     prometheus-node-exporter:
+      resources:
+        requests:
+          cpu: 12m
+          memory: 35Mi
+        limits:
+          memory: 35Mi
       tolerations:
         - key: nas
           operator: Equal
