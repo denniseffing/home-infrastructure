@@ -20,7 +20,15 @@
       matchDatasources: ["docker"],
       matchPackageNames: ["plexinc/pms-docker"],
       automergeSchedule: ["after 3:00am and before 9:00am"],
-      versioning: "loose",
+    },
+    {
+      matchDatasources: [
+        "github-tags",
+      ],
+      matchPackageNames: [
+        "bitnami-labs/sealed-secrets",
+      ],
+      allowedVersions: "!/0.31.0/",
     }
   ]
 }
