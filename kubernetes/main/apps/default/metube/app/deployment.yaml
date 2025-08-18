@@ -63,6 +63,12 @@ spec:
                 }
           image: ghcr.io/alexta69/metube:2025.08.13
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 10m
+              memory: 67Mi
+            limits:
+              memory: 67Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
