@@ -35,7 +35,8 @@ spec:
               tag: 2.15.3@sha256:3e0eaca8c082ebe121a0ae9125bea1b4e2d177fca34ac8df4ec14a28e62f63a4
             env:
               TZ: Europe/Berlin
-              TAUTULLI__PORT: &port 80
+              TAUTULLI_HTTP_BASE_URL: https://tautulli.internal.denniseffing.de
+              TAUTULLI_HTTP_PORT: &port 80
             probes:
               liveness: &probes
                 enabled: true
@@ -44,7 +45,7 @@ spec:
                   httpGet:
                     path: /status
                     port: *port
-                  initialDelaySeconds: 0
+                  initialDelaySeconds: 30
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
