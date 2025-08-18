@@ -24,6 +24,12 @@ spec:
           ports:
             - containerPort: 5580
               name: websocket
+          resources:
+            requests:
+              cpu: 115m
+              memory: 175Mi
+            limits:
+              memory: 175Mi
           securityContext:
             appArmorProfile:
               type: Unconfined
