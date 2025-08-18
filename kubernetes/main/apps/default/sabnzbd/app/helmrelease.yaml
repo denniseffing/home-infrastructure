@@ -58,15 +58,17 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+            resources:
+              requests:
+                cpu: 373m
+                memory: 740Mi
+              limits:
+                cpu: 700m
+                memory: 740Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                cpu: 700m
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/hostname: rachel
