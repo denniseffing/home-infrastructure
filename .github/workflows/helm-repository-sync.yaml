@@ -32,7 +32,7 @@ jobs:
           version: 2.4.0
 
       - name: 🛠 Set up yq
-        uses: jdx/mise-action@v2
+        uses: jdx/mise-action@v3
         with:
           tool_versions: |
             yq latest
