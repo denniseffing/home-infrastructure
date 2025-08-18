@@ -72,6 +72,12 @@ spec:
         mountPath: "/mnt/storage-2"
     pms:
       configStorage: 100Gi
+      resources:
+        requests:
+          cpu: 900m
+          memory: 450Mi
+        limits:
+          memory: 450Mi
       storageClassName: longhorn
     tolerations:
       - key: nas
