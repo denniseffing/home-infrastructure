@@ -46,7 +46,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kube-vip-ds
     app.kubernetes.io/instance: kube-vip-control-plane
-    app.kubernetes.io/version: v0.8.6
+    app.kubernetes.io/version: v1.0.0
   name: kube-vip-control-plane-ds
   namespace: kube-system
 spec:
@@ -59,7 +59,7 @@ spec:
       labels:
         app.kubernetes.io/name: kube-vip-ds
         app.kubernetes.io/instance: kube-vip-control-plane
-        app.kubernetes.io/version: v0.8.6
+        app.kubernetes.io/version: v1.0.0
     spec:
       affinity:
         nodeAffinity:
@@ -131,7 +131,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kube-vip-ds
     app.kubernetes.io/instance: kube-vip-services
-    app.kubernetes.io/version: v0.8.6
+    app.kubernetes.io/version: v1.0.0
   name: kube-vip-services-ds
   namespace: kube-system
 spec:
@@ -144,7 +144,7 @@ spec:
       labels:
         app.kubernetes.io/name: kube-vip-ds
         app.kubernetes.io/instance: kube-vip-services
-        app.kubernetes.io/version: v0.8.6
+        app.kubernetes.io/version: v1.0.0
     spec:
       containers:
         - args:
@@ -180,6 +180,8 @@ spec:
               value: "1"
             - name: prometheus_server
               value: :2113
+            - name: enable_upnp
+              value: "true"
           image: ghcr.io/kube-vip/kube-vip:v1.0.0
           imagePullPolicy: IfNotPresent
           name: kube-vip
