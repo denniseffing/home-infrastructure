@@ -4,6 +4,7 @@ namespace: default
 configMapGenerator:
   - files:
       - automations.yaml
+      - climates.yaml
       - groups.yaml
       - switches.yaml
     name: home-assistant-gitops-config

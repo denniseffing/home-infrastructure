@@ -120,9 +120,10 @@ spec:
         automation: !include automations.yaml
         script: !include scripts.yaml
         scene: !include scenes.yaml
-        group: !include gitops/groups.yaml # matches mount path of gitops-config config map
         
         automation gitops: !include gitops/automations.yaml # matches mount path of gitops-config config map
+        climate gitops: !include gitops/climates.yaml # matches mount path of gitops-config config map
+        group: !include gitops/groups.yaml # matches mount path of gitops-config config map
         switch gitops: !include gitops/switches.yaml # matches mount path of gitops-config config map
         
         # Activate Bubble card module store & editor

@@ -1,0 +1,19 @@
+- platform: climate_group
+  name: 'Wohnzimmer'
+  temperature_unit: C
+  decimal_accuracy_to_half: True
+  entities:
+    - climate.wohnzimmer_1
+    - climate.wohnzimmer_2
+    - climate.wohnzimmer_3
+
+- platform: climate_group
+  name: 'Heizung'
+  temperature_unit: C
+  decimal_accuracy_to_half: True
+  entities:
+    - climate.wohnzimmer_1
+    - climate.wohnzimmer_2
+    - climate.wohnzimmer_3
+    - climate.schlafzimmer
+    - climate.buero
