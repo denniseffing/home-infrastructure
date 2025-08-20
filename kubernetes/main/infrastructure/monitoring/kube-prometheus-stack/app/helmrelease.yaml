@@ -37,6 +37,14 @@ spec:
             memory: 50Mi
           limits:
             memory: 50Mi
+        storage:
+          volumeClaimTemplate:
+            spec:
+              accessModes: [ "ReadWriteOnce" ]
+              resources:
+                requests:
+                  storage: 1Gi
+              storageClassName: longhorn
       config:
         route:
           group_by:
