@@ -145,10 +145,13 @@ spec:
             locale: de-DE
             filter:
               include_entities:
-                - "switch.bett"
                 - "vacuum.roborock_s7"
+                - "switch.bett"
                 - "switch.pc"
-                - "switch.buero_stern"
+                - "switch.buero_stehlampe"
+                - "climate.wohnzimmer"
+                - "climate.buero"
+                - "climate.schlafzimmer"
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     image:
