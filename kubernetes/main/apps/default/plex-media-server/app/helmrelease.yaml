@@ -75,9 +75,9 @@ spec:
       resources:
         requests:
           cpu: 900m
-          memory: 450Mi
+          memory: 500Mi
         limits:
-          memory: 450Mi
+          memory: 2Gi
       storageClassName: longhorn
     tolerations:
       - key: nas
