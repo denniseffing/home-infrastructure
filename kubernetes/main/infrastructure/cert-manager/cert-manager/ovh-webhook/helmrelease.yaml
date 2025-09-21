@@ -28,7 +28,7 @@ spec:
     groupName: acme.denniseffing.de
     image:
       repository: ghcr.io/aureq/cert-manager-webhook-ovh
-      tag: 0.7.6
+      tag: 0.8.0
     resources:
       requests:
         cpu: 110m
