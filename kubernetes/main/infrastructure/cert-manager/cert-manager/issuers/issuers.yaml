@@ -15,15 +15,16 @@ spec:
             groupName: acme.denniseffing.de
             config:
               endpoint: ovh-eu
+              authenticationMethod: application
               applicationKeyRef:
                 name: ovh-credentials
                 key: OVH_APPLICATION_KEY
+              applicationConsumerKeyRef:
+                name: ovh-credentials
+                key: OVH_CONSUMER_KEY
               applicationSecretRef:
                 name: ovh-credentials
                 key: OVH_APPLICATION_SECRET
-              consumerKeyRef:
-                name: ovh-credentials
-                key: OVH_CONSUMER_KEY
         selector:
           dnsZones:
             - internal.denniseffing.de
@@ -51,15 +52,16 @@ spec:
             groupName: acme.denniseffing.de
             config:
               endpoint: ovh-eu
+              authenticationMethod: application
               applicationKeyRef:
                 name: ovh-credentials
                 key: OVH_APPLICATION_KEY
+              applicationConsumerKeyRef:
+                name: ovh-credentials
+                key: OVH_CONSUMER_KEY
               applicationSecretRef:
                 name: ovh-credentials
                 key: OVH_APPLICATION_SECRET
-              consumerKeyRef:
-                name: ovh-credentials
-                key: OVH_CONSUMER_KEY
         selector:
           dnsZones:
             - internal.denniseffing.de
@@ -69,15 +71,16 @@ spec:
             groupName: acme.denniseffing.de
             config:
               endpoint: ovh-eu
+              authenticationMethod: application
               applicationKeyRef:
                 name: ovh-credentials
                 key: OVH_APPLICATION_KEY
+              applicationConsumerKeyRef:
+                name: ovh-credentials
+                key: OVH_CONSUMER_KEY
               applicationSecretRef:
                 name: ovh-credentials
                 key: OVH_APPLICATION_SECRET
-              consumerKeyRef:
-                name: ovh-credentials
-                key: OVH_CONSUMER_KEY
         selector:
           dnsZones:
             - denniseffing.de

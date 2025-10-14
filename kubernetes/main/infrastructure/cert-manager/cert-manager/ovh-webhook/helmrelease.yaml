@@ -24,7 +24,7 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    configVersion: 0.0.1
+    configVersion: 0.0.2
     groupName: acme.denniseffing.de
     image:
       repository: ghcr.io/aureq/cert-manager-webhook-ovh
