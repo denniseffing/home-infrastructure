@@ -10,7 +10,7 @@ spec:
         kind: HelmRepository
         name: home-assistant
         namespace: flux-system
-      version: 0.3.24
+      version: 0.3.25
   dependsOn:
     - name: kube-prometheus-stack-crds
       namespace: monitoring
