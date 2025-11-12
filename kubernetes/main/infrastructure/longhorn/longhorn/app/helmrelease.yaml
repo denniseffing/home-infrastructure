@@ -10,7 +10,7 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
-      version: 1.9.2
+      version: 1.10.1
   dependsOn:
     - name: kube-prometheus-stack-crds
       namespace: monitoring
