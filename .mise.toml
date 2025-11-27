@@ -9,7 +9,7 @@ pipx = "latest"
 
 ansible = "11.2.0"
 "aqua:bitnami-labs/sealed-secrets" = "0.33.1"
-"aqua:fluxcd/flux2" = "2.7.4"
+"aqua:fluxcd/flux2" = "2.7.5"
 "aqua:go-task/task" = "3.45.5"
 "aqua:hashicorp/terraform" = "1.14.0"
 "aqua:helm/helm" = "3.19.2"
