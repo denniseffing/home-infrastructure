@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant-openthread-br
+  labels: &labels
+    app.kubernetes.io/name: home-assistant
+    app.kubernetes.io/instance: home-assistant
+    app.kubernetes.io/component: openthread-br
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      <<: *labels
+  template:
+    metadata:
+      labels:
+        <<: *labels
+    spec:
+      containers:
+        - name: openthread-br
+          image: openthread/border-router:latest
+          env:
+            - name: OT_RCP_DEVICE
+              value: spinel+hdlc+uart:///dev/serial/by-id/usb-Nabu_Casa_Home_Assistant_Connect_ZBT-1_4e892cf65612f011954e0714773d9da9-if00-port0?uart-baudrate=460800
+            - name: OT_INFRA_IF
+              value: eth0
+            - name: OT_THREAD_IF
+              value: wpan0
+            - name: OT_LOG_LEVEL
+              value: "7"
+            - name: OT_REST_LISTEN_ADDR
+              value: "0.0.0.0"
+            - name: OT_REST_LISTEN_PORT
+              value: "8081"
+#          env:
+#            - name: DEVICE
+#              value: /dev/serial/by-id/usb-Nabu_Casa_Home_Assistant_Connect_ZBT-1_4e892cf65612f011954e0714773d9da9-if00-port0
+#            - name: BAUDRATE
+#              value: "460800"
+#            - name: FLOW_CONTROL
+#              value: "0"
+#            - name: AUTOFLASH_FIRMWARE
+#              value: "0"
+#            - name: OTBR_REST_PORT
+#              value: "8081"
+#            - name: OTBR_WEB_PORT
+#              value: "8085"
+#            - name: BACKBONE_IF
+#              value: eth0
+          ports:
+            - name: http
+              containerPort: 8081
+          resources:
+            limits:
+              squat.ai/zbt-1: "1"
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+            privileged: true
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: net-tun
+              mountPath: /dev/net/tun
+      hostNetwork: true
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: home-assistant-openthread-br
+        - name: net-tun
+          hostPath:
+            path: /dev/net/tun
