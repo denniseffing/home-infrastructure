@@ -5,6 +5,7 @@ metadata:
   labels: &labels
     app.kubernetes.io/name: home-assistant
     app.kubernetes.io/instance: home-assistant
+    app.kubernetes.io/component: matter-server
 spec:
   template:
     spec:
