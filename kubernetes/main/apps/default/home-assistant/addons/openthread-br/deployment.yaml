@@ -25,7 +25,7 @@ spec:
             - name: OT_THREAD_IF
               value: wpan0
             - name: OT_LOG_LEVEL
-              value: "7"
+              value: "3"
             - name: OT_REST_LISTEN_ADDR
               value: "0.0.0.0"
             - name: OT_REST_LISTEN_PORT
