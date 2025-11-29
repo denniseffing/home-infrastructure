@@ -3,9 +3,7 @@ kind: Service
 metadata:
   name: home-assistant-openthread-br
   labels:
-    app.kubernetes.io/name: home-assistant
-    app.kubernetes.io/instance: home-assistant
-    app.kubernetes.io/component: openthread-br
+    app.kubernetes.io/name: home-assistant-openthread-br
 spec:
   type: ClusterIP
   ports:
@@ -13,6 +11,4 @@ spec:
       port: 8081
       targetPort: http
   selector:
-    app.kubernetes.io/name: home-assistant
-    app.kubernetes.io/instance: home-assistant
-    app.kubernetes.io/component: openthread-br
+    app.kubernetes.io/name: home-assistant-openthread-br

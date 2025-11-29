@@ -2,9 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
   labels:
-    app.kubernetes.io/name: home-assistant
-    app.kubernetes.io/instance: home-assistant
-    app.kubernetes.io/component: matter-server
+    app.kubernetes.io/name: home-assistant-matter-server
 resources:
   - deployment.yaml
   - pvc.yaml

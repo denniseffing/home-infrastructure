@@ -3,9 +3,7 @@ kind: Deployment
 metadata:
   name: home-assistant-openthread-br
   labels: &labels
-    app.kubernetes.io/name: home-assistant
-    app.kubernetes.io/instance: home-assistant
-    app.kubernetes.io/component: openthread-br
+    app.kubernetes.io/name: home-assistant-openthread-br
 spec:
   replicas: 1
   selector:
@@ -32,21 +30,6 @@ spec:
               value: "0.0.0.0"
             - name: OT_REST_LISTEN_PORT
               value: "8081"
-#          env:
-#            - name: DEVICE
-#              value: /dev/serial/by-id/usb-Nabu_Casa_Home_Assistant_Connect_ZBT-1_4e892cf65612f011954e0714773d9da9-if00-port0
-#            - name: BAUDRATE
-#              value: "460800"
-#            - name: FLOW_CONTROL
-#              value: "0"
-#            - name: AUTOFLASH_FIRMWARE
-#              value: "0"
-#            - name: OTBR_REST_PORT
-#              value: "8081"
-#            - name: OTBR_WEB_PORT
-#              value: "8085"
-#            - name: BACKBONE_IF
-#              value: eth0
           ports:
             - name: http
               containerPort: 8081
