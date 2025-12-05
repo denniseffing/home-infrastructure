@@ -4,7 +4,7 @@ AWS_PROFILE = "home"
 AWS_REGION = "eu-central-1"
 
 [tools]
-python = "3.14.1"
+python = "3.14.2"
 pipx = "latest"
 
 ansible = "11.2.0"
