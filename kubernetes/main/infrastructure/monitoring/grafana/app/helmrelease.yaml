@@ -181,9 +181,9 @@ spec:
     resources:
       requests:
         cpu: 200m
-        memory: 260Mi
+        memory: 350Mi
       limits:
-        memory: 260Mi
+        memory: 350Mi
     sidecar:
       dashboards:
         enabled: true
@@ -200,9 +200,9 @@ spec:
       resources:
         requests:
           cpu: 120m
-          memory: 150Mi
+          memory: 250Mi
         limits:
-          memory: 150Mi
+          memory: 400Mi
     serviceMonitor:
       enabled: true
     ingress:
