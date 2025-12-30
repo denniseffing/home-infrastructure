@@ -9,7 +9,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: plex
-        namespace: flux-system
+        namespace: default
       version: 1.4.0
   driftDetection:
     mode: enabled

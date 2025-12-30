@@ -6,7 +6,7 @@
       versioning: "loose"
     },
     {
-      matchPackageNames: ["longhorn"],
+      matchPackageNames: ["longhorn", "ghcr.io/home-operations/charts-mirror/longhorn"],
       matchUpdateTypes: ["major", "minor"],
       automerge: false,
       automergeType: "pr"

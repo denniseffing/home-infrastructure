@@ -3,14 +3,9 @@ kind: HelmRelease
 metadata:
   name: longhorn
 spec:
-  chart:
-    spec:
-      chart: longhorn
-      sourceRef:
-        kind: HelmRepository
-        name: longhorn
-        namespace: flux-system
-      version: 1.9.2
+  chartRef:
+    kind: OCIRepository
+    name: longhorn
   dependsOn:
     - name: kube-prometheus-stack-crds
       namespace: monitoring

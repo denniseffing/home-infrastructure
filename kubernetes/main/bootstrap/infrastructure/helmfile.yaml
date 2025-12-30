@@ -5,12 +5,8 @@ helmDefaults:
   waitForJobs: true
 
 repositories:
-  - name: cilium
-    url: https://helm.cilium.io
   - name: incubator
     url: https://charts.helm.sh/incubator
-  - name: jetstack
-    url: https://charts.jetstack.io
   - name: sealed-secrets
     url: https://bitnami-labs.github.io/sealed-secrets
 
@@ -22,7 +18,7 @@ hooks:
 releases:
   - name: cilium
     namespace: kube-system
-    chart: cilium/cilium
+    chart: oci://ghcr.io/home-operations/charts-mirror/cilium
     version: 1.18.5
     values: ['{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/kube-system/cilium/app/helm-values.yaml']
 
@@ -58,7 +54,7 @@ releases:
 
   - name: cert-manager
     namespace: cert-manager
-    chart: jetstack/cert-manager
+    chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.19.2
     values: [ '{{ requiredEnv "KUBERNETES_DIR" }}/infrastructure/cert-manager/cert-manager/app/helm-values.yaml' ]
 

@@ -5,14 +5,9 @@ metadata:
 spec:
   interval: 30m
   releaseName: external-dns
-  chart:
-    spec:
-      chart: external-dns
-      version: 1.19.0
-      sourceRef:
-        kind: HelmRepository
-        name: external-dns
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: external-dns
   dependsOn:
     - name: kube-prometheus-stack-crds
       namespace: monitoring
