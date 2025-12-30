@@ -82,19 +82,19 @@
         name: iscsid
         enabled: true
         state: started
-- name: Prepare nodes for matter-controller
+- name: Prepare nodes for Matter & OpenThread Border Router
   hosts: k3s_cluster
   become: true
   tasks:
-    - name: Configure IPv6 prerequisites for Matter Controller
+    - name: Configure IPv6 prerequisites for Matter & OpenThread Border Router
       sysctl:
         name: '{{ item.key }}'
         value: '{{ item.value }}'
         reload: true
         state: present
       with_dict:
-        net.ipv6.conf.all.forwarding: 0
-        net.ipv6.conf.eth0.accept_ra: 1
+        net.ipv6.conf.all.forwarding: 1
+        net.ipv6.conf.eth0.accept_ra: 2
         net.ipv6.conf.eth0.accept_ra_rt_info_max_plen: 64
 - name: Set up k3s cluster
   hosts: k3s_cluster
