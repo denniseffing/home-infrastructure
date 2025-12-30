@@ -5,13 +5,15 @@ metadata:
   namespace: aws
 spec:
   isCA: true
-  commonName: home-aws-trust-anchor
-  secretName: aws-trust-anchor-cert
-  privateKey:
-    algorithm: ECDSA
-    size: 256
-    rotationPolicy: Always
   issuerRef:
     name: aws-trust-anchor
     kind: ClusterIssuer
     group: cert-manager.io
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+    rotationPolicy: Always
+  commonName: home-aws-trust-anchor
+  duration: 8760h # 1 year
+  renewBefore: 360h # 15 days before expiry
+  secretName: aws-trust-anchor-cert
