@@ -2,7 +2,6 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: plex
-  namespace: flux-system
 spec:
   interval: 2h
   url: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages

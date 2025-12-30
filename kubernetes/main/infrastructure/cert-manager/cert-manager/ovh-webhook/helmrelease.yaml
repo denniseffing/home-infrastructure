@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cert-manager-webhook-ovh
-        namespace: flux-system
+        namespace: cert-manager
   dependsOn:
     - name: cert-manager
   install:

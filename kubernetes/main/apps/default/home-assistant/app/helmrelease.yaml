@@ -9,7 +9,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: home-assistant
-        namespace: flux-system
+        namespace: default
       version: 0.3.37
   dependsOn:
     - name: kube-prometheus-stack-crds

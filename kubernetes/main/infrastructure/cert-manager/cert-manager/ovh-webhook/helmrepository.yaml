@@ -1,8 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: external-secrets
-  namespace: flux-system
+  name: cert-manager-webhook-ovh
 spec:
   interval: 2h
-  url: https://charts.external-secrets.io
+  url: https://aureq.github.io/cert-manager-webhook-ovh/

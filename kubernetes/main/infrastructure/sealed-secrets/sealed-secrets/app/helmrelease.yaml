@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: sealed-secrets
-        namespace: flux-system
+        namespace: sealed-secrets
   dependsOn:
     - name: kube-prometheus-stack-crds
       namespace: monitoring

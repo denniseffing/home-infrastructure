@@ -5,14 +5,9 @@ metadata:
 spec:
   interval: 30m
   releaseName: cert-manager-csi-driver
-  chart:
-    spec:
-      chart: cert-manager-csi-driver
-      version: v0.12.0
-      sourceRef:
-        kind: HelmRepository
-        name: jetstack
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: cert-manager-csi-driver
   dependsOn:
     - name: cert-manager
   install:

@@ -5,13 +5,9 @@ metadata:
 spec:
   interval: 30m
   releaseName: ack-iam-controller
-  chart:
-    spec:
-      chart: "./helm"
-      sourceRef:
-        kind: GitRepository
-        name: aws-iam-controller-fork
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: aws-iam-controller
   install:
     disableSchemaValidation: true
     remediation:

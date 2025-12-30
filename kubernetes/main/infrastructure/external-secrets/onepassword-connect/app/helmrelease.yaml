@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: onepassword
-        namespace: flux-system
+        namespace: external-secrets
   dependsOn:
     - name: kube-prometheus-stack-crds
       namespace: monitoring

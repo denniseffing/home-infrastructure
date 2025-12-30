@@ -1,0 +1,12 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: ack-s3-controller
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.2.1
+  url: oci://public.ecr.aws/aws-controllers-k8s/s3-chart
