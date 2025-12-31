@@ -10,6 +10,7 @@ spec:
     - name: kube-prometheus-stack-crds
       namespace: monitoring
   interval: 5m
+  timeout: 20m
   values:
     defaultSettings:
       defaultDataLocality: best-effort
