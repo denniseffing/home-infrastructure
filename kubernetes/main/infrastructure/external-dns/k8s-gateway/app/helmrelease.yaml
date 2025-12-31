@@ -34,3 +34,4 @@ spec:
         memory: 80Mi
     watchedResources:
       - Ingress
+      - HTTPRoute
