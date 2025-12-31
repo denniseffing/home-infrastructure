@@ -1,0 +1,27 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: denniseffing-de
+spec:
+  secretName: denniseffing-de-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: denniseffing.de
+  dnsNames:
+    - denniseffing.de
+    - "*.denniseffing.de"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: internal-denniseffing-de
+spec:
+  secretName: internal-denniseffing-de-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: internal.denniseffing.de
+  dnsNames:
+    - internal.denniseffing.de
+    - "*.internal.denniseffing.de"
