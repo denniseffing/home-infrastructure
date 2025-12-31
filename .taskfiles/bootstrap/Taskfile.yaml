@@ -12,9 +12,16 @@ tasks:
     preconditions:
       - op user get --me
 
-  infrastructure:
+  infrastructure-crds:
+    desc: Bootstrap infrastructure CRDs into the k3s cluster
+    cmds:
+      - helmfile --file "{{.KUBERNETES_DIR}}/bootstrap/infrastructure/helmfile.d/00-crds.yaml" template -q | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -
+    preconditions:
+      - which helmfile
+
+  infrastructure-apps:
     desc: Boostrap infrastructure components into the k3s cluster
     cmds:
-      - helmfile --file {{.KUBERNETES_DIR}}/bootstrap/infrastructure/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - helmfile --file "{{.KUBERNETES_DIR}}/bootstrap/infrastructure/helmfile.d/01-apps.yaml" sync --hide-notes
     preconditions:
       - which helmfile

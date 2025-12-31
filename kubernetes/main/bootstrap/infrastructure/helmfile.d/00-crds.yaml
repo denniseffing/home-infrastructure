@@ -1,0 +1,18 @@
+# This helmfile is for extracting and installing Custom Resource Definitions (CRDs) from Helm charts.
+# It is not intended to be used with helmfile apply or helmfile sync.
+
+helmDefaults:
+  args:
+    - --include-crds
+    - --no-hooks
+
+releases:
+  - name: envoy-gateway
+    namespace: network
+    chart: oci://mirror.gcr.io/envoyproxy/gateway-crds-helm
+    version: v1.6.1
+
+  - name: kube-prometheus-stack
+    namespace: monitoring
+    chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
+    version: 25.0.1
