@@ -182,6 +182,8 @@ spec:
               value: :2113
             - name: enable_upnp
               value: "true"
+            - name: vip_preserve_on_leadership_loss
+              value: "true"
           image: ghcr.io/kube-vip/kube-vip:v1.0.3
           imagePullPolicy: IfNotPresent
           name: kube-vip
