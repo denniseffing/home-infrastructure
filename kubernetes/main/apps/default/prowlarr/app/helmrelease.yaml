@@ -79,7 +79,7 @@ spec:
     ingress:
       app:
         annotations:
-          nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.nginx-ingress.svc.cluster.local/oauth2/auth"
+          nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.network.svc.cluster.local/oauth2/auth"
           nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.internal.denniseffing.de/oauth2/start?rd=https://$host$uri"
         className: nginx-internal
         hosts:

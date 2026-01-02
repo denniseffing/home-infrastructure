@@ -4,4 +4,3 @@ resources:
   - namespace.yaml
   - nginx-ingress/helmrepository.yaml
   - nginx-ingress/ks.yaml
-  - oauth2-proxy/ks.yaml

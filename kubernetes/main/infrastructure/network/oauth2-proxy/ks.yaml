@@ -11,13 +11,13 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: onepassword
-  path: ./kubernetes/main/infrastructure/nginx-ingress/oauth2-proxy/app
+  path: ./kubernetes/main/infrastructure/network/oauth2-proxy/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: nginx-ingress
+  targetNamespace: network
   wait: false
   interval: 30m
   timeout: 5m
