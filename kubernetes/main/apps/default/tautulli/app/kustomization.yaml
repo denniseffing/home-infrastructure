@@ -4,3 +4,4 @@ resources:
   - helmrelease.yaml
   - ocirepository.yaml
   - pvc.yaml
+  - securitypolicy.yaml
