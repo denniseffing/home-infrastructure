@@ -147,3 +147,26 @@ spec:
           requestRedirect:
             scheme: https
             statusCode: 301
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: envoy-internal-auth
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+  oidc:
+    clientIDRef:
+      name: envoy-internal-github-oauth-app
+    clientSecret:
+      name: envoy-internal-github-oauth-app
+    cookieDomain: internal.denniseffing.de
+    defaultTokenTTL: 8760h # github tokens do not expire
+    logoutPath: /logout
+    provider:
+      issuer: https://github.com
+      authorizationEndpoint: https://github.com/login/oauth/authorize
+      tokenEndpoint: https://github.com/login/oauth/access_token
+    redirectURL: https://usenet.internal.denniseffing.de/oauth2/callback
