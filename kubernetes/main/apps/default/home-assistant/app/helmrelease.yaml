@@ -156,7 +156,7 @@ spec:
     hostNetwork: true
     image:
       repository: ghcr.io/denniseffing/home-assistant
-      tag: 2025.8.2
+      tag: 2026.1.0
     ingress:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
