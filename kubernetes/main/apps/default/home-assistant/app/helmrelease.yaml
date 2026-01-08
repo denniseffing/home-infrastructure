@@ -186,6 +186,10 @@ spec:
         memory: 700Mi
     securityContext:
       allowPrivilegeEscalation: false
+      capabilities:
+        add:
+          - NET_ADMIN
+          - NET_RAW
       readOnlyRootFilesystem: true
     serviceMonitor:
       enabled: false
