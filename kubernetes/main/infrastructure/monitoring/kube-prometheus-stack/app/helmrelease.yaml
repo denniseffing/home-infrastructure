@@ -26,6 +26,7 @@ spec:
       enabled: false
     alertmanager:
       alertmanagerSpec:
+        externalUrl: https://alertmanager.internal.denniseffing.de
         resources:
           requests:
             cpu: 10m
@@ -68,6 +69,7 @@ spec:
       forceDeployDashboards: true
     prometheus:
       prometheusSpec:
+        externalUrl: https://prometheus.internal.denniseffing.de
         resources:
           requests:
             cpu: 235m
