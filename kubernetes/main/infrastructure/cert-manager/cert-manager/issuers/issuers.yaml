@@ -29,8 +29,10 @@ spec:
           dnsZones:
             - internal.denniseffing.de
       - http01:
-          ingress:
-            ingressClassName: nginx-external
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: envoy-external
+                namespace: network
         selector:
           dnsZones:
             - denniseffing.de
@@ -85,8 +87,10 @@ spec:
           dnsZones:
             - denniseffing.de
       - http01:
-          ingress:
-            ingressClassName: nginx-external
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: envoy-external
+                namespace: network
         selector:
           dnsZones:
             - denniseffing.de
