@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - helmrelease.yaml
   - helmrepository.yaml
-  - ingress.yaml
+  - httproute-external.yaml
+  - httproute-internal.yaml
   - pvc.yaml

@@ -1,0 +1,26 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: &app webhook-receiver
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+    app.kubernetes.io/part-of: flux
+spec:
+  hostnames:
+    - flux-webhook.denniseffing.de
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: webhook-receiver
+          namespace: flux-system
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /hook/

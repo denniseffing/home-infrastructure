@@ -66,25 +66,19 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app-internal:
-        className: nginx-internal
-        hosts:
-          - host: jellyseerr.internal.denniseffing.de
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "requests.internal.denniseffing.de"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
       app-external:
-        className: nginx-external
-        hosts:
-          - host: requests.denniseffing.de
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "requests.denniseffing.de"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
     persistence:
       config:
         existingClaim: jellyseerr-config

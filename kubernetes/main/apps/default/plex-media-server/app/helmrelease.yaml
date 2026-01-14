@@ -32,15 +32,16 @@ spec:
                   operator: In
                   values:
                     - rachel
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+      hostnames:
+        - plex.denniseffing.de
     image:
       repository: plexinc/pms-docker
       tag: 1.42.1.10060-4e8b05daf
-    ingress:
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      enabled: true
-      ingressClassName: nginx-external
-      url: https://plex.denniseffing.de
     initContainer:
       script: |-
         #!/bin/sh

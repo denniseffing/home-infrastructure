@@ -59,18 +59,6 @@ spec:
     addons:
       codeserver:
         enabled: false
-        ingress:
-          annotations:
-            cert-manager.io/cluster-issuer: letsencrypt-prod
-            nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.network.svc.cluster.local/oauth2/auth"
-            nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.internal.denniseffing.de/oauth2/start?rd=https://$host$uri"
-          className: nginx-internal
-          enabled: true
-          hosts:
-            - host: home-config.internal.denniseffing.de
-              paths:
-                - path: /
-                  pathType: Prefix
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -157,16 +145,6 @@ spec:
     image:
       repository: ghcr.io/denniseffing/home-assistant
       tag: 2026.1.0
-    ingress:
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      className: nginx-internal
-      enabled: true
-      hosts:
-        - host: home.internal.denniseffing.de
-          paths:
-            - path: /
-              pathType: Prefix
     persistence:
       accessMode: ReadWriteOnce
       enabled: true

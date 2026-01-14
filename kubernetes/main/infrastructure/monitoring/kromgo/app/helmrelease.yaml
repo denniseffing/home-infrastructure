@@ -67,18 +67,13 @@ spec:
             port: *serverPort
           health:
             port: *healthPort
-    ingress:
+    route:
       app:
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        className: nginx-external
-        hosts:
-          - host: "kromgo.denniseffing.de"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "kromgo.denniseffing.de"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
     persistence:
       config-file:
         type: configMap
