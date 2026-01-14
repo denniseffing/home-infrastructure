@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - envoy-gateway/ks.yaml
-  - oauth2-proxy/ks.yaml
