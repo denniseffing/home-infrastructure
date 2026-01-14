@@ -10,6 +10,5 @@ resources:
   - kube-system
   - longhorn
   - network
-  - nginx-ingress
   - monitoring
   - sealed-secrets
