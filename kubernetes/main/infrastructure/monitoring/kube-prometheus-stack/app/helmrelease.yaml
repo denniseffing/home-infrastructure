@@ -55,26 +55,18 @@ spec:
             webhook_configs:
               - url: "http://home-assistant.default.svc.cluster.local:8080/api/webhook/-0vlh45jwAWYCeXeCweVaPitY"
                 send_resolved: true
-      ingress:
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.network.svc.cluster.local/oauth2/auth"
-          nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.internal.denniseffing.de/oauth2/start?rd=https://$host$uri"
-        enabled: true
-        hosts:
-          - alertmanager.internal.denniseffing.de
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - alertmanager.internal.denniseffing.de
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
     grafana:
       enabled: false
       forceDeployDashboards: true
     prometheus:
-      ingress:
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.network.svc.cluster.local/oauth2/auth"
-          nginx.ingress.kubernetes.io/auth-signin: "https://oauth2-proxy.internal.denniseffing.de/oauth2/start?rd=https://$host$uri"
-        enabled: true
-        hosts:
-          - prometheus.internal.denniseffing.de
       prometheusSpec:
         resources:
           requests:
@@ -95,6 +87,14 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - prometheus.internal.denniseffing.de
+          parentRefs:
+            - name: envoy-internal
+              namespace: network
     prometheusOperator:
       prometheusConfigReloader:
         resources:

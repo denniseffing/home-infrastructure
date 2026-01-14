@@ -179,6 +179,14 @@ spec:
         memory: 350Mi
       limits:
         memory: 350Mi
+    route:
+      main:
+        enabled: true
+        hostnames:
+          - grafana.internal.denniseffing.de
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
     sidecar:
       dashboards:
         enabled: true
@@ -200,10 +208,6 @@ spec:
           memory: 400Mi
     serviceMonitor:
       enabled: true
-    ingress:
-      enabled: true
-      ingressClassName: nginx-internal
-      hosts: ["grafana.internal.denniseffing.de"]
     persistence:
       enabled: false
     testFramework:

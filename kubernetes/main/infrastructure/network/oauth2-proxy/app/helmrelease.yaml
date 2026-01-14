@@ -44,12 +44,12 @@ spec:
             key: cookie_secret
       - name: OAUTH2_PROXY_GITHUB_USERS
         value: denniseffing,feltenj
-    ingress:
+    gatewayApi:
       enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      className: nginx-internal
-      hosts:
+      gatewayRef:
+        name: envoy-internal
+        namespace: network
+      hostnames:
         - oauth2-proxy.internal.denniseffing.de
     metrics:
       serviceMonitor:

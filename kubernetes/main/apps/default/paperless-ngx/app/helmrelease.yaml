@@ -70,18 +70,13 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        annotations:
-          nginx.ingress.kubernetes.io/proxy-body-size: 100m
-        className: nginx-internal
-        hosts:
-          - host: "paperless.internal.denniseffing.de"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "paperless.internal.denniseffing.de"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
     persistence:
       consume:
         existingClaim: paperless-ngx-consume
