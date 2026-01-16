@@ -4,3 +4,4 @@ namespace: kube-system
 resources:
   - cilium/ks.yaml
   - device-plugin/ks.yaml
+  - intel-gpu-resource-driver/ks.yaml
