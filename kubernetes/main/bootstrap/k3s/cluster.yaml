@@ -41,25 +41,6 @@
         name: nfs-server
         state: restarted
         enabled: true
-- name: Configure DNS
-  hosts: k3s_cluster
-  become: true
-  tasks:
-    - name: Configure DNS server
-      community.general.nmcli:
-        conn_name: "Wired connection 1"
-        type: ethernet
-        ifname: eth0
-        dns4:
-          - 1.1.1.1
-        state: present
-      notify:
-        - Restart NetworkManager
-  handlers:
-    - name: Restart NetworkManager
-      ansible.builtin.systemd:
-        name: NetworkManager
-        state: restarted
 - name: Prepare nodes for longhorn
   hosts: k3s_cluster
   become: true
