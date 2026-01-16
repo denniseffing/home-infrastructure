@@ -31,7 +31,7 @@ spec:
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
-                    - rachel
+                    - joey
     httpRoute:
       enabled: true
       parentRefs:
@@ -61,11 +61,13 @@ spec:
         echo "Done."
     extraVolumes:
       - name: storage-1
-        persistentVolumeClaim:
-          claimName: plex-storage-1
+        nfs:
+          server: 192.168.178.52
+          path: /nfs/storage-1/plex
       - name: storage-2
-        persistentVolumeClaim:
-          claimName: plex-storage-2
+        nfs:
+          server: 192.168.178.52
+          path: /nfs/storage-2/plex
     extraVolumeMounts:
       - name: storage-1
         mountPath: "/mnt/storage-1"
