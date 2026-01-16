@@ -95,7 +95,21 @@
       disable:
         - traefik
         - servicelb
+      kube-apiserver-arg:
+        - "feature-gates=DRAExtendedResource=true,DRADeviceTaints=true,DRAAdminAccess=true,DRAPartitionableDevices=true,DRAResourceClaimDeviceStatus=true,ResourceHealthStatus=true,DRAPrioritizedList=true"
+        - "runtime-config=resource.k8s.io/v1beta1=true,resource.k8s.io/v1alpha3=true"
+      kube-controller-manager-arg:
+        - "feature-gates=DRADeviceTaints=true,DRAAdminAccess=true,DRAPrioritizedList=true"
+      kube-scheduler-arg:
+        - "feature-gates=DRAExtendedResource=true,DRADeviceTaints=true,DRAAdminAccess=true,DRAPartitionableDevices=true,DRAPrioritizedList=true"
+      kubelet-arg:
+        - "feature-gates=DRAExtendedResource=true,ResourceHealthStatus=true"
+      nonroot-devices: true
       tls-san: 192.168.178.40
+    k3s_agent:
+      kubelet-arg:
+        - "feature-gates=DRAExtendedResource=true,ResourceHealthStatus=true"
+      nonroot-devices: true
   roles:
     - role: xanmanning.k3s
       vars:
