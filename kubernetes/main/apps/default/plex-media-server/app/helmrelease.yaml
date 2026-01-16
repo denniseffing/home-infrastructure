@@ -22,6 +22,22 @@ spec:
       strategy: rollback
       retries: 3
   interval: 5m
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              - op: add
+                path: /spec/template/spec/resourceClaims
+                value:
+                  - name: gpu
+                    resourceClaimTemplateName: plex
+              - op: add
+                path: /spec/template/spec/containers/0/resources/claims
+                value:
+                  - name: gpu
+            target:
+              kind: StatefulSet
+              name: plex-media-server
   values:
     affinity:
       nodeAffinity:
