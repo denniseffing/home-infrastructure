@@ -73,8 +73,8 @@ spec:
               csi.cert-manager.io/issuer-name: aws-trusted-issuer
               csi.cert-manager.io/issuer-group: cert-manager.io
               csi.cert-manager.io/common-name: "${SERVICE_ACCOUNT_NAME}.${POD_NAMESPACE}"
-              csi.cert-manager.io/duration: 168h
-              csi.cert-manager.io/renew-before: 24h
+              csi.cert-manager.io/duration: 336h
+              csi.cert-manager.io/renew-before: 168h
               csi.cert-manager.io/is-ca: "false"
               csi.cert-manager.io/key-usages: "client auth, server auth, digital signature"
               csi.cert-manager.io/fs-group: "1000"
