@@ -10,7 +10,7 @@ releases:
   - name: envoy-gateway
     namespace: network
     chart: oci://mirror.gcr.io/envoyproxy/gateway-crds-helm
-    version: v1.6.1
+    version: v1.6.2
 
   - name: kube-prometheus-stack
     namespace: monitoring
