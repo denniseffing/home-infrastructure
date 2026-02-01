@@ -5,6 +5,7 @@ resources:
   - bazarr/ks.yaml
   - home-assistant/ks.yaml
   - jellyseerr/ks.yaml
+  - memos/ks.yaml
   - metube/ks.yaml
   - paperless-ngx/ks.yaml
   - plex-media-server/ks.yaml
