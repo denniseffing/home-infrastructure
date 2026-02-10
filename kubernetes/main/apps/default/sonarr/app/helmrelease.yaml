@@ -61,7 +61,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: { drop: [ "ALL" ] }
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/hostname: rachel
@@ -90,6 +90,24 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+      api:
+        hostnames:
+          - "sonarr.internal.denniseffing.de"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - name: api
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /api
+            backendRefs:
+              - group: ""
+                kind: Service
+                name: sonarr
+                port: 80
+                weight: 1
     persistence:
       config:
         existingClaim: sonarr-config
