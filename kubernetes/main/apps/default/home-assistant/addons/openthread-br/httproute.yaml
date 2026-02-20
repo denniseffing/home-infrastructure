@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: home-assistant-openthread-br
+  labels:
+    app.kubernetes.io/name: home-assistant-openthread-br
+spec:
+  hostnames:
+    - border-router.internal.denniseffing.de
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: network
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: home-assistant-openthread-br
+          port: 8080

@@ -17,6 +17,7 @@ spec:
       containers:
         - name: openthread-br
           image: openthread/border-router:latest
+          imagePullPolicy: Always
           env:
             - name: OT_RCP_DEVICE
               value: spinel+hdlc+uart:///dev/serial/by-id/usb-Nabu_Casa_Home_Assistant_Connect_ZBT-1_4e892cf65612f011954e0714773d9da9-if00-port0?uart-baudrate=460800
@@ -26,12 +27,18 @@ spec:
               value: wpan0
             - name: OT_LOG_LEVEL
               value: "3"
+            - name: OT_WEB_LISTEN_ADDR
+              value: "0.0.0.0"
+            - name: OT_WEB_LISTEN_PORT
+              value: "8080"
             - name: OT_REST_LISTEN_ADDR
               value: "0.0.0.0"
             - name: OT_REST_LISTEN_PORT
               value: "8081"
           ports:
-            - name: http
+            - name: http-web
+              containerPort: 8080
+            - name: http-rest
               containerPort: 8081
           resources:
             limits:
