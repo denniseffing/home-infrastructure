@@ -134,9 +134,10 @@ spec:
             filter:
               include_entities:
                 - "vacuum.roborock_s7"
-                - "switch.bett"
+                - "light.bett"
                 - "switch.pc"
-                - "switch.buero_stehlampe"
+                - "switch.stehlampe"
+                - "switch.schreibtisch"
                 - "climate.wohnzimmer"
                 - "climate.buero"
                 - "climate.schlafzimmer"
