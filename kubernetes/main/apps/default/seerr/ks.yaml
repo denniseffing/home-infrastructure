@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app jellyseerr
+  name: &app seerr
   labels:
     flux.local/enabled: "true"
   namespace: flux-system
@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: kubernetes/main/apps/default/jellyseerr/app
+  path: kubernetes/main/apps/default/seerr/app
   prune: true
   sourceRef:
     kind: GitRepository
