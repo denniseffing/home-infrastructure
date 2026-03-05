@@ -18,10 +18,9 @@ spec:
   accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-      storage: 5Gi
+      storage: 20Gi
   storageClassName: longhorn
   volumeName: pvc-f50ffab8-b9d6-4cb0-80db-64e760dbb48f
-
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
