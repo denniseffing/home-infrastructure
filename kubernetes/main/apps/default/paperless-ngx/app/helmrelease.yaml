@@ -34,6 +34,7 @@ spec:
               PAPERLESS_SUPERVISORD_WORKING_DIR: "/tmp"
               PAPERLESS_TASK_WORKERS: "2"
               PAPERLESS_THREADS_PER_WORKER: "1"
+              PAPERLESS_DB_TIMEOUT: "40"
               PAPERLESS_URL: "https://paperless.internal.denniseffing.de"
               PAPERLESS_USE_X_FORWARD_HOST: "true"
               PAPERLESS_USE_X_FORWARD_PORT: "true"
