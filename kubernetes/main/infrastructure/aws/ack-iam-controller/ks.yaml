@@ -2,8 +2,6 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app ack-iam-controller
-  labels:
-    flux.local/enabled: "false"
   namespace: flux-system
 spec:
   commonMetadata:
