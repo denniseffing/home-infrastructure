@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app actions-runner-controller
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -28,7 +28,7 @@ kind: Kustomization
 metadata:
   name: &app actions-runner-controller-runners
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:

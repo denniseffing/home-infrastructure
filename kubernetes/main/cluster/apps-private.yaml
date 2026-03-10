@@ -4,7 +4,7 @@ metadata:
   name: apps-private
   namespace: flux-system
   labels:
-    flux.local/enabled: "false"
+    denniseffing.de/source: "private"
 spec:
   interval: 5m
   retryInterval: 1m

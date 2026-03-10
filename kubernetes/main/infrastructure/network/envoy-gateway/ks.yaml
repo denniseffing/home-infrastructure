@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app envoy-certificates
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -26,7 +26,7 @@ kind: Kustomization
 metadata:
   name: envoy-gateway
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   dependsOn:

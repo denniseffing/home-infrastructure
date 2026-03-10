@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app grafana
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   targetNamespace: monitoring
@@ -27,7 +27,7 @@ kind: Kustomization
 metadata:
   name: grafana-custom-dashboards
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   targetNamespace: monitoring

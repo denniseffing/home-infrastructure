@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app device-plugin
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: &namespace kube-system
 spec:
   commonMetadata:

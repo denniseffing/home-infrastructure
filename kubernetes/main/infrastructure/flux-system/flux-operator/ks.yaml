@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app flux-operator
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   targetNamespace: flux-system
@@ -24,7 +24,7 @@ kind: Kustomization
 metadata:
   name: &app flux-instance
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: &namespace flux-system
 spec:
   commonMetadata:

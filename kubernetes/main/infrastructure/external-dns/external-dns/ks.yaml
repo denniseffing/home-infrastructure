@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app external-dns
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:

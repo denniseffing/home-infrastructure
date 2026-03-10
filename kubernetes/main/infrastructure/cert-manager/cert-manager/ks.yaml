@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app cert-manager
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -25,7 +25,7 @@ kind: Kustomization
 metadata:
   name: &app cert-manager-csi-driver
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -49,7 +49,7 @@ kind: Kustomization
 metadata:
   name: &app cert-manager-ovh-webhook
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:
@@ -73,7 +73,7 @@ kind: Kustomization
 metadata:
   name: &app cert-manager-issuers
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   commonMetadata:

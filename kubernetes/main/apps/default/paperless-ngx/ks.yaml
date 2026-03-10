@@ -3,7 +3,7 @@ kind: Kustomization
 metadata:
   name: &app paperless-ngx
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   targetNamespace: default
@@ -26,7 +26,7 @@ kind: Kustomization
 metadata:
   name: &app paperless-ngx-redis
   labels:
-    flux.local/enabled: "true"
+    denniseffing.de/source: "public"
   namespace: flux-system
 spec:
   targetNamespace: default
