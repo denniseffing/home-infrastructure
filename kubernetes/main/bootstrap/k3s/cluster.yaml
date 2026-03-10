@@ -95,6 +95,7 @@
       disable:
         - traefik
         - servicelb
+      secrets-encryption: true
       kube-apiserver-arg:
         - "feature-gates=DRAExtendedResource=true,DRADeviceTaints=true,DRAAdminAccess=true,DRAPartitionableDevices=true,DRAResourceClaimDeviceStatus=true,ResourceHealthStatus=true,DRAPrioritizedList=true"
         - "runtime-config=resource.k8s.io/v1beta1=true,resource.k8s.io/v1alpha3=true"
