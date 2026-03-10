@@ -3,6 +3,8 @@ kind: Kustomization
 metadata:
   name: &app ack-s3-controller
   namespace: flux-system
+  labels:
+    denniseffing.de/source: "public"
 spec:
   commonMetadata:
     labels:
