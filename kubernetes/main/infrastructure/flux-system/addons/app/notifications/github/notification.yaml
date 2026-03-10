@@ -21,3 +21,5 @@ spec:
   eventSources:
     - kind: Kustomization
       name: "*"
+      matchLabels:
+        denniseffing.de/source: "public"
