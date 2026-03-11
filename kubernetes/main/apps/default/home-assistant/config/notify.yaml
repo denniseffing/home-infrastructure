@@ -1,0 +1,5 @@
+- platform: group
+  name: "Familie"
+  services:
+    - action: mobile_app_chandler
+    - action: mobile_app_ninis_iphone

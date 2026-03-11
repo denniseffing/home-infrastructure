@@ -6,6 +6,7 @@ configMapGenerator:
       - automations.yaml
       - climates.yaml
       - groups.yaml
+      - notify.yaml
       - switches.yaml
     name: home-assistant-gitops-config
     options:
