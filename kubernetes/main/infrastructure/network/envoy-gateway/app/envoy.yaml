@@ -160,7 +160,6 @@ spec:
         - 10.0.0.0/16
   http2:
     onInvalidMessage: TerminateStream
-  http3: { }
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
