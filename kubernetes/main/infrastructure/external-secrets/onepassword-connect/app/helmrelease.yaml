@@ -52,7 +52,7 @@ spec:
           cpu: 10m
           memory: 240Mi
         limits:
-          memory: 240Mi
+          memory: 512Mi
       token:
         name: onepassword-connect
         key: token
