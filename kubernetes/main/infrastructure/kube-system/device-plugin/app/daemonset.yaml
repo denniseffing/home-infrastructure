@@ -23,6 +23,12 @@ spec:
               groups:
                 - paths:
                     - path: /dev/serial/by-id/usb-Nabu_Casa_Home_Assistant_Connect_ZBT-1*
+            - --device
+            - |
+              name: zbt-2
+              groups:
+                - paths:
+                    - path: /dev/serial/by-id/usb-Nabu_Casa_ZBT-2*
           name: generic-device-plugin
           resources:
             requests:
