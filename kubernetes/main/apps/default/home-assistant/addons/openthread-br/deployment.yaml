@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: OT_RCP_DEVICE
-              value: spinel+hdlc+uart:///dev/serial/by-id/usb-Nabu_Casa_Home_Assistant_Connect_ZBT-1_4e892cf65612f011954e0714773d9da9-if00-port0?uart-baudrate=460800
+              value: spinel+hdlc+uart:///dev/serial/by-id/usb-Nabu_Casa_ZBT-2_E072A1FB75C4-if00?uart-baudrate=460800
             - name: OT_INFRA_IF
               value: eth0
             - name: OT_THREAD_IF
@@ -44,7 +44,7 @@ spec:
               containerPort: 8081
           resources:
             limits:
-              squat.ai/zbt-1: "1"
+              squat.ai/zbt-2: "1"
           securityContext:
             capabilities:
               add:
