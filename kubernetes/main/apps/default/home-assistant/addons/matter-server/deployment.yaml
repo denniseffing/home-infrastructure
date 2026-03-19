@@ -34,7 +34,7 @@ spec:
               type: Unconfined
             privileged: true
           volumeMounts:
-            - mountPath: /var/run/dbus
+            - mountPath: /run/dbus
               name: bluetooth
               readOnly: true
             - mountPath: /data
@@ -43,7 +43,7 @@ spec:
       volumes:
         - name: bluetooth
           hostPath:
-            path: /var/run/dbus
+            path: /run/dbus
         - name: data
           persistentVolumeClaim:
             claimName: home-assistant-matter-server
