@@ -18,25 +18,29 @@ spec:
     spec:
       containers:
         - name: openthread-br
-          image: openthread/border-router:latest
+          image: ghcr.io/ownbee/hass-otbr-docker:latest
           imagePullPolicy: Always
           env:
-            - name: OT_RCP_DEVICE
-              value: spinel+hdlc+uart:///dev/serial/by-id/usb-Nabu_Casa_ZBT-2_E072A1FB75C4-if00?uart-baudrate=460800
-            - name: OT_INFRA_IF
-              value: eth0
-            - name: OT_THREAD_IF
-              value: wpan0
-            - name: OT_LOG_LEVEL
-              value: "3"
-            - name: OT_WEB_LISTEN_ADDR
-              value: "0.0.0.0"
-            - name: OT_WEB_LISTEN_PORT
-              value: "8080"
-            - name: OT_REST_LISTEN_ADDR
-              value: "0.0.0.0"
-            - name: OT_REST_LISTEN_PORT
+            - name: DEVICE
+              value: "/dev/serial/by-id/usb-Nabu_Casa_ZBT-2_E072A1FB75C4-if00"
+            - name: BAUDRATE
+              value: "460800"
+            - name: FLOW_CONTROL
+              value: "0"
+            - name: AUTOFLASH_FIRMWARE
+              value: "0"
+            - name: OTBR_LOG_LEVEL
+              value: "notice"
+            - name: OTBR_REST_PORT
               value: "8081"
+            - name: OTBR_WEB_PORT
+              value: "8080"
+            - name: OTBR_WEB
+              value: "1"
+            - name: BACKBONE_IF
+              value: "eth0"
+            - name: FIREWALL
+              value: "1"
           ports:
             - name: http-web
               containerPort: 8080
@@ -51,12 +55,17 @@ spec:
                 - NET_ADMIN
             privileged: true
           volumeMounts:
+            - name: bluetooth
+              mountPath: /var/run/dbus
             - name: data
               mountPath: /data
             - name: net-tun
               mountPath: /dev/net/tun
       hostNetwork: true
       volumes:
+        - name: bluetooth
+          hostPath:
+            path: /var/run/dbus
         - name: data
           persistentVolumeClaim:
             claimName: home-assistant-openthread-br
