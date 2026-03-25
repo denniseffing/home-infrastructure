@@ -95,6 +95,7 @@
       disable:
         - traefik
         - servicelb
+      etcd-expose-metrics: true
       secrets-encryption: true
       kube-apiserver-arg:
         - "feature-gates=DRAExtendedResource=true,DRADeviceTaints=true,DRAAdminAccess=true,DRAPartitionableDevices=true,DRAResourceClaimDeviceStatus=true,ResourceHealthStatus=true,DRAPrioritizedList=true"
