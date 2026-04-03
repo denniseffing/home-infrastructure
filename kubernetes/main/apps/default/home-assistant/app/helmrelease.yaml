@@ -149,7 +149,7 @@ spec:
     hostNetwork: true
     image:
       repository: ghcr.io/denniseffing/home-assistant
-      tag: 2026.4.0
+      tag: 2026.4.1
     persistence:
       accessMode: ReadWriteOnce
       enabled: true
