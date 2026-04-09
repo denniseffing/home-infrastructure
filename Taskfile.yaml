@@ -4,6 +4,7 @@ set: [pipefail]
 shopt: [globstar]
 
 vars:
+  BOOTSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
   KUBERNETES_DIR: '{{.ROOT_DIR}}/kubernetes/main'
   K3S_DIR: '{{.ROOT_DIR}}/k3s'
 
