@@ -5,7 +5,7 @@ shopt: [globstar]
 
 vars:
   KUBERNETES_DIR: '{{.ROOT_DIR}}/kubernetes/main'
-  K3S_DIR: '{{.ROOT_DIR}}/kubernetes/main/bootstrap/k3s'
+  K3S_DIR: '{{.ROOT_DIR}}/k3s'
 
 env:
   KUBERNETES_DIR: '{{.KUBERNETES_DIR}}'
