@@ -63,8 +63,6 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/hostname: rachel
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -123,12 +121,14 @@ spec:
         globalMounts:
           - path: /media
       media-1:
-        type: hostPath
-        hostPath: /mnt/storage-1/plex
+        type: nfs
+        server: 192.168.178.52
+        path: /nfs/storage-1/plex
         globalMounts:
           - path: /media-1
       media-2:
-        type: hostPath
-        hostPath: /mnt/storage-2/plex
+        type: nfs
+        server: 192.168.178.52
+        path: /nfs/storage-2/plex
         globalMounts:
           - path: /media-2
