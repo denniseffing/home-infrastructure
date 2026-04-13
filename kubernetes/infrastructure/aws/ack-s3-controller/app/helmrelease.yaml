@@ -29,7 +29,7 @@ spec:
                 path: /spec/template/spec/containers/-
                 value:
                   name: iam-roles-anywhere-sidecar
-                  image: ghcr.io/denniseffing/aws-signing-helper:1.7.0
+                  image: ghcr.io/denniseffing/aws-signing-helper:1.8.0
                   env:
                     - name: TRUST_ANCHOR_ARN
                       value: "arn:aws:rolesanywhere:eu-central-1:514266269969:trust-anchor/74a9e9cd-97a2-4b99-a51f-2c79109e8dc0"
