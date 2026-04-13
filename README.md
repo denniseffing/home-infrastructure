@@ -33,8 +33,8 @@ task bootstrap:infrastructure
 
 ## ⭐ Overview
 
-* [`kubernetes/main/bootstrap/k3s`](./provisioning) – Ansible configuration to provision the k3s cluster
-* [`kubernetes/main/bootstrap/infrastructure`](./kubernetes/main/bootstrap) – Helmfile configuration to bootstrap infrastructure components
+* [`k3s`](./k3s) – Ansible configuration to provision the k3s cluster
+* [`bootstrap`](./bootstrap) – Helmfile configuration to bootstrap infrastructure components
 * [`kubernetes/main/cluster`](./kubernetes/main/cluster) – Flux cluster configuration entrypoint
 * [`kubernetes/main/infrastructure`](./kubernetes/main/infrastructure) – Manifests for infrastructure components
 * [`kubernetes/main/apps`](./kubernetes/main/apps) – Manifests for apps
