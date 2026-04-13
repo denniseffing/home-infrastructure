@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: ["main"]
     paths:
-      - kubernetes/main/apps/**
-      - kubernetes/main/infrastructure/**
+      - kubernetes/apps/**
+      - kubernetes/infrastructure/**
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -26,7 +26,7 @@ jobs:
             test
             --enable-helm
             --all-namespaces
-            --path /github/workspace/kubernetes/main/cluster
+            --path /github/workspace/kubernetes/cluster
             --sources "flux-system"
             --label-selector "denniseffing.de/source=public"
             -v
@@ -60,8 +60,8 @@ jobs:
           args: >-
             diff ${{ matrix.resources }}
             --unified 6
-            --path /github/workspace/pull/kubernetes/main/cluster
-            --path-orig /github/workspace/default/kubernetes/main/cluster
+            --path /github/workspace/pull/kubernetes/cluster
+            --path-orig /github/workspace/default/kubernetes/cluster
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces

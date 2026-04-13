@@ -35,9 +35,9 @@ task bootstrap:infrastructure
 
 * [`k3s`](./k3s) – Ansible configuration to provision the k3s cluster
 * [`bootstrap`](./bootstrap) – Helmfile configuration to bootstrap infrastructure components
-* [`kubernetes/main/cluster`](./kubernetes/main/cluster) – Flux cluster configuration entrypoint
-* [`kubernetes/main/infrastructure`](./kubernetes/main/infrastructure) – Manifests for infrastructure components
-* [`kubernetes/main/apps`](./kubernetes/main/apps) – Manifests for apps
+* [`kubernetes/cluster`](./kubernetes/cluster) – Flux cluster configuration entrypoint
+* [`kubernetes/infrastructure`](./kubernetes/infrastructure) – Manifests for infrastructure components
+* [`kubernetes/apps`](./kubernetes/apps) – Manifests for apps
 
 ## ❤️ Thanks
 

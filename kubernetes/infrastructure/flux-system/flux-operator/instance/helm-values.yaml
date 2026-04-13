@@ -1,0 +1,69 @@
+instance:
+  components:
+    - source-controller
+    - kustomize-controller
+    - helm-controller
+    - notification-controller
+  sync:
+    kind: GitRepository
+    url: "ssh://git@github.com/denniseffing/home-infrastructure.git"
+    pullSecret: github-deploy-key
+    ref: "refs/heads/main"
+    path: kubernetes/cluster
+  kustomize:
+    patches:
+      - target:
+          kind: Deployment
+          name: "(kustomize-controller|helm-controller|source-controller)"
+        patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --requeue-dependency=5s
+      - target:
+          kind: Deployment
+          name: "kustomize-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              requests:
+                cpu: 12m
+                memory: 90Mi
+              limits:
+                memory: 90Mi
+      - target:
+          kind: Deployment
+          name: "helm-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              requests:
+                cpu: 21m
+                memory: 200Mi
+              limits:
+                memory: 200Mi
+      - target:
+          kind: Deployment
+          name: "source-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              requests:
+                cpu: 10m
+                memory: 170Mi
+              limits:
+                memory: 170Mi
+      - target:
+          kind: Deployment
+          name: "notification-controller"
+        patch: |
+          - op: replace
+            path: /spec/template/spec/containers/0/resources
+            value:
+              requests:
+                cpu: 10m
+                memory: 90Mi
+              limits:
+                memory: 90Mi
