@@ -12,7 +12,7 @@ repositories:
 
 hooks:
   - events: ['prepare']
-    command: '{{ requiredEnv "KUBERNETES_DIR" }}/bootstrap/infrastructure/hooks/bootstrap.sh'
+    command: '{{ requiredEnv "BOOTSTRAP_DIR" }}/hooks/bootstrap.sh'
     showlogs: true
 
 releases:
