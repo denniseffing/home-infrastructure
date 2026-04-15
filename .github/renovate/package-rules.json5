@@ -12,11 +12,6 @@
       automergeType: "pr"
     },
     {
-      enabled: false,
-      matchDatasources: ["docker"],
-      matchPackageNames: ["ghcr.io/paperless-ngx/paperless-ngx"],
-    },
-    {
       matchDatasources: ["docker"],
       matchPackageNames: ["plexinc/pms-docker"],
       automergeSchedule: ["after 3:00am and before 9:00am"],
