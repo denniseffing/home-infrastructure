@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.14.7
+              tag: 2.20.14
             env:
               PAPERLESS_APP_TITLE: "Paperless"
               PAPERLESS_APPS: "allauth.socialaccount.providers.github"
@@ -40,10 +40,10 @@ spec:
               PAPERLESS_USE_X_FORWARD_PORT: "true"
               PAPERLESS_PROXY_SSL_HEADER: '["HTTP_X_FORWARDED_PROTO", "https"]'
               PAPERLESS_PORT: &port 80
+              S6_READ_ONLY_ROOT: "1"
+              S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: "1"
               PYTHONPYCACHEPREFIX: "/tmp/pycache"
               TZ: Europe/Berlin
-              USERMAP_UID: 1000
-              USERMAP_GID: 1000
             envFrom:
               - secretRef:
                   name: paperless-ngx
@@ -95,5 +95,7 @@ spec:
         existingClaim: paperless-ngx-media
         globalMounts:
           - path: /usr/src/paperless/media
+      run:
+        type: emptyDir
       tmp:
         type: emptyDir
