@@ -9,4 +9,4 @@ spec:
     operation: copy
   ref:
     tag: 6.55.0
-  url: oci://ghcr.io/grafana/helm-charts/loki
+  url: oci://ghcr.io/grafana-community/helm-charts/loki
