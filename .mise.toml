@@ -7,7 +7,7 @@ AWS_REGION = "eu-central-1"
 python = "3.14.6"
 pipx = "latest"
 
-ansible = "11.13.0"
+ansible = "14.1.0"
 "aqua:bitnami-labs/sealed-secrets" = "0.38.4"
 "aqua:fluxcd/flux2" = "2.9.2"
 "aqua:go-task/task" = "3.52.0"
