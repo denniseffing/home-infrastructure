@@ -8,7 +8,7 @@ repositories:
   - name: incubator
     url: https://charts.helm.sh/incubator
   - name: sealed-secrets
-    url: https://bitnami-labs.github.io/sealed-secrets
+    url: https://bitnami.github.io/sealed-secrets
 
 hooks:
   - events: ['prepare']
