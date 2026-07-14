@@ -28,9 +28,9 @@ instance:
             value:
               requests:
                 cpu: 12m
-                memory: 90Mi
+                memory: 150Mi
               limits:
-                memory: 90Mi
+                memory: 150Mi
       - target:
           kind: Deployment
           name: "helm-controller"
