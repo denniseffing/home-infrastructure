@@ -11,6 +11,10 @@ releases:
     namespace: network
     chart: oci://mirror.gcr.io/envoyproxy/gateway-crds-helm
     version: v1.8.2
+    values:
+      - crds:
+          gatewayAPI:
+            enabled: "true"
 
   - name: kube-prometheus-stack
     namespace: monitoring
