@@ -21,21 +21,33 @@ spec:
       retries: 3
   values:
     config:
+      configFile: |-
+        email_domains = [ "*" ]
+        upstreams = [ "static://200" ]
       existingSecret: oauth2-proxy-oauth-app
     extraEnv:
       - name: OAUTH2_PROXY_PROVIDER
         value: github
+      - name: OAUTH2_PROXY_REDIRECT_URL
+        value: https://oauth2-proxy.internal.denniseffing.de/oauth2/callback
       - name: OAUTH2_PROXY_WHITELIST_DOMAINS
         value: .denniseffing.de
       - name: OAUTH2_PROXY_COOKIE_DOMAINS
         value: .denniseffing.de
       - name: OAUTH2_PROXY_GITHUB_USERS
         value: denniseffing,feltenj
+      - name: OAUTH2_PROXY_REVERSE_PROXY
+        value: "true"
+      - name: OAUTH2_PROXY_SET_XAUTHREQUEST
+        value: "true"
+      - name: OAUTH2_PROXY_SKIP_PROVIDER_BUTTON
+        value: "true"
     gatewayApi:
       enabled: true
       gatewayRef:
         name: envoy-internal
         namespace: network
+        sectionName: https
       hostnames:
         - oauth2-proxy.internal.denniseffing.de
     metrics:

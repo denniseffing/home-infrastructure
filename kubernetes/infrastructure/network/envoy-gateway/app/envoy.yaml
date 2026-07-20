@@ -158,6 +158,11 @@ spec:
     xForwardedFor:
       trustedCIDRs:
         - 10.0.0.0/16
+  headers:
+    earlyRequestHeaders:
+      set:
+        - name: X-Auth-Request-Redirect
+          value: https://%REQ(Host)%%REQ(:PATH)%
   http2:
     onInvalidMessage: TerminateStream
   targetSelectors:
@@ -196,20 +201,24 @@ kind: SecurityPolicy
 metadata:
   name: envoy-internal-auth
 spec:
+  extAuth:
+    failOpen: false
+    headersToExtAuth:
+      - Cookie
+      - X-Auth-Request-Redirect
+    http:
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: oauth2-proxy
+          namespace: network
+          port: 80
+      headersToBackend:
+        - X-Auth-Request-Email
+        - X-Auth-Request-Groups
+        - X-Auth-Request-Preferred-Username
+        - X-Auth-Request-User
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: envoy-internal
-  oidc:
-    clientIDRef:
-      name: envoy-internal-github-oauth-app
-    clientSecret:
-      name: envoy-internal-github-oauth-app
-    cookieDomain: internal.denniseffing.de
-    defaultTokenTTL: 8760h # github tokens do not expire
-    logoutPath: /logout
-    provider:
-      issuer: https://github.com
-      authorizationEndpoint: https://github.com/login/oauth/authorize
-      tokenEndpoint: https://github.com/login/oauth/access_token
-    redirectURL: https://usenet.internal.denniseffing.de/oauth2/callback
