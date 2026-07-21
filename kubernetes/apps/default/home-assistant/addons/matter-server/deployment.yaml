@@ -18,7 +18,12 @@ spec:
                       - joey
       containers:
         - name: matter-server
-          image: ghcr.io/home-assistant-libs/python-matter-server:8.1.0
+          image: ghcr.io/matter-js/matterjs-server:1.2.8
+          env:
+            - name: NOBLE_BINDINGS
+              value: dbus
+            - name: PRODUCTION_MODE
+              value: "true"
           ports:
             - containerPort: 5580
               name: websocket
@@ -28,10 +33,6 @@ spec:
               memory: 175Mi
             limits:
               memory: 175Mi
-          securityContext:
-            appArmorProfile:
-              type: Unconfined
-            privileged: true
           volumeMounts:
             - mountPath: /run/dbus
               name: bluetooth
@@ -39,6 +40,11 @@ spec:
             - mountPath: /data
               name: data
       hostNetwork: true
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
       volumes:
         - name: bluetooth
           hostPath:
