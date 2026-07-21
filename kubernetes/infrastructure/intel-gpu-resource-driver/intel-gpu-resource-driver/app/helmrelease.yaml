@@ -11,3 +11,5 @@ spec:
     kubeletPlugin:
       nodeSelector:
         kubernetes.io/hostname: joey
+    # xpumd is deployed separately via a standalone HelmRelease, see ../../xpumd
+    xpumdEnabled: false

@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: xpumd
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: xpumd
+  interval: 1h
+  values:
+    nodeSelector:
+      kubernetes.io/hostname: joey

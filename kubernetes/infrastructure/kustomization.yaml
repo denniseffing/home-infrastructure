@@ -7,6 +7,7 @@ resources:
   - external-secrets
   - flux-system
   - github-actions-runner
+  - intel-gpu-resource-driver
   - kube-system
   - longhorn
   - network

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: intel-gpu-resource-driver
+  labels:
+    # `ResourceClaim` and `ResourceClaimTemplate` objects can only use the `adminAccess` field
+    # in namespaces labeled with `resource.kubernetes.io/admin-access: "true"`
+    # See https://github.com/intel/xpumanager/tree/main/xpumd/charts/xpumd#installation
+    resource.kubernetes.io/admin-access: "true"
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
