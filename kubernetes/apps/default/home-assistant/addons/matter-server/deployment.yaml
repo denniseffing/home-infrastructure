@@ -5,6 +5,8 @@ metadata:
   labels: &labels
     app.kubernetes.io/name: home-assistant-matter-server
 spec:
+  strategy:
+    type: Recreate
   template:
     spec:
       affinity:
