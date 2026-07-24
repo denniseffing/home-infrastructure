@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana-mcp
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: grafana-mcp
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    grafana:
+      url: "http://grafana.monitoring.svc.cluster.local"
+      apiKeySecret:
+        name: grafana-mcp-service-account
+        key: token
+    disableWrite: true
+    extraArgs:
+      - "--allowed-hosts=grafana-mcp.internal.denniseffing.de"
+    metrics:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 128Mi
+    route:
+      main:
+        enabled: true
+        hostnames:
+          - grafana-mcp.internal.denniseffing.de
+        parentRefs:
+          - name: envoy-internal
+            namespace: network

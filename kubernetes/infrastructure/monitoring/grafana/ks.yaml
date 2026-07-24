@@ -18,7 +18,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  wait: false
+  wait: true
   interval: 30m
   timeout: 5m
 ---
@@ -40,5 +40,29 @@ spec:
     kind: GitRepository
     name: flux-system
   wait: true
+  interval: 30m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: grafana-mcp
+  labels:
+    denniseffing.de/source: "public"
+  namespace: flux-system
+spec:
+  targetNamespace: monitoring
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: grafana
+  dependsOn:
+    - name: external-secrets-stores
+    - name: grafana
+  path: kubernetes/infrastructure/monitoring/grafana/addons/mcp
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: false
   interval: 30m
   timeout: 5m
