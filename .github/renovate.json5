@@ -37,6 +37,7 @@
   kubernetes: {
     managerFilePatterns: [
       '/(^|/)kubernetes/.+\\.ya?ml$/',
+      '/(^|/)k3s/manifests/.+\\.ya?ml$/'
     ],
   },
   timezone: 'Europe/Berlin',
