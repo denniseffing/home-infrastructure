@@ -21,6 +21,15 @@ spec:
       apiKeySecret:
         name: grafana-mcp-service-account
         key: token
+    disabledCategories:
+      - admin
+      - incident
+      - config
+      - influxdb
+      - oncall
+      - sift
+      - pyroscope
+      - asserts
     disableWrite: true
     extraArgs:
       - "--allowed-hosts=grafana-mcp.internal.denniseffing.de"
