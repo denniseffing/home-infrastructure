@@ -25,10 +25,17 @@ spec:
     extraArgs:
       - "--allowed-hosts=grafana-mcp.internal.denniseffing.de"
       - "--transport=streamable-http"
+      - "--metrics-address=:9090"
     metrics:
       enabled: true
+    service:
+      extraPorts:
+        - name: metrics
+          port: 9090
+          targetPort: 9090
+          protocol: TCP
     serviceMonitor:
-      enabled: true
+      enabled: false
     resources:
       requests:
         cpu: 10m
