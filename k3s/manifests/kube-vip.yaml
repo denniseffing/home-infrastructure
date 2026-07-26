@@ -59,7 +59,7 @@ spec:
       labels:
         app.kubernetes.io/name: kube-vip-ds
         app.kubernetes.io/instance: kube-vip-control-plane
-        app.kubernetes.io/version: v1.0.3
+        app.kubernetes.io/version: v1.2.1
     spec:
       affinity:
         nodeAffinity:

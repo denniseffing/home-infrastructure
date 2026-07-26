@@ -1,0 +1,15 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [
+    {
+      "description": ["Update app.kubernetes.io/version labels alongside their image"],
+      "customType": "regex",
+      "fileMatch": ["(^|/)k3s/manifests/.+\\.ya?ml$"],
+      "matchStrings": [
+        "app\\.kubernetes\\.io/version:\\s*(?<currentValue>\\S+)"
+      ],
+      "depNameTemplate": "ghcr.io/kube-vip/kube-vip",
+      "datasourceTemplate": "docker"
+    }
+  ]
+}
