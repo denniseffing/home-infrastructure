@@ -32,9 +32,9 @@ spec:
           resources:
             requests:
               cpu: 115m
-              memory: 175Mi
+              memory: 384Mi
             limits:
-              memory: 175Mi
+              memory: 384Mi
           volumeMounts:
             - mountPath: /run/dbus
               name: bluetooth
