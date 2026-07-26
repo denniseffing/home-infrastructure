@@ -24,6 +24,7 @@ spec:
     disableWrite: true
     extraArgs:
       - "--allowed-hosts=grafana-mcp.internal.denniseffing.de"
+      - "--transport=streamable-http"
     metrics:
       enabled: true
     serviceMonitor:
