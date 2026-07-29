@@ -46,7 +46,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kube-vip-ds
     app.kubernetes.io/instance: kube-vip-control-plane
-    app.kubernetes.io/version: v1.2.1
+    app.kubernetes.io/version: v1.2.2
   name: kube-vip-control-plane-ds
   namespace: kube-system
 spec:
@@ -59,7 +59,7 @@ spec:
       labels:
         app.kubernetes.io/name: kube-vip-ds
         app.kubernetes.io/instance: kube-vip-control-plane
-        app.kubernetes.io/version: v1.2.1
+        app.kubernetes.io/version: v1.2.2
     spec:
       affinity:
         nodeAffinity:
@@ -107,7 +107,7 @@ spec:
               value: 192.168.178.40
             - name: prometheus_server
               value: :2112
-          image: ghcr.io/kube-vip/kube-vip:v1.2.1
+          image: ghcr.io/kube-vip/kube-vip:v1.2.2
           imagePullPolicy: IfNotPresent
           name: kube-vip
           resources: {}
@@ -131,7 +131,7 @@ metadata:
   labels:
     app.kubernetes.io/name: kube-vip-ds
     app.kubernetes.io/instance: kube-vip-services
-    app.kubernetes.io/version: v1.2.1
+    app.kubernetes.io/version: v1.2.2
   name: kube-vip-services-ds
   namespace: kube-system
 spec:
@@ -144,7 +144,7 @@ spec:
       labels:
         app.kubernetes.io/name: kube-vip-ds
         app.kubernetes.io/instance: kube-vip-services
-        app.kubernetes.io/version: v1.2.1
+        app.kubernetes.io/version: v1.2.2
     spec:
       containers:
         - args:
@@ -184,7 +184,7 @@ spec:
               value: "true"
             - name: vip_preserve_on_leadership_loss
               value: "true"
-          image: ghcr.io/kube-vip/kube-vip:v1.2.1
+          image: ghcr.io/kube-vip/kube-vip:v1.2.2
           imagePullPolicy: IfNotPresent
           name: kube-vip
           resources: {}
