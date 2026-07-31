@@ -137,6 +137,13 @@ spec:
           - sourceLabels: [ "node" ]
             targetLabel: instance
             action: replace
+        # Drop IPv6 targets so nodes with dual-stack InternalIPs aren't scraped twice
+        relabelings: &kubeletDropIpv6Relabelings
+          - sourceLabels: [ "__address__" ]
+            regex: '\[.*\]:.*'
+            action: drop
+        cAdvisorRelabelings: *kubeletDropIpv6Relabelings
+        probesRelabelings: *kubeletDropIpv6Relabelings
     kubeApiServer:
       enabled: true
       serviceMonitor:
