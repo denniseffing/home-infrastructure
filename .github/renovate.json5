@@ -10,7 +10,6 @@
     ':skipStatusChecks',
     ':timezone(Europe/Berlin)',
     'github>denniseffing/home-infrastructure//.github/renovate/auto-merge.json5',
-    'github>denniseffing/home-infrastructure//.github/renovate/clusters.json5',
     'github>denniseffing/home-infrastructure//.github/renovate/custom-managers.json5',
     'github>denniseffing/home-infrastructure//.github/renovate/groups.json5',
     'github>denniseffing/home-infrastructure//.github/renovate/labels.json5',
