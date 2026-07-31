@@ -1,19 +1,26 @@
 <div align="center">
 
 # 🏠 🌐  home-infrastructure
-_Infrastructure as code repository for my home_
 
 </div>
 
 <div align="center">
 
-[![Age-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.denniseffing.de%2Fcluster_age_days&style=flat-square&label=Age)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Uptime-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.denniseffing.de%2Fcluster_uptime_days&style=flat-square&label=Uptime)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Node-Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.denniseffing.de%2Fcluster_node_count&style=flat-square&label=Nodes)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Pod-Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.denniseffing.de%2Fcluster_pod_count&style=flat-square&label=Pods)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![CPU-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.denniseffing.de%2Fcluster_cpu_usage&style=flat-square&label=CPU)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Memory-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.denniseffing.de%2Fcluster_memory_usage&style=flat-square&label=Memory)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
+[![Kubernetes](https://kromgo.denniseffing.de/badges/kubernetes_version)](https://kubernetes.io)&nbsp;&nbsp;
+[![Flux](https://kromgo.denniseffing.de/badges/flux_version)](https://fluxcd.io)&nbsp;&nbsp;
 
+</div>
+
+<div align="center">
+
+[![Age](https://kromgo.denniseffing.de/badges/cluster_birth_age)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Uptime](https://kromgo.denniseffing.de/badges/cluster_uptime_age)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Nodes](https://kromgo.denniseffing.de/badges/cluster_node_count)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Pods](https://kromgo.denniseffing.de/badges/cluster_pod_count)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![CPU](https://kromgo.denniseffing.de/badges/cluster_cpu_usage)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Memory](https://kromgo.denniseffing.de/badges/cluster_memory_usage)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+
+_Infrastructure as code repository for my home_
 </div>
 
 ## 🚀 Quickstart
@@ -33,11 +40,14 @@ task bootstrap:infrastructure
 
 ## ⭐ Overview
 
-* [`k3s`](./k3s) – Ansible configuration to provision the k3s cluster
-* [`bootstrap`](./bootstrap) – Helmfile configuration to bootstrap infrastructure components
-* [`kubernetes/cluster`](./kubernetes/cluster) – Flux cluster configuration entrypoint
-* [`kubernetes/infrastructure`](./kubernetes/infrastructure) – Manifests for infrastructure components
-* [`kubernetes/apps`](./kubernetes/apps) – Manifests for apps
+```sh
+📁 k3s                   # ansible configuration to provision the cluster
+📁 bootstrap             # helmfile configuration to bootstrap infrastructure
+📁 kubernetes
+├── 📁 apps              # applications
+├── 📁 components        # flux entrypoints
+└── 📁 infrastructure    # infrastructure components
+```
 
 ## ❤️ Thanks
 
