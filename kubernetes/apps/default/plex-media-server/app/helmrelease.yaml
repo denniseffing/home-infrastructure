@@ -50,6 +50,9 @@ spec:
                     - joey
     httpRoute:
       enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          path: /identity
       parentRefs:
         - name: envoy-external
           namespace: network
