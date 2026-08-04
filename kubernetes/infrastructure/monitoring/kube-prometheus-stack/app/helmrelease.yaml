@@ -142,6 +142,9 @@ spec:
           - sourceLabels: [ "__address__" ]
             regex: '\[.*\]:.*'
             action: drop
+          - action: replace
+            sourceLabels: [ __metrics_path__ ]
+            targetLabel: metrics_path
         cAdvisorRelabelings: *kubeletDropIpv6Relabelings
         probesRelabelings: *kubeletDropIpv6Relabelings
     kubeApiServer:
