@@ -10,7 +10,7 @@ releases:
   - name: envoy-gateway
     namespace: network
     chart: oci://mirror.gcr.io/envoyproxy/gateway-crds-helm
-    version: 1.8.3
+    version: v1.9.0
     values:
       - crds:
           gatewayAPI:
