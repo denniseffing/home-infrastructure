@@ -24,6 +24,11 @@
         "bitnami-labs/sealed-secrets",
       ],
       allowedVersions: "!/0.31.0/",
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/intel/xpumanager/charts/xpumd"],
+      allowedVersions: "!/2.1.0/",
     }
   ]
 }
