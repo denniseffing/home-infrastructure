@@ -8,7 +8,7 @@ python = "3.14.7"
 pipx = "latest"
 
 ansible = "14.4.0"
-"aqua:bitnami-labs/sealed-secrets" = "0.39.1"
+"aqua:bitnami-labs/sealed-secrets" = "0.40.0"
 "aqua:fluxcd/flux2" = "2.9.5"
 "aqua:go-task/task" = "3.53.1"
 "aqua:hashicorp/terraform" = "1.16.2"
