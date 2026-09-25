@@ -41,6 +41,7 @@ spec:
     extraArgs:
       - --exclude-target-net=192.168.178.0/24
     interval: 5m
+    policy: sync
     provider:
       name: ovh
     resources:
