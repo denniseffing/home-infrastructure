@@ -11,5 +11,7 @@ spec:
     kubeletPlugin:
       nodeSelector:
         kubernetes.io/hostname: joey
+      # xpumd >= 2.1.0 renamed its socket, but the driver still defaults to `intelxpuinfo.sock`
+      extraArgs: "--xpumd-socket=/run/xpumd/intel_xpu_info.sock"
     # xpumd is deployed separately via a standalone HelmRelease, see ../../xpumd
     xpumdEnabled: false
