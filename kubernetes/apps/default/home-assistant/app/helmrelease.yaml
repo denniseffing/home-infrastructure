@@ -137,14 +137,15 @@ spec:
             locale: de-DE
             filter:
               include_entities:
-                - "vacuum.roborock_s7"
+                - "climate.wohnzimmer"
+                - "climate.buero"
+                - "climate.schlafzimmer"
+                - "input_boolean.fernseher_nachtmodus"
                 - "light.bett"
                 - "switch.pc"
                 - "switch.stehlampe"
                 - "switch.schreibtisch"
-                - "climate.wohnzimmer"
-                - "climate.buero"
-                - "climate.schlafzimmer"
+                - "vacuum.roborock_s7"
     dnsPolicy: ClusterFirstWithHostNet
     hostNetwork: true
     image:
