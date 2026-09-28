@@ -142,6 +142,7 @@ spec:
                 - "climate.schlafzimmer"
                 - "input_boolean.fernseher_nachtmodus"
                 - "light.bett"
+                - "scene.schlafen"
                 - "switch.pc"
                 - "switch.stehlampe"
                 - "switch.schreibtisch"
