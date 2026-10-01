@@ -1,0 +1,89 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant-mcp
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: home-assistant-mcp
+  interval: 1h
+  values:
+    controllers:
+      home-assistant-mcp:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/homeassistant-ai/ha-mcp
+              tag: 8.5.0@sha256:e1538bcdadb13a5467bbb8258fba3262a05518585e18115742da638adec7057c
+            command: ["ha-mcp-web"]
+            env:
+              FASTMCP_CHECK_FOR_UPDATES: "off"
+              HA_MCP_CONFIG_DIR: &configDir /config
+              HA_MCP_DISABLE_UPDATE_CHECK: true
+              HOMEASSISTANT_URL: http://home-assistant.default.svc.cluster.local:8123
+              MCP_HEALTHZ: true
+              MCP_HOST: 0.0.0.0
+              MCP_PORT: &port 80
+              TZ: Europe/Berlin
+            envFrom:
+              - secretRef:
+                  name: "home-assistant-mcp"
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "home-mcp.internal.denniseffing.de"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    persistence:
+      config:
+        existingClaim: "home-assistant-mcp-config"
+        globalMounts:
+          - path: *configDir
