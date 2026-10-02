@@ -82,6 +82,29 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *port
+      settings:
+        hostnames:
+          - "home-mcp.internal.denniseffing.de"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /mcp/settings
+              - path:
+                  type: PathPrefix
+                  value: /mcp/api/settings
+              - path:
+                  type: PathPrefix
+                  value: /mcp/api/policy/config
+              - path:
+                  type: PathPrefix
+                  value: /mcp/api/visibility/config
+            backendRefs:
+              - identifier: app
+                port: *port
     persistence:
       config:
         existingClaim: "home-assistant-mcp-config"
