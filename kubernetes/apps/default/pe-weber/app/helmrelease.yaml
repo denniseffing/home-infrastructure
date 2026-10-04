@@ -21,10 +21,8 @@ spec:
         containers:
           app:
             image:
-              # TODO: pin to the digest once the first CI build on
-              # ghcr.io/feltenj/pe-weber-website has completed.
               repository: ghcr.io/feltenj/pe-weber-website
-              tag: sha-fa9e9a4bf1188a0b96092521d44a145f3202e3c1
+              tag: sha-9bcc9d63b90b277acf7b07be375881888e57c5f5@sha256:abfc01742b83c848171363ae853bc7e664856aa87de2531a85ba39ce54b8f2a2
             env:
               HOST: 0.0.0.0
               PORT: &port 4321
