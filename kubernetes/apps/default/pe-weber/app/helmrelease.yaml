@@ -1,0 +1,81 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pe-weber
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: pe-weber
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      pe-weber:
+        containers:
+          app:
+            image:
+              # TODO: pin to the digest once the first CI build on
+              # ghcr.io/feltenj/pe-weber-website has completed.
+              repository: ghcr.io/feltenj/pe-weber-website
+              tag: sha-fa9e9a4bf1188a0b96092521d44a145f3202e3c1
+            env:
+              HOST: 0.0.0.0
+              PORT: &port 4321
+            envFrom:
+              - secretRef:
+                  name: pe-weber-smtp
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/healthz
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: pe-weber
+        ports:
+          http:
+            port: *port
+    route:
+      app-external:
+        hostnames:
+          - "pe-weber.denniseffing.de"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+    persistence:
+      tmp:
+        type: emptyDir
