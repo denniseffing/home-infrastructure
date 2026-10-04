@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/feltenj/pe-weber-website
-              tag: sha-a799d430905df1f0e745cc5bba244fd2d10c12fa@sha256:a80fe7609c0df47fb7350f948557d93267b44c3e642566f2b31634793b6bf368
+              tag: sha-d837e7867f689aa380401cefe529067e248668a3@sha256:5ce71c190de69056eee0fdaf1e1466cdf933c7e9bb0d105f066b3676d99d1641
             env:
               HOST: 0.0.0.0
               PORT: &port 4321
