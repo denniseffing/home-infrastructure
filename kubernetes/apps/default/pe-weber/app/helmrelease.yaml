@@ -15,17 +15,22 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn
   values:
     controllers:
       pe-weber:
+        strategy: Recreate
         containers:
           app:
             image:
               repository: ghcr.io/feltenj/pe-weber-website
-              tag: sha-9bcc9d63b90b277acf7b07be375881888e57c5f5@sha256:abfc01742b83c848171363ae853bc7e664856aa87de2531a85ba39ce54b8f2a2
+              tag: sha-a799d430905df1f0e745cc5bba244fd2d10c12fa@sha256:a80fe7609c0df47fb7350f948557d93267b44c3e642566f2b31634793b6bf368
             env:
               HOST: 0.0.0.0
               PORT: &port 4321
+              REVIEWS_FILE: /app/.data/reviews.json
             envFrom:
               # optional: true lets the app come up before the pe-weber-smtp
               # 1Password item exists; the contact form just reports an
@@ -79,5 +84,9 @@ spec:
           - name: envoy-external
             namespace: network
     persistence:
+      reviews:
+        existingClaim: pe-weber-reviews
+        globalMounts:
+          - path: /app/.data
       tmp:
         type: emptyDir
