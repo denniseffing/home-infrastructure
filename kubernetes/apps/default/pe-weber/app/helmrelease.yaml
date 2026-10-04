@@ -29,8 +29,12 @@ spec:
               HOST: 0.0.0.0
               PORT: &port 4321
             envFrom:
+              # optional: true lets the app come up before the pe-weber-smtp
+              # 1Password item exists; the contact form just reports an
+              # error on submit until the SMTP secret is populated.
               - secretRef:
                   name: pe-weber-smtp
+                  optional: true
             probes:
               liveness: &probes
                 enabled: true
