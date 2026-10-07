@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - aws
   - cert-manager
+  - cnpg-system
   - external-dns
   - external-secrets
   - flux-system

@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cloudnative-pg
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: cloudnative-pg
+  dependsOn:
+    - name: kube-prometheus-stack-crds
+      namespace: monitoring
+  interval: 1h
+  values:
+    crds:
+      create: true
+    monitoring:
+      podMonitorEnabled: true
+    resources:
+      requests:
+        cpu: 10m
+      limits:
+        memory: 512Mi
