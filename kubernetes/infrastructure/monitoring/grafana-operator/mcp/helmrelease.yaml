@@ -27,7 +27,6 @@ spec:
       - config
       - influxdb
       - oncall
-      - sift
       - pyroscope
       - asserts
     disableWrite: true
