@@ -4,6 +4,7 @@ resources:
   - namespace.yaml
   - audiobookshelf/ks.yaml
   - bazarr/ks.yaml
+  - dawarich/ks.yaml
   - home-assistant/ks.yaml
   - memos/ks.yaml
   - paperless-ngx/ks.yaml
@@ -14,3 +15,4 @@ resources:
   - seerr/ks.yaml
   - sonarr/ks.yaml
   - tautulli/ks.yaml
+  - valkey/ks.yaml

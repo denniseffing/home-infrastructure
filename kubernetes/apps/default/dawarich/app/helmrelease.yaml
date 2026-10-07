@@ -1,0 +1,157 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: dawarich
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: dawarich
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn
+    - name: valkey
+  values:
+    controllers:
+      dawarich:
+        containers:
+          app:
+            image: &image
+              repository: docker.io/freikin/dawarich
+              tag: 1.15.3@sha256:589e3606b11b61c3fa2d9661832cb73645a9b93a9cc7d807a071e2bc6c584498
+            command: ["web-entrypoint.sh"]
+            args: ["bin/rails", "server", "-p", "3000", "-b", "::"]
+            env: &env
+              RAILS_ENV: production
+              SELF_HOSTED: "true"
+              TIME_ZONE: Europe/Berlin
+              APPLICATION_HOSTS: "timeline.internal.denniseffing.de,dawarich.default.svc.cluster.local,dawarich.default.svc,dawarich"
+              APPLICATION_PROTOCOL: http
+              DOMAIN: timeline.internal.denniseffing.de
+              STORE_GEODATA: "true"
+              WEB_CONCURRENCY: "1"
+              BACKGROUND_PROCESSING_CONCURRENCY: "3"
+              RAILS_CACHE_DB: "10"
+              RAILS_JOB_QUEUE_DB: "11"
+              RAILS_WS_DB: "12"
+              RACK_ATTACK_REDIS_DB: "13"
+              DATABASE_HOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: dawarich-postgres-app
+                    key: host
+              DATABASE_PORT:
+                valueFrom:
+                  secretKeyRef:
+                    name: dawarich-postgres-app
+                    key: port
+              DATABASE_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: dawarich-postgres-app
+                    key: dbname
+              DATABASE_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: dawarich-postgres-app
+                    key: username
+              DATABASE_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: dawarich-postgres-app
+                    key: password
+            envFrom: &envFrom
+              - secretRef:
+                  name: dawarich
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/health
+                    port: &port 3000
+                  periodSeconds: 10
+                  failureThreshold: 180
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/health
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+          sidekiq:
+            image: *image
+            command: ["sidekiq-entrypoint.sh"]
+            env: *env
+            envFrom: *envFrom
+            securityContext: *securityContext
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: dawarich
+        ports:
+          http:
+            port: 80
+            targetPort: *port
+    route:
+      app:
+        hostnames:
+          - "timeline.internal.denniseffing.de"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    persistence:
+      storage:
+        existingClaim: dawarich-storage
+        globalMounts:
+          - path: /var/app/storage
+      watched:
+        existingClaim: dawarich-watched
+        globalMounts:
+          - path: /var/app/tmp/imports/watched
+      public:
+        type: emptyDir
+        globalMounts:
+          - path: /var/app/public
+      app-tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /var/app/tmp
+      tmp:
+        type: emptyDir
