@@ -5,6 +5,13 @@ metadata:
     app.kubernetes.io/name: home-assistant-matter-server
 resources:
   - deployment.yaml
+  - grafanadashboard.yaml
   - httproute.yaml
   - pvc.yaml
   - service.yaml
+configMapGenerator:
+  - name: home-infrastructure-overview-dashboard
+    files:
+      - home-infrastructure-overview.json=./resources/home-infrastructure-overview.json
+generatorOptions:
+  disableNameSuffixHash: true

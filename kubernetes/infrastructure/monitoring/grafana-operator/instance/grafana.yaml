@@ -1,0 +1,94 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    dashboards: grafana
+spec:
+  version: 13.1.3
+  config:
+    analytics:
+      check_for_updates: "false"
+      check_for_plugin_updates: "false"
+      reporting_enabled: "false"
+    auth:
+      disable_login_form: "true"
+    auth.github:
+      enabled: "true"
+      allow_assign_grafana_admin: "true"
+      role_attribute_path: "[login=='denniseffing'][0] && 'GrafanaAdmin' || [login=='feltenj'][0] && 'Admin'"
+      role_attribute_strict: "true"
+    date_formats:
+      use_browser_locale: "true"
+    explore:
+      enabled: "true"
+    log:
+      mode: console
+    metrics:
+      enabled: "true"
+    news:
+      news_feed_enabled: "false"
+    server:
+      root_url: https://grafana.internal.denniseffing.de
+  deployment:
+    spec:
+      strategy:
+        type: Recreate
+      template:
+        spec:
+          containers:
+            - name: grafana
+              env:
+                - name: GF_SECURITY_ADMIN_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-admin-password-secret
+                      key: GF_SECURITY_ADMIN_PASSWORD
+                - name: GF_AUTH_GITHUB_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-github-auth-secret
+                      key: client_id
+                - name: GF_AUTH_GITHUB_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-github-auth-secret
+                      key: client_secret
+              resources:
+                requests:
+                  cpu: 200m
+                  memory: 350Mi
+                limits:
+                  memory: 350Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: { drop: ["ALL"] }
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile: { type: RuntimeDefault }
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-pvc
+  httpRoute:
+    spec:
+      hostnames:
+        - grafana.internal.denniseffing.de
+      parentRefs:
+        - name: envoy-internal
+          namespace: network
+  persistentVolumeClaim:
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: longhorn
+  disableDefaultSecurityContext: All

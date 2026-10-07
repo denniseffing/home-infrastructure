@@ -17,7 +17,7 @@ spec:
       retries: 3
   values:
     grafana:
-      url: "http://grafana.monitoring.svc.cluster.local"
+      url: "http://grafana-service.monitoring.svc.cluster.local:3000"
       apiKeySecret:
         name: grafana-mcp-service-account
         key: token

@@ -67,6 +67,10 @@ spec:
     grafana:
       enabled: false
       forceDeployDashboards: true
+      operator:
+        dashboardsConfigMapRefEnabled: true
+        matchLabels:
+          dashboards: grafana
     prometheus:
       prometheusSpec:
         externalUrl: https://prometheus.internal.denniseffing.de

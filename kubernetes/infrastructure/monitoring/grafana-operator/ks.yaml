@@ -1,7 +1,28 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app grafana
+  name: &app grafana-operator
+  labels:
+    denniseffing.de/source: "public"
+  namespace: flux-system
+spec:
+  targetNamespace: monitoring
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: kubernetes/infrastructure/monitoring/grafana-operator/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: true
+  interval: 30m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app grafana-instance
   labels:
     denniseffing.de/source: "public"
   namespace: flux-system
@@ -12,20 +33,20 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: onepassword
-    - name: grafana-custom-dashboards
-  path: kubernetes/infrastructure/monitoring/grafana/app
+    - name: grafana-operator
+  path: kubernetes/infrastructure/monitoring/grafana-operator/instance
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  wait: true
+  wait: false
   interval: 30m
   timeout: 5m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: grafana-custom-dashboards
+  name: &app grafana-mcp
   labels:
     denniseffing.de/source: "public"
   namespace: flux-system
@@ -33,32 +54,11 @@ spec:
   targetNamespace: monitoring
   commonMetadata:
     labels:
-      app.kubernetes.io/name: grafana
-  path: kubernetes/infrastructure/monitoring/grafana/dashboards
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  wait: true
-  interval: 30m
-  timeout: 5m
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: grafana-mcp
-  labels:
-    denniseffing.de/source: "public"
-  namespace: flux-system
-spec:
-  targetNamespace: monitoring
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: grafana
+      app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-    - name: grafana
-  path: kubernetes/infrastructure/monitoring/grafana/addons/mcp
+    - name: grafana-instance
+  path: kubernetes/infrastructure/monitoring/grafana-operator/mcp
   prune: true
   sourceRef:
     kind: GitRepository

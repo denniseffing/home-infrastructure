@@ -15,9 +15,10 @@ tasks:
   infrastructure-crds:
     desc: Bootstrap infrastructure CRDs into the k3s cluster
     cmds:
-      - helmfile --file "{{.BOOTSTRAP_DIR}}/helmfile.d/00-crds.yaml" template -q | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -
+      - helmfile --file "{{.BOOTSTRAP_DIR}}/helmfile.d/00-crds.yaml" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -
     preconditions:
       - which helmfile
+      - which yq
 
   infrastructure-apps:
     desc: Boostrap infrastructure components into the k3s cluster
