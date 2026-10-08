@@ -33,7 +33,7 @@ spec:
               RAILS_ENV: production
               SELF_HOSTED: "true"
               TIME_ZONE: Europe/Berlin
-              APPLICATION_HOSTS: "timeline.internal.denniseffing.de,dawarich.default.svc.cluster.local,dawarich.default.svc,dawarich"
+              APPLICATION_HOSTS: "timeline.internal.denniseffing.de,timeline.denniseffing.de,dawarich.default.svc.cluster.local,dawarich.default.svc,dawarich"
               APPLICATION_PROTOCOL: http
               DOMAIN: timeline.internal.denniseffing.de
               STORE_GEODATA: "true"
@@ -136,6 +136,21 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+      external:
+        hostnames:
+          - "timeline.denniseffing.de"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+            matches:
+              - method: POST
+                path:
+                  type: Exact
+                  value: /api/v1/overland/batches
     persistence:
       storage:
         existingClaim: dawarich-storage
