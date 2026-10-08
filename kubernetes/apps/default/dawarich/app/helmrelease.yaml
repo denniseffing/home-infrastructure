@@ -33,7 +33,7 @@ spec:
               RAILS_ENV: production
               SELF_HOSTED: "true"
               TIME_ZONE: Europe/Berlin
-              APPLICATION_HOSTS: "timeline.internal.denniseffing.de,dawarich.default.svc.cluster.local,dawarich.default.svc,dawarich"
+              APPLICATION_HOSTS: "timeline.internal.denniseffing.de,timeline.denniseffing.de,dawarich.default.svc.cluster.local,dawarich.default.svc,dawarich"
               APPLICATION_PROTOCOL: http
               DOMAIN: timeline.internal.denniseffing.de
               STORE_GEODATA: "true"
@@ -136,6 +136,33 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+      external:
+        hostnames:
+          - "timeline.denniseffing.de"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /api/v1
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /api/v1/auth
+              - path:
+                  type: RegularExpression
+                  value: /api/v1/users/exist(\.[^/]*)?/?
+            filters:
+              - type: ExtensionRef
+                extensionRef:
+                  group: gateway.envoyproxy.io
+                  kind: HTTPRouteFilter
+                  name: dawarich-not-found
     persistence:
       storage:
         existingClaim: dawarich-storage

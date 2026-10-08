@@ -1,0 +1,7 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: dawarich-not-found
+spec:
+  directResponse:
+    statusCode: 404
