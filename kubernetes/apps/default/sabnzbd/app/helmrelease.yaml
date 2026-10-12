@@ -48,8 +48,8 @@ spec:
                   httpGet:
                     path: /api?mode=version
                     port: *port
-                  initialDelaySeconds: 30
-                  periodSeconds: 10
+                  initialDelaySeconds: 60
+                  periodSeconds: 20
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
