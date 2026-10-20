@@ -139,6 +139,9 @@ spec:
           - name: envoy-internal
             namespace: network
       external:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            path: /api/v1/health
         hostnames:
           - "timeline.denniseffing.de"
         parentRefs:
