@@ -21,6 +21,8 @@ spec:
       apiKeySecret:
         name: grafana-mcp-service-account
         key: token
+    serverAuth:
+      token: null
     disabledCategories:
       - admin
       - incident
