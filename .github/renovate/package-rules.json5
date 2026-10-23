@@ -13,7 +13,7 @@
     },
     {
       matchDatasources: ["docker"],
-      matchPackageNames: ["plexinc/pms-docker"],
+      matchPackageNames: ["ghcr.io/home-operations/plex"],
       automergeSchedule: ["after 3:00am and before 9:00am"],
     },
     {

@@ -3,14 +3,9 @@ kind: HelmRelease
 metadata:
   name: plex-media-server
 spec:
-  chart:
-    spec:
-      chart: plex-media-server
-      sourceRef:
-        kind: HelmRepository
-        name: plex
-        namespace: default
-      version: 1.4.0
+  chartRef:
+    kind: OCIRepository
+    name: plex-media-server
   driftDetection:
     mode: enabled
   install:
@@ -22,87 +17,93 @@ spec:
       strategy: rollback
       retries: 3
   interval: 5m
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |-
-              - op: add
-                path: /spec/template/spec/resourceClaims
-                value:
-                  - name: gpu
-                    resourceClaimTemplateName: plex
-              - op: add
-                path: /spec/template/spec/containers/0/resources/claims
-                value:
-                  - name: gpu
-            target:
-              kind: StatefulSet
-              name: plex-media-server
   values:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - joey
-    httpRoute:
-      enabled: true
-      annotations:
-        gatus.home-operations.com/endpoint: |-
-          path: /identity
-      parentRefs:
-        - name: envoy-external
-          namespace: network
-      hostnames:
-        - plex.denniseffing.de
-    image:
-      repository: plexinc/pms-docker
-      tag: 1.43.4.10903-e5521bd8c
-    initContainer:
-      script: |-
-        #!/bin/sh
-        echo "waiting for pre-existing pms database to uploaded..."
-
-        if [ -d "/config/Library" ]; then
-          echo "PMS library already exists, exiting."
-          exit 0
-        fi
-
-        # wait for the database archive to be manually copied to the server
-        while [ ! -f /pms.tgz ]; do sleep 2; done;
-
-        tar -xvzf /pms.tgz -C /config
-        rm pms.tgz
-
-        echo "Done."
-    extraVolumes:
-      - name: storage-1
-        nfs:
-          server: 192.168.178.52
-          path: /nfs/storage-1/plex
-      - name: storage-2
-        nfs:
-          server: 192.168.178.52
-          path: /nfs/storage-2/plex
-    extraVolumeMounts:
-      - name: storage-1
-        mountPath: "/mnt/storage-1"
-      - name: storage-2
-        mountPath: "/mnt/storage-2"
-    pms:
-      configStorage: 100Gi
-      resources:
-        requests:
-          cpu: 900m
-          memory: 500Mi
-        limits:
-          memory: 2Gi
-      storageClassName: longhorn
-    tolerations:
-      - key: nas
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
+    controllers:
+      plex-media-server:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/plex
+              tag: 1.43.4.10903@sha256:fdc6fe82bc7d8acd08fc0aa581fcb76722803ba5905e2537135a697347dd6149
+            env:
+              TZ: Europe/Berlin
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /identity
+                    port: &port 32400
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              claims:
+                - name: gpu
+              requests:
+                cpu: 900m
+                memory: 500Mi
+              limits:
+                memory: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: plex
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: plex-media-server
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            path: /identity
+        hostnames:
+          - plex.denniseffing.de
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+    persistence:
+      config:
+        existingClaim: pms-config-plex-media-server-0
+      transcode:
+        type: emptyDir
+      tmp:
+        type: emptyDir
+      storage-1:
+        type: nfs
+        server: 192.168.178.52
+        path: /nfs/storage-1/plex
+        globalMounts:
+          - path: /mnt/storage-1
+      storage-2:
+        type: nfs
+        server: 192.168.178.52
+        path: /nfs/storage-2/plex
+        globalMounts:
+          - path: /mnt/storage-2
