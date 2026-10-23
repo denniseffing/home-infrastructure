@@ -69,6 +69,7 @@ spec:
       forceDeployDashboards: true
       operator:
         dashboardsConfigMapRefEnabled: true
+        folder: monitoring
         matchLabels:
           dashboards: grafana
     prometheus:
