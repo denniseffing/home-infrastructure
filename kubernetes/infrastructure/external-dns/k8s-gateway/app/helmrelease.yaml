@@ -16,15 +16,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/hostname
-                  operator: In
-                  values:
-                    - ross
     domain: internal.denniseffing.de
     resources:
       requests:
