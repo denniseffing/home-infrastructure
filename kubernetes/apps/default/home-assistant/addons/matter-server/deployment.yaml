@@ -20,7 +20,7 @@ spec:
                       - joey
       containers:
         - name: matter-server
-          image: ghcr.io/matter-js/matterjs-server:1.5.2
+          image: ghcr.io/matter-js/matterjs-server:1.5.3
           env:
             - name: NOBLE_BINDINGS
               value: dbus
