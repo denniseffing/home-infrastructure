@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: home-assistant-matter-server
   labels:
+    recurring-job.longhorn.io/source: enabled
+    recurring-job-group.longhorn.io/weekly-backup: enabled
     app.kubernetes.io/name: home-assistant-matter-server
 spec:
   accessModes:
