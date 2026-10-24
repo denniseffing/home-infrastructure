@@ -48,7 +48,7 @@ spec:
               containerPort: 8081
           resources:
             limits:
-              squat.ai/zbt-2: "1"
+              devic.es/zbt-2: "1"
           securityContext:
             capabilities:
               add:
