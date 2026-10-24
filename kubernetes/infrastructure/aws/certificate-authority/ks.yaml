@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: cert-manager
   path: ./kubernetes/infrastructure/aws/certificate-authority/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
