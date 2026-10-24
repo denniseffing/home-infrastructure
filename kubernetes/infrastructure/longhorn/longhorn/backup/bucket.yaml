@@ -1,0 +1,18 @@
+apiVersion: s3.services.k8s.aws/v1alpha1
+kind: Bucket
+metadata:
+  name: longhorn-backups
+spec:
+  name: longhorn-backups-514266269969-eu-central-1-an
+  namespace: account-regional
+  createBucketConfiguration:
+    locationConstraint: eu-central-1
+  encryption:
+    rules:
+      - applyServerSideEncryptionByDefault:
+          sseAlgorithm: AES256
+  publicAccessBlock:
+    blockPublicACLs: true
+    blockPublicPolicy: true
+    ignorePublicACLs: true
+    restrictPublicBuckets: true

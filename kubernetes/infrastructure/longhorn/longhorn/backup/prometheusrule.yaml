@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: longhorn-backup-rules
+spec:
+  groups:
+    - name: longhorn-backup
+      rules:
+        - alert: LonghornBackupFailed
+          expr: |-
+            longhorn_backup_state == 4
+          for: 15m
+          annotations:
+            summary: >-
+              Longhorn backup {{ $labels.backup }} of volume {{ $labels.volume }} failed
+          labels:
+            severity: critical
+
+        - alert: LonghornBackupStale
+          expr: |-
+            (time() - longhorn_volume_last_backup_at) > (8 * 24 * 3600) and longhorn_volume_last_backup_at > 0
+          for: 1h
+          annotations:
+            summary: >-
+              Volume {{ $labels.volume }} ({{ $labels.pvc_namespace }}/{{ $labels.pvc }}) has not been backed up for {{ $value | humanizeDuration }}
+          labels:
+            severity: critical

@@ -1,0 +1,101 @@
+apiVersion: policies.kyverno.io/v1
+kind: NamespacedMutatingPolicy
+metadata:
+  name: longhorn-aws-iamra
+spec:
+  failurePolicy: Ignore
+  autogen:
+    podControllers:
+      controllers: []
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+  matchConditions:
+    - name: is-longhorn-manager-or-instance-manager
+      expression: >-
+        object.metadata.?labels['app'].orValue('') == 'longhorn-manager' ||
+        object.metadata.?labels['longhorn.io/component'].orValue('') == 'instance-manager'
+    - name: not-already-injected
+      expression: >-
+        !object.spec.?initContainers.orValue([]).exists(c, c.name == 'iam-roles-anywhere-sidecar')
+  mutations:
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: >-
+          Object{
+            spec: Object.spec{
+              initContainers: [
+                Object.spec.initContainers{
+                  name: "iam-roles-anywhere-sidecar",
+                  image: "ghcr.io/denniseffing/aws-signing-helper:1.8.5",
+                  restartPolicy: "Always",
+                  env: [
+                    Object.spec.initContainers.env{
+                      name: "TRUST_ANCHOR_ARN",
+                      value: "arn:aws:rolesanywhere:eu-central-1:514266269969:trust-anchor/656d3226-4a2b-43b5-924d-b9137a11c915"
+                    },
+                    Object.spec.initContainers.env{
+                      name: "PROFILE_ARN",
+                      value: "arn:aws:rolesanywhere:eu-central-1:514266269969:profile/5659f964-405f-48c5-9e77-1e3e55e0b90b"
+                    },
+                    Object.spec.initContainers.env{
+                      name: "ROLE_ARN",
+                      value: "arn:aws:iam::514266269969:role/longhorn-backup"
+                    }
+                  ],
+                  securityContext: Object.spec.initContainers.securityContext{
+                    allowPrivilegeEscalation: false,
+                    privileged: false,
+                    readOnlyRootFilesystem: true,
+                    runAsNonRoot: true,
+                    runAsUser: 1000,
+                    runAsGroup: 1000
+                  },
+                  volumeMounts: [
+                    Object.spec.initContainers.volumeMounts{
+                      name: "iamra-certificate",
+                      mountPath: "/iamra",
+                      readOnly: true
+                    }
+                  ],
+                  resources: Object.spec.initContainers.resources{
+                    requests: {"cpu": "10m", "memory": "32Mi"},
+                    limits: {"memory": "32Mi"}
+                  }
+                }
+              ],
+              containers: [
+                Object.spec.containers{
+                  name: object.spec.containers[0].name,
+                  env: [
+                    Object.spec.containers.env{
+                      name: "AWS_EC2_METADATA_SERVICE_ENDPOINT",
+                      value: "http://localhost:9911/"
+                    }
+                  ]
+                }
+              ],
+              volumes: [
+                Object.spec.volumes{
+                  name: "iamra-certificate",
+                  csi: Object.spec.volumes.csi{
+                    driver: "csi.cert-manager.io",
+                    readOnly: true,
+                    volumeAttributes: {
+                      "csi.cert-manager.io/issuer-name": "aws-trusted-issuer",
+                      "csi.cert-manager.io/issuer-group": "cert-manager.io",
+                      "csi.cert-manager.io/common-name": "${SERVICE_ACCOUNT_NAME}.${POD_NAMESPACE}",
+                      "csi.cert-manager.io/duration": "336h",
+                      "csi.cert-manager.io/renew-before": "168h",
+                      "csi.cert-manager.io/is-ca": "false",
+                      "csi.cert-manager.io/key-usages": "client auth, server auth, digital signature",
+                      "csi.cert-manager.io/fs-group": "1000"
+                    }
+                  }
+                }
+              ]
+            }
+          }
