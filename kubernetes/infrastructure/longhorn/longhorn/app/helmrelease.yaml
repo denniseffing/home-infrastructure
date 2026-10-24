@@ -12,6 +12,9 @@ spec:
   interval: 5m
   timeout: 20m
   values:
+    defaultBackupStore:
+      backupTarget: s3://longhorn-backups-514266269969-eu-central-1-an@eu-central-1/
+      backupTargetCredentialSecret: aws-backup-credentials
     defaultSettings:
       defaultDataLocality: best-effort
       defaultReplicaCount: 1
