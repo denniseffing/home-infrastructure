@@ -9,10 +9,12 @@ spec:
     kind: OCIRepository
     name: ack-iam-controller
   install:
+    crds: CreateReplace
     disableSchemaValidation: true
     remediation:
       retries: 3
   upgrade:
+    crds: CreateReplace
     cleanupOnFail: true
     disableSchemaValidation: true
     remediation:
