@@ -1,0 +1,7 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: aws-trusted-issuer
+spec:
+  ca:
+    secretName: aws-trust-anchor-cert
