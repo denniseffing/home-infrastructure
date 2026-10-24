@@ -10,6 +10,7 @@ resources:
   - github-actions-runner
   - intel-gpu-resource-driver
   - kube-system
+  - kyverno
   - longhorn
   - network
   - monitoring
