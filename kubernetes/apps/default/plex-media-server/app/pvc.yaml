@@ -67,3 +67,16 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pms-config-plex-media-server-0
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: longhorn
+  volumeName: pvc-f9e1cc13-7454-4042-a458-1fed41aa4b91
