@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - audiobookshelf/ks.yaml
-  - bazarr/ks.yaml
   - dawarich/ks.yaml
   - home-assistant/ks.yaml
   - memos/ks.yaml
