@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: aws-certificate-authority
+    - name: ack-aws-trust-anchor
   path: ./kubernetes/infrastructure/aws/ack-iam-controller/app
   prune: true
   sourceRef:
