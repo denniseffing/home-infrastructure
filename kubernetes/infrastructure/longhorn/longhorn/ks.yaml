@@ -33,7 +33,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: ack-s3-controller
-    - name: kyverno
     - name: longhorn
     - name: longhorn-aws-trust-anchor
   path: ./kubernetes/infrastructure/longhorn/longhorn/backup

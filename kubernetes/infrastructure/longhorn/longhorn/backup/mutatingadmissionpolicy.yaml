@@ -1,12 +1,10 @@
-apiVersion: policies.kyverno.io/v1
-kind: NamespacedMutatingPolicy
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionPolicy
 metadata:
   name: longhorn-aws-iamra
 spec:
   failurePolicy: Ignore
-  autogen:
-    podControllers:
-      controllers: []
+  reinvocationPolicy: Never
   matchConstraints:
     resourceRules:
       - apiGroups: [""]
@@ -99,3 +97,14 @@ spec:
               ]
             }
           }
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: longhorn-aws-iamra
+spec:
+  policyName: longhorn-aws-iamra
+  matchResources:
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: longhorn
