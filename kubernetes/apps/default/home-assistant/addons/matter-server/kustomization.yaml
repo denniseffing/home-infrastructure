@@ -15,3 +15,5 @@ configMapGenerator:
       - home-infrastructure-overview.json=./resources/home-infrastructure-overview.json
 generatorOptions:
   disableNameSuffixHash: true
+  labels:
+    app.kubernetes.io/managed-by: grafana-operator

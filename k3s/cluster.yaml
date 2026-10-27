@@ -41,6 +41,72 @@
         name: nfs-server
         state: restarted
         enabled: true
+- name: Export disk power state metrics on rachel
+  hosts: rachel
+  become: true
+  tasks:
+    - name: Install hdparm
+      package:
+        name: hdparm
+        state: present
+    - name: Create node-exporter textfile collector directory
+      file:
+        path: /var/lib/node_exporter/textfile_collector
+        state: directory
+        mode: "0755"
+    - name: Install disk power state script
+      copy:
+        dest: /usr/local/bin/disk-power-state.sh
+        mode: "0755"
+        content: |
+          #!/bin/bash
+          dir=/var/lib/node_exporter/textfile_collector
+          tmp=$(mktemp -p "$dir")
+          {
+            echo "# HELP node_disk_spinning 1 if the disk is spinning (active/idle), 0 if spun down (standby)"
+            echo "# TYPE node_disk_spinning gauge"
+            for d in /dev/sdb /dev/sdc; do
+              state=$(hdparm -C "$d" 2>/dev/null | awk '/drive state/ {print $NF}')
+              case "$state" in
+                standby)     v=0 ;;
+                active/idle) v=1 ;;
+                *)           continue ;;
+              esac
+              echo "node_disk_spinning{device=\"${d#/dev/}\"} $v"
+            done
+          } > "$tmp"
+          chmod 644 "$tmp"
+          mv "$tmp" "$dir/disk_power.prom"
+    - name: Install disk power state service
+      copy:
+        dest: /etc/systemd/system/disk-power-state.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Export disk power state for node-exporter
+
+          [Service]
+          Type=oneshot
+          ExecStart=/usr/local/bin/disk-power-state.sh
+    - name: Install disk power state timer
+      copy:
+        dest: /etc/systemd/system/disk-power-state.timer
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Export disk power state for node-exporter every minute
+
+          [Timer]
+          OnCalendar=minutely
+
+          [Install]
+          WantedBy=timers.target
+    - name: Enable disk power state timer
+      systemd:
+        name: disk-power-state.timer
+        enabled: true
+        state: started
+        daemon_reload: true
 - name: Prepare nodes for longhorn
   hosts: k3s_cluster
   become: true
