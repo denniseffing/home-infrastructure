@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 3.3.4
+              tag: 3.4.0
             env:
               PAPERLESS_APP_TITLE: "Paperless"
               PAPERLESS_APPS: "allauth.socialaccount.providers.github"
