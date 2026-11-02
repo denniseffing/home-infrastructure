@@ -25,6 +25,7 @@
       loop:
         - { source: /mnt/storage-1, destination: /nfs/storage-1 }
         - { source: /mnt/storage-2, destination: /nfs/storage-2 }
+        - { source: /mnt/storage-3, destination: /nfs/storage-3 }
     - name: Export NFS shares
       lineinfile:
         path: /etc/exports
@@ -33,6 +34,7 @@
       loop:
         - /nfs/storage-1
         - /nfs/storage-2
+        - /nfs/storage-3
       notify:
         - Restart NFS server
   handlers:

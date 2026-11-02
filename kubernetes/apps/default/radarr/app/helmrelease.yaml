@@ -132,3 +132,9 @@ spec:
         path: /nfs/storage-2/plex
         globalMounts:
           - path: /media-2
+      media-3:
+        type: nfs
+        server: 192.168.178.52
+        path: /nfs/storage-3/plex
+        globalMounts:
+          - path: /media-3

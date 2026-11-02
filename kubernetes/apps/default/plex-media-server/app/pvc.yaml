@@ -69,6 +69,29 @@ spec:
   volumeMode: Filesystem
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-storage-3
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 3Ti
+  local:
+    path: "/mnt/storage-3/plex"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - rachel
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pms-config-plex-media-server-0

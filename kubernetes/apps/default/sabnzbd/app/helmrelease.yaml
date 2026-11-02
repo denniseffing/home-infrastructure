@@ -130,3 +130,8 @@ spec:
         hostPath: /mnt/storage-2/plex
         globalMounts:
           - path: /media-2
+      media-3:
+        type: hostPath
+        hostPath: /mnt/storage-3/plex
+        globalMounts:
+          - path: /media-3
