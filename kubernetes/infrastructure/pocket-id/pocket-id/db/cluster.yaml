@@ -2,6 +2,10 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: pocket-id-postgres
+  labels:
+    app.kubernetes.io/name: pocket-id
+    app.kubernetes.io/instance: pocket-id
+    app.kubernetes.io/component: database
 spec:
   instances: 2
   affinity:

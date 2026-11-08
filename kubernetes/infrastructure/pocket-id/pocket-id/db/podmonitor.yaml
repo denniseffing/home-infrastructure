@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: pocket-id-postgres
+  labels:
+    app.kubernetes.io/name: pocket-id
+    app.kubernetes.io/instance: pocket-id
+    app.kubernetes.io/component: database
+spec:
+  selector:
+    matchLabels:
+      cnpg.io/cluster: pocket-id-postgres
+  podMetricsEndpoints:
+    - port: metrics
