@@ -8,6 +8,8 @@ spec:
     name: envoy-gateway
   interval: 1h
   values:
+    crds:
+      enabled: false
     global:
       imageRegistry: mirror.gcr.io
     config:

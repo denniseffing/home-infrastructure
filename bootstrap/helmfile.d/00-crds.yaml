@@ -15,6 +15,7 @@ releases:
       - crds:
           gatewayAPI:
             enabled: "true"
+            channel: standard
           envoyGateway:
             enabled: "true"
   - name: kube-prometheus-stack
