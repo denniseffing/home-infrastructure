@@ -1,0 +1,17 @@
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDUser
+metadata:
+  name: denniseffing
+spec:
+  userInfoSecretRef:
+    name: pocket-id-user-denniseffing
+  admin: true
+---
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDUser
+metadata:
+  name: janinefelten
+spec:
+  userInfoSecretRef:
+    name: pocket-id-user-janinefelten
+  admin: true
