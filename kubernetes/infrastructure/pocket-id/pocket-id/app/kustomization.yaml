@@ -5,4 +5,7 @@ resources:
   - externalsecret-users.yaml
   - pocketidinstance.yaml
   - pocketidusers.yaml
+  - pocketidusergroups.yaml
+  - pocketidoidcclients.yaml
+  - clusterrolebinding.yaml
   - securitypolicy.yaml

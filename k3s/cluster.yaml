@@ -147,6 +147,36 @@
         net.ipv6.conf.eth0.accept_ra_rt_info_max_plen: 64
 - name: Set up k3s cluster
   hosts: k3s_cluster
+  pre_tasks:
+    - name: Install API server authentication configuration
+      become: true
+      when: k3s_control_node | default(false)
+      block:
+        - name: Create k3s config directory
+          file:
+            path: /etc/rancher/k3s
+            state: directory
+            mode: "0755"
+        - name: Write authentication configuration
+          copy:
+            dest: /etc/rancher/k3s/authentication-config.yaml
+            mode: "0644"
+            # language=YAML
+            content: |
+              apiVersion: apiserver.config.k8s.io/v1
+              kind: AuthenticationConfiguration
+              jwt:
+                - issuer:
+                    url: https://auth.internal.denniseffing.de
+                    audiences:
+                      - kubernetes
+                  claimMappings:
+                    username:
+                      claim: preferred_username
+                      prefix: "oidc:"
+                    groups:
+                      claim: groups
+                      prefix: "oidc:"
   vars:
     k3s_become: true
     k3s_etcd_datastore: true
@@ -166,6 +196,7 @@
       etcd-expose-metrics: true
       secrets-encryption: true
       kube-apiserver-arg:
+        - "authentication-config=/etc/rancher/k3s/authentication-config.yaml"
         - "feature-gates=DRAExtendedResource=true,DRADeviceTaints=true,DRAAdminAccess=true,DRAPartitionableDevices=true,DRAResourceClaimDeviceStatus=true,ResourceHealthStatus=true,DRAPrioritizedList=true"
         - "runtime-config=resource.k8s.io/v1beta1=true,resource.k8s.io/v1alpha3=true"
       kube-controller-manager-arg:
