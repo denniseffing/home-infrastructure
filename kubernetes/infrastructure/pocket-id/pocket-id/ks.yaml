@@ -1,0 +1,47 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app pocket-id
+  namespace: flux-system
+  labels:
+    denniseffing.de/source: "public"
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+    - name: pocket-id-db
+    - name: pocket-id-operator
+  interval: 30m
+  path: kubernetes/infrastructure/pocket-id/pocket-id/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  targetNamespace: pocket-id
+  timeout: 5m
+  wait: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app pocket-id-db
+  namespace: flux-system
+  labels:
+    denniseffing.de/source: "public"
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: cloudnative-pg
+  interval: 30m
+  path: kubernetes/infrastructure/pocket-id/pocket-id/db
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  targetNamespace: pocket-id
+  timeout: 10m
+  wait: true

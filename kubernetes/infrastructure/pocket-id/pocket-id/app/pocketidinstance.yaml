@@ -1,0 +1,30 @@
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDInstance
+metadata:
+  name: pocket-id
+spec:
+  appUrl: https://auth.internal.denniseffing.de
+  encryptionKey:
+    valueFrom:
+      secretKeyRef:
+        name: pocket-id-encryption
+        key: encryptionKey
+  databaseUrl:
+    valueFrom:
+      secretKeyRef:
+        name: pocket-id-postgres-app
+        key: uri
+  fileBackend: database
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+  route:
+    enabled: true
+    parentRefs:
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: envoy-internal
+        namespace: network

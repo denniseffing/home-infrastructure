@@ -1,0 +1,34 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pocket-id-postgres
+spec:
+  instances: 2
+  affinity:
+    enablePodAntiAffinity: true
+    podAntiAffinityType: required
+    topologyKey: kubernetes.io/hostname
+  bootstrap:
+    initdb:
+      database: pocket-id
+      owner: pocket-id
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6-standard-bookworm
+  postgresql:
+    parameters:
+      max_connections: "20"
+      shared_buffers: "32MB"
+      effective_cache_size: "64MB"
+      work_mem: "2MB"
+      maintenance_work_mem: "16MB"
+      max_wal_size: "128MB"
+      min_wal_size: "32MB"
+      random_page_cost: "1.1"
+  resources:
+    requests:
+      cpu: 10m
+      memory: 128Mi
+    limits:
+      memory: 192Mi
+  storage:
+    size: 1Gi
+    storageClass: longhorn
