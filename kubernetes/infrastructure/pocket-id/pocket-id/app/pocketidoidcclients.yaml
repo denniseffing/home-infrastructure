@@ -11,3 +11,16 @@ spec:
   clientID: kubernetes
   isPublic: true
   pkceEnabled: true
+---
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDOIDCClient
+metadata:
+  name: envoy-gateway
+spec:
+  callbackUrls:
+    - https://auth.internal.denniseffing.de/oauth2/callback
+  clientID: envoy-gateway
+  name: Homelab
+  secret:
+    keys:
+      clientSecret: client-secret

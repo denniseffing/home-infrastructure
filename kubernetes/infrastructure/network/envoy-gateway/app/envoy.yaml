@@ -215,23 +215,18 @@ kind: SecurityPolicy
 metadata:
   name: envoy-internal-auth
 spec:
-  extAuth:
-    failOpen: false
-    headersToExtAuth:
-      - Cookie
-      - X-Auth-Request-Redirect
-    http:
-      backendRefs:
-        - group: ""
-          kind: Service
-          name: oauth2-proxy
-          namespace: network
-          port: 80
-      headersToBackend:
-        - X-Auth-Request-Email
-        - X-Auth-Request-Groups
-        - X-Auth-Request-Preferred-Username
-        - X-Auth-Request-User
+  oidc:
+    clientID: envoy-gateway
+    clientSecret:
+      name: envoy-gateway-oidc-credentials
+      namespace: pocket-id
+    cookieDomain: internal.denniseffing.de
+    cookieNames:
+      suffix: pocket-id
+    logoutPath: /oauth2/logout
+    provider:
+      issuer: https://auth.internal.denniseffing.de
+    redirectURL: https://auth.internal.denniseffing.de/oauth2/callback
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
