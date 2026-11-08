@@ -3,4 +3,5 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - cilium/ks.yaml
+  - coredns-custom/ks.yaml
   - device-plugin/ks.yaml
