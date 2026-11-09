@@ -28,7 +28,7 @@ spec:
               initContainers: [
                 Object.spec.initContainers{
                   name: "iam-roles-anywhere-sidecar",
-                  image: "ghcr.io/denniseffing/aws-signing-helper:1.8.5",
+                  image: "ghcr.io/denniseffing/aws-signing-helper:1.8.6",
                   restartPolicy: "Always",
                   env: [
                     Object.spec.initContainers.env{
