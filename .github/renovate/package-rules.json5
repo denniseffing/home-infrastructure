@@ -24,6 +24,12 @@
         "bitnami-labs/sealed-secrets",
       ],
       allowedVersions: "!/0.31.0/",
+    },
+    {
+      // xpumd 2.4.0 renamed its gRPC API, which breaks intel-gpu-resource-driver <= 0.12.1
+      matchDatasources: ["docker"],
+      matchPackageNames: ["ghcr.io/intel/xpumanager/charts/xpumd"],
+      allowedVersions: "<2.4.0",
     }
   ]
 }
