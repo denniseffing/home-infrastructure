@@ -1,0 +1,27 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: pe-weber
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: pe-weber
+  # Preserve the gateway's compression and timeout settings.
+  mergeType: StrategicMerge
+  requestBuffer:
+    # Enforce the actual body size, including requests without Content-Length.
+    # Envoy rejects oversized bodies with HTTP 413 before forwarding them.
+    limit: 16Ki
+  rateLimit:
+    local:
+      rules:
+        # Limit all POST paths so alternate spellings cannot bypass protection.
+        # The bucket is shared by all clients, separately for each Envoy replica.
+        # Excess requests return HTTP 429; GET requests do not consume tokens.
+        - clientSelectors:
+            - methods:
+                - value: POST
+          limit:
+            requests: 5
+            unit: Minute
