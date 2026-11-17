@@ -1,0 +1,175 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: error-page-tests
+  annotations:
+    gatus.home-operations.com/enabled: "false"
+spec:
+  hostnames:
+    - errors.internal.denniseffing.de
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /400
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-400
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /401
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-401
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /403
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-403
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /404
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-404
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /429
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-429
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /500
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-500
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /502
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-502
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /503
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-503
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /504
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: gateway.envoyproxy.io
+            kind: HTTPRouteFilter
+            name: error-page-test-504
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-400
+spec:
+  directResponse:
+    statusCode: 400
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-401
+spec:
+  directResponse:
+    statusCode: 401
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-403
+spec:
+  directResponse:
+    statusCode: 403
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-404
+spec:
+  directResponse:
+    statusCode: 404
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-429
+spec:
+  directResponse:
+    statusCode: 429
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-500
+spec:
+  directResponse:
+    statusCode: 500
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-502
+spec:
+  directResponse:
+    statusCode: 502
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-503
+spec:
+  directResponse:
+    statusCode: 503
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: HTTPRouteFilter
+metadata:
+  name: error-page-test-504
+spec:
+  directResponse:
+    statusCode: 504
