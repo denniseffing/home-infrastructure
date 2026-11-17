@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="robots" content="noindex, nofollow">
+    <title>HTTP %RESPONSE_CODE% · A small interruption</title>
+    <style>
+      /* Envoy formats this body: avoid literal percent signs except command operators. */
+      :root {
+        color-scheme: light dark;
+        --background: #fafafa;
+        --text: #18181b;
+        --muted: #71717a;
+        --border: #e4e4e7;
+        --button: #18181b;
+        --button-text: #fafafa;
+        --button-hover: #3f3f46;
+        --fur: #d9a273;
+        --fur-light: #f6e6ce;
+        --ink: #665044;
+        --pink: #d9a19a;
+        --prop: #a3b5ac;
+        --paper: #ede5d6;
+        --ground: #e4e4e7;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #09090b;
+          --text: #fafafa;
+          --muted: #a1a1aa;
+          --border: #27272a;
+          --button: #fafafa;
+          --button-text: #18181b;
+          --button-hover: #d4d4d8;
+          --ground: #3f3f46;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 48px 24px;
+        background: var(--background);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
+        width: min(480px, calc(100vw - 48px));
+        text-align: center;
+      }
+      .eyebrow { margin: 0; font-size: 12px; font-weight: 500; letter-spacing: .3px; color: var(--muted); }
+      .mascot { display: block; width: min(340px, calc(100vw - 48px)); height: auto; margin: 16px auto 28px; }
+      .badge {
+        display: inline-block;
+        padding: 4px 9px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        color: var(--muted);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      h1 { margin: 20px 0 12px; font-size: clamp(28px, 5vw, 36px); font-weight: 600; line-height: 1.2; letter-spacing: -1px; text-wrap: balance; }
+      .message p { margin: 0 auto; max-width: 40ch; color: var(--muted); font-size: 15px; line-height: 1.75; text-wrap: pretty; }
+      .action {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin-top: 32px;
+        padding: 11px 17px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: var(--button);
+        color: var(--button-text);
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .action:hover { background: var(--button-hover); }
+      .action:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+      footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; line-height: 1.6; }
+      .variant { display: none; }
+      [data-code="400"] .bad-request,
+      [data-code="401"] .unauthorized,
+      [data-code="403"] .forbidden,
+      [data-code="404"] .not-found,
+      [data-code="429"] .rate-limited,
+      [data-code="502"] .unavailable,
+      [data-code="503"] .unavailable,
+      [data-code="504"] .timeout { display: block; }
+      :is([data-code="400"], [data-code="401"], [data-code="403"], [data-code="404"], [data-code="429"], [data-code="502"], [data-code="503"], [data-code="504"]) .fallback { display: none; }
+      .line { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .fur { fill: var(--fur); stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .fur-light { fill: var(--fur-light); }
+      .pink { fill: var(--pink); }
+      .accessory { fill: var(--prop); stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .paper { fill: var(--paper); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+      .stripe { fill: none; stroke: var(--ink); stroke-opacity: .35; stroke-width: 3; stroke-linecap: round; }
+      .ground { fill: none; stroke: var(--ground); stroke-width: 1.5; stroke-linecap: round; }
+    </style>
+  </head>
+  <body>
+    <main data-code="%RESPONSE_CODE%">
+      <p class="eyebrow">A small interruption</p>
+      <svg class="mascot" viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cat-title cat-description">
+        <title id="cat-title">A little cat, here to keep you company</title>
+        <desc id="cat-description">A full-body ginger cat in a hand-drawn storybook scene, with a different activity for each error.</desc>
+        <defs>
+          <!-- Small head, long body, pointed ears, visible paws, and a sweeping tail. -->
+          <g id="sitting-cat">
+            <path class="fur" d="M185 213c33 12 75 7 76-19 1-14-11-19-17-12-5 7 5 10 5 17-1 11-29 14-49 5z"/>
+            <path class="fur" d="M140 109c-8 21-18 42-15 65-18 12-21 40-5 44h76c12-4 9-12-1-15 1-20-5-59-20-82z"/>
+            <path class="fur-light" d="M147 120c-4 18-10 49-7 73l11 14h21l-2-68z"/>
+            <path class="stripe" d="M181 147l-9 6m13 6-10 5m-45 14 10 4m-15 8 10 4m101 16 3 9m10-18 5 7"/>
+            <path class="fur" d="M145 152l-5 55c-8 2-9 10 0 12h13c5-1 6-5 6-9l5-55"/>
+            <path class="fur" d="M166 155l1 53c-5 2-6 9 1 11h14c7-2 4-8 2-13l-1-53"/>
+            <path class="line" d="M143 213v5m7-5v5m20-5v5m7-5v5m-58-8q11-2 17 3"/>
+            <path class="fur" d="M125 92l-4-34 23 16c8-3 19-3 26-1l20-21-1 38 5 12-6-1c-1 14-14 27-29 28-18 1-33-9-36-24l-6 1z"/>
+            <path class="pink" d="M126 65l3 20 9-8zM184 62l-10 14 10 7z"/>
+            <path class="fur-light" d="M139 103q17-10 36 1l-3 17q-16 13-30-1z"/>
+            <path class="stripe" d="M149 77l3 10m8-11v10m9-9-3 10"/>
+            <path class="line" d="M136 96q4-3 8 0m27-1q4-3 8 0"/>
+            <ellipse cx="141" cy="100" rx="2.5" ry="4" fill="var(--ink)"/>
+            <ellipse cx="174" cy="99" rx="2.5" ry="4" fill="var(--ink)"/>
+            <path class="pink" d="M153 108l8-1-3 5z"/>
+            <path class="line" d="M158 112v4m0 0q-4 5-8 0m8 0q4 4 8-1m-28-5-15-3m15 8-16 1m56-7 16-5m-15 10 16 1"/>
+          </g>
+          <g id="walking-cat">
+            <path class="fur" d="M216 140c35-18 50-45 44-68-3-13-15-12-14-2 9 24-11 42-38 53z"/>
+            <path class="fur" d="M193 156l6 47 14 7c6 7-2 10-13 7l-14-8-14-42m-41-10-9 48-10 5c-5 8 8 10 17 5l13-48"/>
+            <path class="fur" d="M102 123c17-17 39-22 61-16 18 5 28 9 45 13 17 7 22 24 9 39-12 12-45 18-64 12l-26-7-20-4z"/>
+            <path class="fur-light" d="M110 138l14 12 26 17c-7 4-26-1-36-5z"/>
+            <path class="fur" d="M112 150l-4 48-14 9c-5 8 7 12 17 6l10-9 9-47m54 0-9 45 8 8c5 8-7 10-14 5l-7-10 5-43"/>
+            <path class="line" d="M98 209l1 5m7-6 1 5m66-2-2 5m7-6-1 5"/>
+            <path class="stripe" d="M146 111l-4 13m16-9-5 13m29-7-4 11m31-3-10 6m-82 27 11 3m71 1-10-2m48-49 9 4m-2-14 10 3"/>
+            <g transform="rotate(-12 106 107)">
+              <path class="fur" d="M77 95l-2-29 22 17c8-4 17-4 24-2l20-18-4 34 4 14-6-1c-3 18-17 28-33 26-15-2-28-11-28-25l-5-2z"/>
+              <path class="pink" d="M81 76l3 16 8-7zM134 74l-9 11 9 7z"/>
+              <path class="fur-light" d="M84 114q19-13 36-2l-4 18q-19 9-30-7z"/>
+              <path class="stripe" d="M100 85l2 10m9-11-1 10"/>
+              <path class="line" d="M83 104q4-3 8 0m25-2q4-3 8 0"/>
+              <ellipse cx="88" cy="107" rx="2.5" ry="4" fill="var(--ink)"/>
+              <ellipse cx="120" cy="105" rx="2.5" ry="4" fill="var(--ink)"/>
+              <path class="pink" d="M99 115h8l-4 5z"/>
+              <path class="line" d="M103 120v3m0 0q-4 4-8-1m8 1q5 4 8-2m-24-3-17-3m18 9-17 2m48-10 16-5m-16 11 17 1"/>
+            </g>
+          </g>
+        </defs>
+        <path class="ground" d="M55 224q42-2 80 0t83 0 87 0m-242 6 18 1m196-2 13-1"/>
+        <g class="illustration variant bad-request">
+          <title>A curious cat caught in a trail of yarn</title>
+          <use href="#walking-cat" transform="translate(5 0)"/>
+          <circle class="accessory" cx="68" cy="206" r="17"/>
+          <path class="line" d="M56 194q19 2 25 20m-30-9q19-12 32 2m-14-17q-12 12 5 31m10-10c32 17 35-5 53-1s35 23 51 12"/>
+          <path class="ground" d="M47 130l-5-5m11-2-1-8"/>
+        </g>
+        <g class="illustration variant unauthorized">
+          <title>A sitting cat offering a little key</title>
+          <use href="#sitting-cat" transform="translate(-15 0)"/>
+          <path class="accessory" d="M184 179l32 23-4 6-9-6-4 5-6-5 4-4-17-12z"/>
+          <circle class="accessory" cx="178" cy="178" r="11"/>
+          <circle cx="178" cy="178" r="4" fill="var(--paper)"/>
+          <path class="fur" d="M153 156q7 7 23 10c11 2 10 14 0 14-16-1-26-7-30-11"/>
+          <path class="line" d="M175 170l-1 6m5-4-1 5"/>
+        </g>
+        <g class="illustration variant forbidden">
+          <title>A patient cat sitting beside a locked cat flap</title>
+          <path class="paper" d="M231 222l-2-103q-1-5 5-5l59 2 2 106z"/>
+          <path class="accessory" d="M241 222l-1-64q23-27 45 0l1 64z"/>
+          <path class="line" d="M253 187v-6q0-12 12-12 11 0 11 12v6"/>
+          <rect class="paper" x="252" y="187" width="25" height="21" rx="3"/>
+          <path class="line" d="M264 195v6"/>
+          <use href="#sitting-cat" transform="translate(-28 0)"/>
+        </g>
+        <g class="illustration variant not-found">
+          <title>A full-body cat investigating an empty cardboard box</title>
+          <use href="#walking-cat" transform="translate(335 0) scale(-1 1)"/>
+          <path class="paper" d="M245 182l37 11 32-13-1 37-31 12-37-10z"/>
+          <path class="paper" d="M245 182l-12-12 36 7 13 16 13-18 33-7-14 12-32 13z"/>
+          <path class="line" d="M282 195v30m9-18 11-4"/>
+          <path class="ground" d="M284 136l-4-7m15 9 4-7"/>
+        </g>
+        <g class="illustration variant rate-limited">
+          <title>A sleeping cat stretched out with its paws tucked under its chin</title>
+          <path class="fur" d="M137 207c-18-37 12-79 53-77 43 0 60 28 55 55l-6 23z"/>
+          <path class="fur-light" d="M154 187q46 12 83 0l-3 22h-74z"/>
+          <path class="stripe" d="M189 133l-1 15m13-12-3 14m13-10-5 12m29 17-11 4m13 9-12 2"/>
+          <path class="fur" d="M143 195c28 29 99 35 113 11 5-8-2-16-8-11-9 18-70 11-94-13z"/>
+          <path class="fur" d="M105 202c-10 1-11 12 0 14h34c11-3 8-12-2-13zm30 6c-5 8 0 12 12 12l27-1c8-7-3-12-11-12z"/>
+          <path class="fur" d="M95 168l-7-25 23 15q16-6 30 0l19-12-4 27c7 21-5 34-27 35-22 1-42-13-34-31l-5-3z"/>
+          <path class="pink" d="M95 151l6 17 7-5zM153 153l-12 10 9 5z"/>
+          <path class="fur-light" d="M108 183q18-10 34 0l-2 19q-19 8-31-7z"/>
+          <path class="stripe" d="M118 159l3 10m9-11-1 10"/>
+          <path class="line" d="M101 180q6 7 12 0m24 0q6 7 12 0m-25 11 2 5m0 0q-5 4-8 0m8 0q4 4 8 0m-23-5-19-2m19 7-17 3m46-9 16-3m-15 9 17 2m-51 13v4m7-4v5"/>
+          <path class="pink" d="M120 187h9l-4 5z"/>
+          <g fill="var(--muted)" font-family="Georgia, serif" font-style="italic"><text x="170" y="112" font-size="16">z</text><text x="191" y="92" font-size="21">z</text><text x="218" y="68" font-size="26">z</text></g>
+        </g>
+        <g class="illustration variant unavailable">
+          <title>A helpful cat with a bandana and a small toolbox</title>
+          <use href="#sitting-cat" transform="translate(-12 0)"/>
+          <path class="accessory" d="M122 126q23 12 46-1l-9 24-10-10-13 10z"/>
+          <path class="paper" d="M212 194l65 1-1 26-64-1z"/>
+          <path class="line" d="M232 193v-9l23 1v9m-42 11 63 1m-34-6v11"/>
+          <path class="accessory" d="M207 169l-14 18-5-4 14-18c-6-6-2-15 4-17l-2 9 6 3 6-7c3 8-2 17-9 16z"/>
+          <path class="fur" d="M158 157q12 10 32 9c10-1 12 11 2 13-19 4-32-1-39-10"/>
+          <path class="line" d="M189 169l1 6m5-6v5"/>
+        </g>
+        <g class="illustration variant timeout">
+          <title>A cat waiting beside a clock, with its tail curled around its paws</title>
+          <use href="#sitting-cat" transform="translate(-25 0)"/>
+          <circle class="paper" cx="252" cy="193" r="28"/>
+          <circle class="ground" cx="252" cy="193" r="21"/>
+          <path class="line" d="M252 177v16l10 6m-25 18-4 6m34-6 4 6m-28-59-6-6m24 6 6-6"/>
+          <path class="ground" d="M213 120l4-7m-1 19 8-2"/>
+        </g>
+        <g class="illustration fallback">
+          <title>A slightly sheepish cat beside a fallen flowerpot</title>
+          <use href="#sitting-cat" transform="translate(-12 0)"/>
+          <path class="paper" d="M233 196l25 13-17 20-21-11z"/>
+          <path class="line" d="M233 198l-7-8-8-4m9 5 4-16"/>
+          <path class="accessory" d="M224 190q-22 4-23-11 18-2 23 11zm6-10q-9-15 3-23 9 12-3 23z"/>
+          <path class="ground" d="M250 222l5 1m6-4 4 1m-9 9 3-1"/>
+        </g>
+      </svg>
+      <span class="badge">HTTP %RESPONSE_CODE%</span>
+      <div class="message variant bad-request"><h1>Let's untangle that.</h1><p>The gateway couldn't understand this request. Check the address and try again.</p></div>
+      <div class="message variant unauthorized"><h1>A key is needed.</h1><p>This request needs authentication. Sign in through the application, then try again.</p></div>
+      <div class="message variant forbidden"><h1>This door is closed.</h1><p>The gateway isn't allowing this request. Check your permissions or contact the administrator.</p></div>
+      <div class="message variant not-found"><h1>Nothing here. We checked.</h1><p>The gateway couldn't find what you requested. Check the address for a stray typo.</p></div>
+      <div class="message variant rate-limited"><h1>Time for a catnap.</h1><p>Too many requests arrived at once. Give things a little breather before trying again.</p></div>
+      <div class="message variant unavailable"><h1>Taking a small pause.</h1><p>The service is temporarily unavailable. It may be restarting. Please try again in a moment.</p></div>
+      <div class="message variant timeout"><h1>A little longer than expected.</h1><p>The service took too long to respond. Give it a moment, then try again.</p></div>
+      <div class="message fallback"><h1>Something went sideways.</h1><p>The gateway couldn't complete this request. If it keeps happening, contact the administrator.</p></div>
+      <!-- An empty URL retries the current address with GET, without scripts or replaying a POST. -->
+      <a class="action" href="" aria-label="Try loading this address again">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-1l2 6M4 12l2 6a7 7 0 0 0 12-1"/></svg>
+        Try again
+      </a>
+      <footer>Served by the gateway · HTTP %RESPONSE_CODE%</footer>
+    </main>
+  </body>
+</html>
