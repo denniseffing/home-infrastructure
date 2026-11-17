@@ -7,3 +7,9 @@ resources:
   - helmrelease.yaml
   - observability.yaml
   - ocirepository.yaml
+configMapGenerator:
+  - name: envoy-error-page
+    files:
+      - response.body=error-page.html
+    options:
+      disableNameSuffixHash: true

@@ -155,6 +155,28 @@ spec:
     - type: Zstd
     - type: Brotli
     - type: Gzip
+  responseOverride:
+    - source: Local
+      match:
+        statusCodes:
+          - type: Range
+            range:
+              start: 400
+              end: 599
+      response:
+        contentType: text/html; charset=utf-8
+        header:
+          set:
+            - name: Cache-Control
+              value: no-store
+            - name: X-Content-Type-Options
+              value: nosniff
+        body:
+          type: ValueRef
+          valueRef:
+            group: ""
+            kind: ConfigMap
+            name: envoy-error-page
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
