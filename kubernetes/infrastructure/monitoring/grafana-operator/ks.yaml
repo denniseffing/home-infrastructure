@@ -34,6 +34,7 @@ spec:
   dependsOn:
     - name: onepassword
     - name: grafana-operator
+    - name: pocket-id
   path: kubernetes/infrastructure/monitoring/grafana-operator/instance
   prune: true
   sourceRef:

@@ -4,5 +4,12 @@ resources:
   - externalsecret.yaml
   - grafana.yaml
   - grafanadatasource.yaml
+  - pocketidoidcclient.yaml
   - securitypolicy.yaml
   - servicemonitor.yaml
+configMapGenerator:
+  - name: grafana-pocket-id-icon
+    files:
+      - gf-pocket-id.svg=./resources/pocket-id.svg
+generatorOptions:
+  disableNameSuffixHash: true

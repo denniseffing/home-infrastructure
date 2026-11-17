@@ -1,0 +1,10 @@
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDOIDCClient
+metadata:
+  name: grafana
+spec:
+  callbackUrls:
+    - https://grafana.internal.denniseffing.de/login/generic_oauth
+  clientID: grafana
+  name: Grafana
+  pkceEnabled: true
