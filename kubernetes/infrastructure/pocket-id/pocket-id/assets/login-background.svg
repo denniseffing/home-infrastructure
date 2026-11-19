@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1600" width="1600" height="1600">
+  <title>A cute cat holding out a key</title>
+  <!-- Pocket ID crops this with object-fit: cover, so everything important stays inside the central 1100 x 1100. -->
+  <style>
+    :root {
+      --accent: oklch(0.68 0.2 50);
+      --amber: oklch(0.83 0.15 78);
+      --rose: oklch(0.7 0.19 10);
+      --bg-top: #fff8f1;
+      --bg-bottom: #ffefe6;
+      --ink: #3d2b24;
+      --fur: #fff6ea;
+      --belly: #ffffff;
+      --pink: #ffa7b6;
+      --mat: oklch(0.62 0.14 45);
+      --shadow: rgb(61 43 36 / .12);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-top: #1a120e;
+        --bg-bottom: #120d0b;
+        --shadow: rgb(0 0 0 / .45);
+      }
+    }
+    .bg0 { stop-color: var(--bg-top); }
+    .bg1 { stop-color: var(--bg-bottom); }
+    .st0 { stop-color: var(--accent); stop-opacity: .5; }
+    .st1 { stop-color: var(--rose); stop-opacity: 0; }
+
+    .ink { fill: var(--ink); }
+    .fur { fill: var(--fur); stroke: var(--ink); stroke-width: 3.5; stroke-linejoin: round; }
+    .fur-fill { fill: var(--fur); }
+    .belly { fill: var(--belly); }
+    .patch { fill: var(--accent); }
+    .patch-o { fill: var(--accent); stroke: var(--ink); stroke-width: 3.5; stroke-linejoin: round; }
+    .outline { fill: none; stroke: var(--ink); stroke-width: 3.5; }
+    .line { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .thin { stroke-width: 2; }
+    .pink { fill: var(--pink); }
+    .blush { fill: var(--pink); opacity: .75; }
+    .white { fill: #fff; }
+    .tail-o { fill: none; stroke: var(--ink); stroke-width: 18; stroke-linecap: round; }
+    .tail-f { fill: none; stroke: var(--fur); stroke-width: 11; stroke-linecap: round; }
+    .tail-tip { fill: none; stroke: var(--accent); stroke-width: 11; stroke-linecap: round; }
+    .prop { stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+    .accent { fill: var(--accent); }
+    .amber { fill: var(--amber); }
+    .rose { fill: var(--rose); }
+    .mat { fill: var(--mat); stroke: var(--ink); stroke-width: 3; }
+    .mat-edge { fill: none; stroke: var(--fur); stroke-opacity: .6; stroke-width: 2; stroke-dasharray: 5 5; }
+    .shadow { fill: var(--shadow); }
+
+
+    .tail { transform-box: fill-box; transform-origin: left bottom; animation: sway 2.4s ease-in-out infinite alternate; }
+    .bob { animation: bob 2.2s ease-in-out infinite alternate; }
+    .float { animation: float 1.8s ease-in-out infinite alternate; }
+    @keyframes sway { from { transform: rotate(-5deg); } to { transform: rotate(7deg); } }
+    @keyframes bob { to { transform: translateY(2.5px); } }
+    @keyframes float { to { transform: translateY(-6px); } }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+  </style>
+  <defs>
+    <linearGradient id="g-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="bg0"/><stop offset="1" class="bg1"/>
+    </linearGradient>
+    <radialGradient id="g-stage"><stop offset="0" class="st0"/><stop offset="1" class="st1"/></radialGradient>
+    <clipPath id="head-clip"><ellipse cx="160" cy="112" rx="56" ry="46"/></clipPath>
+    <path id="sparkle" d="M0-9C1-2 2-1 9 0 2 1 1 2 0 9-1 2-2 1-9 0-2-1-1-2 0-9Z"/>
+  </defs>
+
+  <rect width="1600" height="1600" fill="url(#g-bg)"/>
+  <circle cx="800" cy="800" r="300" fill="url(#g-stage)"/>
+
+  <g transform="translate(512 552) scale(1.8)">
+    <ellipse class="shadow" cx="160" cy="226" rx="86" ry="8"/>
+    <rect class="mat" x="82" y="204" width="156" height="22" rx="8"/>
+    <rect class="mat-edge" x="88" y="208" width="144" height="14" rx="5"/>
+
+    <g class="tail">
+      <path class="tail-o" d="M190 211C236 214 254 184 238 154"/>
+      <path class="tail-f" d="M190 211C236 214 254 184 238 154"/>
+      <path class="tail-tip" d="M244 170C243 163 241 158 238 154"/>
+    </g>
+
+    <path class="fur" d="M122 214C116 180 130 150 160 150S204 180 198 214Z"/>
+    <ellipse class="belly" cx="160" cy="190" rx="19" ry="20"/>
+    <ellipse class="fur" cx="143" cy="214" rx="14" ry="8.5"/>
+    <ellipse class="fur" cx="177" cy="214" rx="14" ry="8.5"/>
+    <path class="line thin" d="M139 211v4m8-4v4m26-4v4m8-4v4"/>
+
+    <g class="bob"><g transform="rotate(5 160 150)">
+      <path class="fur" d="M110 92 114 46 152 70Z"/>
+      <path class="patch-o" d="M210 92 206 46 168 70Z"/>
+      <path class="pink" d="M119 80 121 57 141 71Z"/>
+      <path class="pink" d="M201 80 199 57 179 71Z"/>
+      <ellipse class="fur-fill" cx="160" cy="112" rx="56" ry="46"/>
+      <ellipse class="patch" cx="198" cy="74" rx="36" ry="25" clip-path="url(#head-clip)"/>
+      <ellipse class="outline" cx="160" cy="112" rx="56" ry="46"/>
+      <ellipse class="blush" cx="125" cy="133" rx="9" ry="5.5"/>
+      <ellipse class="blush" cx="195" cy="133" rx="9" ry="5.5"/>
+      <path class="pink" d="M155 127h10l-5 5Z" stroke="#3d2b24" stroke-width="1.5" stroke-linejoin="round"/>
+      <path class="line" d="M160 132q-1 6-8 4m8-4q1 6 8 4"/>
+      <path class="line thin" d="M107 122 90 118m17 11-17 2m123-9 17-4m-17 11 17 2"/>
+      <ellipse class="ink" cx="138" cy="116" rx="7.5" ry="9.5"><animate attributeName="ry" values="9.5;9.5;1;9.5" keyTimes="0;.94;.97;1" dur="5s" repeatCount="indefinite"/></ellipse>
+      <ellipse class="ink" cx="182" cy="116" rx="7.5" ry="9.5"><animate attributeName="ry" values="9.5;9.5;1;9.5" keyTimes="0;.94;.97;1" dur="5s" repeatCount="indefinite"/></ellipse>
+      <g class="white">
+        <animate attributeName="opacity" values="1;1;0;1" keyTimes="0;.94;.97;1" dur="5s" repeatCount="indefinite"/>
+        <circle cx="141" cy="112" r="3"/><circle cx="136" cy="120" r="1.4"/>
+        <circle cx="185" cy="112" r="3"/><circle cx="180" cy="120" r="1.4"/>
+      </g>
+    </g></g>
+
+    <g class="float">
+      <rect class="amber prop" x="138" y="171" width="64" height="9" rx="4"/>
+      <path class="amber prop" d="M186 179v10h7v-10m-21 0v7h7v-7"/>
+      <circle class="amber prop" cx="128" cy="175" r="14"/>
+      <circle class="fur prop" cx="128" cy="175" r="5"/>
+      <ellipse class="fur" cx="150" cy="178" rx="10" ry="8"/>
+      <ellipse class="fur" cx="172" cy="178" rx="10" ry="8"/>
+    </g>
+
+    <use href="#sparkle" class="amber" x="214" y="150"/>
+    <use href="#sparkle" class="accent" x="104" y="148"/>
+    <use href="#sparkle" class="rose" x="226" y="80"/>
+  </g>
+
+</svg>
