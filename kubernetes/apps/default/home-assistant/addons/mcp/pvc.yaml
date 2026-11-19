@@ -7,4 +7,5 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: longhorn
+  storageClassName: longhorn-encrypted
+  volumeName: pvc-662eeafb-97b3-44e2-9dc0-5e1757fd27c0

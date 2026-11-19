@@ -7,7 +7,8 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: longhorn
+  storageClassName: longhorn-encrypted
+  volumeName: pvc-81efa677-b13b-4d91-af6e-6a95c11a0a1c
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -18,4 +19,5 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: longhorn
+  storageClassName: longhorn-encrypted
+  volumeName: pvc-017c74cf-75c3-4bab-94c9-a69c0ea9a646
