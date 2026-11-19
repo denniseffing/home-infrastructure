@@ -156,7 +156,7 @@ spec:
       accessMode: ReadWriteOnce
       enabled: true
       size: 20Gi
-      storageClass: longhorn
+      storageClass: longhorn-encrypted
     podSecurityContext:
       runAsNonRoot: true
       runAsUser: 1000
