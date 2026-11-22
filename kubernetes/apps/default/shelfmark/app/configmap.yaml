@@ -1,0 +1,179 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shelfmark-values
+  labels:
+    reconcile.fluxcd.io/watch: Enabled
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+data:
+  # Helm owns the executable ConfigMap and adds its checksum to the Pod template.
+  # Updating this values source therefore reconciles Helm and rolls the Pod.
+  values.yaml: |
+    configMaps:
+      scripts:
+        forceRename: shelfmark-scripts
+        includeInChecksum: true
+        data:
+          post-import-scan.py: |
+            #!/usr/bin/env python3
+            """Best-effort Audiobookshelf scan after a validated local Shelfmark import."""
+
+            import json
+            import os
+            from pathlib import Path
+            import re
+            import signal
+            import sys
+            import time
+            from urllib.error import HTTPError, URLError
+            from urllib.parse import quote, urlsplit
+            from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
+
+            LIBRARY_ROOT = Path("/audiobooks")
+            MAX_PAYLOAD_CHARS = 1024 * 1024
+            HTTP_TIMEOUT_SECONDS = 60
+            RETRY_DELAYS_SECONDS = (5, 10)
+            HOOK_TIMEOUT_SECONDS = 240  # Below Shelfmark's 300-second script timeout.
+
+
+            class HookDeadlineExceeded(Exception):
+                pass
+
+
+            def log(message, level="WARNING"):
+                line = f"[shelfmark-scan] {level}: {message}\n"
+                try:
+                    sys.stderr.write(line)
+                except OSError:
+                    pass
+                # Shelfmark 1.7.0 captures hook output and discards stderr on exit 0.
+                # Write to the app parent's stdout too, without logging any payload/token.
+                if sys.platform == "linux" and os.environ.get("DOCKERMODE") == "true":
+                    try:
+                        fd = os.open(f"/proc/{os.getppid()}/fd/1", os.O_WRONLY | os.O_NONBLOCK)
+                        try:
+                            os.write(fd, line.encode("utf-8"))
+                        finally:
+                            os.close(fd)
+                    except OSError:
+                        pass
+
+
+            def library_path(value):
+                if not isinstance(value, str) or not value or "\x00" in value:
+                    raise ValueError("Invalid path")
+                path = Path(value)
+                if not path.is_absolute():
+                    raise ValueError("Relative path")
+                path = path.resolve()
+                if not path.is_relative_to(LIBRARY_ROOT.resolve()):
+                    raise ValueError("Path outside audiobook library")
+                return path
+
+
+            def validate_payload(payload, target):
+                if not isinstance(payload, dict):
+                    raise ValueError("Payload must be an object")
+                if type(payload.get("version")) is not int or payload["version"] != 1:
+                    raise ValueError("Unsupported payload version")
+                if payload.get("phase") != "post_transfer":
+                    return False
+                output = payload.get("output")
+                paths = payload.get("paths")
+                if not isinstance(output, dict) or not isinstance(paths, dict):
+                    raise ValueError("Invalid output or paths")
+                if output.get("mode") != "folder":
+                    return False
+                destination = library_path(paths.get("destination"))
+                payload_target = library_path(paths.get("target"))
+                if library_path(target) != payload_target:
+                    raise ValueError("Target argument does not match payload")
+                if not payload_target.is_relative_to(destination):
+                    raise ValueError("Target outside destination")
+                final_paths = paths.get("final_paths")
+                if not isinstance(final_paths, list) or not final_paths:
+                    raise ValueError("No imported files")
+                for value in final_paths:
+                    if not library_path(value).is_relative_to(destination):
+                        raise ValueError("Imported file outside destination")
+                return True
+
+
+            class NoRedirect(HTTPRedirectHandler):
+                def redirect_request(self, req, fp, code, msg, headers, newurl):
+                    # Never forward the admin token to a redirect destination.
+                    return None
+
+
+            def scan_library():
+                base_url = os.environ.get("AUDIOBOOKSHELF_URL", "").strip().rstrip("/")
+                token = os.environ.get("AUDIOBOOKSHELF_TOKEN", "").strip()
+                library_id = os.environ.get("ABS_SCAN_LIBRARY_ID", "").strip()
+                url = urlsplit(base_url)
+                if (url.scheme not in ("http", "https") or not url.hostname
+                        or url.username is not None or url.password is not None
+                        or url.query or url.fragment or not token
+                        or "\r" in token or "\n" in token
+                        or not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", library_id)):
+                    log("Missing or invalid scan configuration; import kept. Run a manual library scan.")
+                    return
+                request = Request(
+                    f"{base_url}/api/libraries/{quote(library_id, safe='')}/scan",
+                    data=b"{}",
+                    method="POST",
+                    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+                )
+                opener = build_opener(ProxyHandler({}), NoRedirect())
+                for attempt in range(len(RETRY_DELAYS_SECONDS) + 1):
+                    try:
+                        with opener.open(request, timeout=HTTP_TIMEOUT_SECONDS) as response:
+                            if 200 <= response.status < 300:
+                                log("Audiobookshelf accepted the library scan.", "INFO")
+                                return
+                            status = response.status
+                    except HTTPError as error:
+                        status = error.code
+                        error.close()
+                    except (URLError, OSError):
+                        status = None
+                    if status is None:
+                        log(f"Scan attempt {attempt + 1} could not reach Audiobookshelf.")
+                    else:
+                        log(f"Scan attempt {attempt + 1} returned HTTP {status}.")
+                    retryable = status is None or status in (408, 429) or 500 <= status < 600
+                    if not retryable or attempt == len(RETRY_DELAYS_SECONDS):
+                        break
+                    time.sleep(RETRY_DELAYS_SECONDS[attempt])
+                log("Automatic scan unavailable; import kept. Run a manual library scan.")
+
+
+            def timeout_handler(signum, frame):
+                raise HookDeadlineExceeded("Scan hook deadline reached")
+
+
+            def main():
+                previous_handler = signal.signal(signal.SIGALRM, timeout_handler)
+                signal.alarm(HOOK_TIMEOUT_SECONDS)
+                try:
+                    if len(sys.argv) != 2:
+                        raise ValueError("Expected one target argument")
+                    raw = sys.stdin.read(MAX_PAYLOAD_CHARS + 1)
+                    if len(raw) > MAX_PAYLOAD_CHARS:
+                        raise ValueError("Payload too large")
+                    payload = json.loads(raw)
+                    if validate_payload(payload, sys.argv[1]):
+                        scan_library()
+                except HookDeadlineExceeded:
+                    log("Scan hook deadline reached; import kept. Run a manual library scan.")
+                except Exception:
+                    # No tracebacks or input values: these can contain credentials or titles.
+                    log("Invalid payload or scan-hook error; import kept. Run a manual library scan.")
+                finally:
+                    signal.alarm(0)
+                    signal.signal(signal.SIGALRM, previous_handler)
+                return 0
+
+
+            if __name__ == "__main__":
+                sys.exit(main())

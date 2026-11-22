@@ -12,6 +12,7 @@ resources:
   - radarr/ks.yaml
   - sabnzbd/ks.yaml
   - seerr/ks.yaml
+  - shelfmark/ks.yaml
   - sonarr/ks.yaml
   - tautulli/ks.yaml
   - valkey/ks.yaml
