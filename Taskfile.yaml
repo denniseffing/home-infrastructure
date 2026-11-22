@@ -22,3 +22,30 @@ tasks:
     cmd: flux --namespace flux-system reconcile kustomization flux-system --with-source
     preconditions:
       - which flux
+
+  reconcile-external-secret:
+    desc: Trigger a manual refresh of a Kubernetes ExternalSecret
+    cmd: |
+      set -- {{range .CLI_ARGS_LIST}}{{. | q}} {{end}}
+      namespace=
+      case "${1:-}" in
+        -n|--namespace)
+          if [ "$#" -eq 3 ] && [ -n "$2" ]; then
+            namespace=$2
+            shift 2
+          fi
+          ;;
+      esac
+      case "${1:-}" in
+        ''|-*) name= ;;
+        *) name=$1 ;;
+      esac
+      if [ "$#" -ne 1 ] || [ -z "$name" ]; then
+        echo 'Usage: task reconcile-external-secret -- [-n|--namespace <namespace>] <name>' >&2
+        exit 1
+      fi
+      set -- annotate --overwrite externalsecret.external-secrets.io
+      if [ -n "$namespace" ]; then
+        set -- "$@" --namespace "$namespace"
+      fi
+      kubectl "$@" -- "$name" "force-sync=$(date +%s)"
