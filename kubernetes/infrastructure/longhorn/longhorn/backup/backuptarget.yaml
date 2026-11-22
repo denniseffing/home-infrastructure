@@ -1,0 +1,8 @@
+apiVersion: longhorn.io/v1beta2
+kind: BackupTarget
+metadata:
+  name: txtrs
+spec:
+  backupTargetURL: s3://backup-denniseffing-de-01a1da2d-7b1a-7406-84ad-45e8459e5463@us-east-1/
+  credentialSecret: txtrs-backup-credentials
+  pollInterval: 24h

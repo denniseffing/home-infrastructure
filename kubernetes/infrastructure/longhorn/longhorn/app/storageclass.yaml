@@ -9,7 +9,7 @@ allowVolumeExpansion: true
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 parameters:
-  backupTargetName: default
+  backupTargetName: txtrs
   dataEngine: v1
   dataLocality: best-effort
   disableRevisionCounter: "true"
