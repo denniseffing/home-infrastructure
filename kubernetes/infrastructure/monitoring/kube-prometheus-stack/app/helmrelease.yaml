@@ -40,7 +40,7 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
-              storageClassName: longhorn
+              storageClassName: longhorn-encrypted
       config:
         route:
           group_by:

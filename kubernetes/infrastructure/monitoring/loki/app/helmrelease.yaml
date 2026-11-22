@@ -69,7 +69,7 @@ spec:
       persistence:
         enabled: true
         enableStatefulSetAutoDeletePVC: false
-        storageClass: longhorn
+        storageClass: longhorn-encrypted
         size: 50Gi
     gateway:
       replicas: 0
