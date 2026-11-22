@@ -18,6 +18,7 @@ spec:
   dependsOn:
     - name: longhorn
       namespace: longhorn
+    - name: paperless-ngx-valkey
   values:
     controllers:
       paperless-ngx:

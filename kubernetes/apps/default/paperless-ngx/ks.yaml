@@ -24,7 +24,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app paperless-ngx-redis
+  name: &app paperless-ngx-valkey
   labels:
     denniseffing.de/source: "public"
   namespace: flux-system
@@ -35,7 +35,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-  path: kubernetes/apps/default/paperless-ngx/redis
+  path: kubernetes/apps/default/paperless-ngx/valkey
   prune: true
   sourceRef:
     kind: GitRepository
