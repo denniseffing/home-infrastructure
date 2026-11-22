@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gatus-sidecar-encrypted
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: longhorn-encrypted
+  volumeName: pvc-435f030f-746a-4bb3-8022-d72bf631ecbd

@@ -4,6 +4,7 @@ resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./prometheusrule.yaml
+  - ./pvc.yaml
 configMapGenerator:
   - name: gatus-sidecar-configmap
     files:

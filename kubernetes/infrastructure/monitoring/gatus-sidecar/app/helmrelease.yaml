@@ -38,9 +38,7 @@ spec:
           path: config.yaml
     persistence:
       enabled: true
-      storageClass: longhorn
-      accessMode: ReadWriteOnce
-      size: 2Gi
+      existingClaim: gatus-sidecar-encrypted
     resources:
       requests:
         cpu: 100m
