@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/instance: pocket-id
     app.kubernetes.io/component: database
 spec:
-  instances: 2
+  instances: 3
   affinity:
     enablePodAntiAffinity: true
     podAntiAffinityType: required
@@ -35,4 +35,5 @@ spec:
       memory: 192Mi
   storage:
     size: 1Gi
-    storageClass: longhorn
+    storageClass: longhorn-encrypted
+    resizeInUseVolumes: false
