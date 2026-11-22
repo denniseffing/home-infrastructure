@@ -90,7 +90,7 @@ spec:
             namespace: network
     persistence:
       config:
-        existingClaim: pms-config-plex-media-server-0
+        existingClaim: plex-config
       transcode:
         type: emptyDir
       tmp:
