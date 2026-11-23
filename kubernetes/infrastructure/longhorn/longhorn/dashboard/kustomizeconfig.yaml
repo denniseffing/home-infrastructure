@@ -1,0 +1,8 @@
+nameReference:
+  - kind: ConfigMap
+    version: v1
+    fieldSpecs:
+      - group: grafana.integreatly.org
+        version: v1beta1
+        kind: GrafanaDashboard
+        path: spec/configMapRef/name

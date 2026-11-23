@@ -1,0 +1,11 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: longhorn
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  configMapRef:
+    name: longhorn-dashboard
+    key: longhorn.json
