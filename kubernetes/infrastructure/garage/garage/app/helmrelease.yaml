@@ -1,0 +1,103 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: garage
+spec:
+  interval: 30m
+  releaseName: garage
+  timeout: 10m
+  chartRef:
+    kind: OCIRepository
+    name: garage
+  dependsOn:
+    - name: kube-prometheus-stack-crds
+      namespace: monitoring
+    - name: grafana-operator
+      namespace: monitoring
+  values:
+    clusterConfig:
+      enabled: true
+      buckets:
+        - name: backup-dannytextores
+          public: false
+      extraCommands:
+        # The chart adds grants but does not revoke existing ones.
+        - bucket deny backup-dannytextores --key "$KEY_ID_DANNY" --owner
+        - bucket set-quotas --max-size 100GiB backup-dannytextores
+      keys:
+        admin:
+          buckets:
+            - name: backup-dannytextores
+              owner: true
+              read: true
+              write: true
+          keyId: keyId
+          secretKey: secretKey
+          secretName: garage-admin
+        danny:
+          buckets:
+            - name: backup-dannytextores
+              owner: false
+              read: true
+              write: true
+          keyId: keyId
+          secretKey: secretKey
+          secretName: garage-danny
+    deployment:
+      replicaCount: 1
+    extraResources:
+      - apiVersion: grafana.integreatly.org/v1beta1
+        kind: GrafanaDashboard
+        metadata:
+          name: garage
+        spec:
+          allowCrossNamespaceImport: true
+          configMapRef:
+            key: garage.json
+            name: garage-grafana-dashboard
+          instanceSelector:
+            matchLabels:
+              dashboards: grafana
+    garage:
+      replicationFactor: "1"
+      s3:
+        api:
+          publicEndpoint: https://s3.denniseffing.de
+          publicEndpointPathStyle: true
+      secret:
+        create: false
+        name: garage-admin
+    gatewayApi:
+      s3:
+        api:
+          enabled: true
+          hostnames:
+            - s3.denniseffing.de
+          parentRefs:
+            - name: envoy-external
+              namespace: network
+              sectionName: https
+    monitoring:
+      grafanaDashboard:
+        enabled: true
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+    persistence:
+      data:
+        size: 100Gi
+        storageClass: longhorn
+      meta:
+        size: 2Gi
+        storageClass: longhorn
+    webui:
+      enabled: true
+      gatewayApi:
+        enabled: true
+        hostnames:
+          - s3.internal.denniseffing.de
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
