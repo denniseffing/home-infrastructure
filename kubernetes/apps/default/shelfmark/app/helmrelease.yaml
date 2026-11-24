@@ -1,0 +1,191 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: shelfmark
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: shelfmark
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn
+  valuesFrom:
+    - kind: ConfigMap
+      name: shelfmark-values
+      valuesKey: values.yaml
+  values:
+    controllers:
+      shelfmark:
+        type: deployment
+        replicas: 1
+        strategy: Recreate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/calibrain/shelfmark-lite
+              tag: 1.7.0@sha256:b8bbc8ae26282c9cc765162719d2090142edf6c93c01c1eb430e51b1fa746ef2
+            env:
+              TZ: Europe/Berlin
+              FLASK_PORT: "8084"
+              CONFIG_DIR: /config
+              TMP_DIR: /tmp/shelfmark
+              ENABLE_LOGGING: "false"
+              DEBUG: "false"
+              UMASK: "0022"
+              AUTH_METHOD: builtin
+              SESSION_COOKIE_SECURE: "true"
+              DEFAULT_CONTENT_TYPE: audiobook
+              SHOW_COMBINED_SELECTOR: "false"
+              SEARCH_MODE: universal
+              BOOK_LANGUAGE: de
+              OPENLIBRARY_ENABLED: "true"
+              METADATA_PROVIDER_AUDIOBOOK: openlibrary
+              PROWLARR_ENABLED: "true"
+              PROWLARR_URL: http://prowlarr.default.svc.cluster.local
+              # Verified Usenet indexers: NZBgeek, Scene NZBs, DrunkenSlug.
+              PROWLARR_INDEXERS: "1,2,3"
+              PROWLARR_USENET_CLIENT: sabnzbd
+              PROWLARR_TORRENT_CLIENT: ""
+              PROWLARR_AUTO_EXPAND: "false"
+              SABNZBD_URL: http://sabnzbd.default.svc.cluster.local
+              SABNZBD_CATEGORY: shelfmark-audiobooks
+              SABNZBD_CATEGORY_AUDIOBOOK: shelfmark-audiobooks
+              PROWLARR_USENET_ACTION: copy
+              INGEST_DIR: /audiobooks
+              DESTINATION_AUDIOBOOK: /audiobooks
+              FILE_ORGANIZATION_AUDIOBOOK: organize
+              TEMPLATE_AUDIOBOOK_ORGANIZE: "{Author}/{Title}/{OriginalName}"
+              HARDLINK_TORRENTS: "false"
+              HARDLINK_TORRENTS_AUDIOBOOK: "false"
+              MAX_CONCURRENT_DOWNLOADS: "1"
+              MAX_CONCURRENT_DOWNLOADS_PER_SOURCE: "0"
+              DIRECT_DOWNLOAD_ENABLED: "false"
+              JACKETT_ENABLED: "false"
+              NEWZNAB_ENABLED: "false"
+              SLSKD_ENABLED: "false"
+              ABB_ENABLED: "false"
+              LIBGEN_SEARCH_ENABLED: "false"
+              WEBSHARE_ENABLED: "false"
+              HARDCOVER_SYNC_ENABLED: "false"
+              AUTO_DOWNLOAD_ENABLED: "false"
+              USING_TOR: "false"
+              USING_WIREGUARD: "false"
+              LIBRARY_CHECK_AUDIOBOOKSHELF_ENABLED: "true"
+              AUDIOBOOKSHELF_URL: http://audiobookshelf.default.svc.cluster.local
+              AUDIOBOOKSHELF_LIBRARY_IDS: &library 8715fc43-44c6-4843-9e94-96c056873511
+              ABS_SCAN_LIBRARY_ID: *library
+              AUDIOBOOK_LIBRARY_URL: https://audiobookshelf.internal.denniseffing.de
+              CUSTOM_SCRIPT: /scripts/post-import-scan.py
+              CUSTOM_SCRIPT_PATH_MODE: absolute
+              CUSTOM_SCRIPT_JSON_PAYLOAD: "true"
+            envFrom:
+              - secretRef:
+                  name: shelfmark
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: &port 8084
+                  periodSeconds: 10
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  periodSeconds: 5
+                  timeoutSeconds: 3
+                  failureThreshold: 60
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+                ephemeral-storage: 1Gi
+              limits:
+                memory: 512Mi
+                ephemeral-storage: 22Gi
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+      tolerations:
+        - key: nas
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+    service:
+      app:
+        controller: shelfmark
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "shelfmark.internal.denniseffing.de"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    persistence:
+      config:
+        existingClaim: shelfmark-config
+        globalMounts:
+          - path: /config
+      audiobooks:
+        type: nfs
+        server: 192.168.178.52
+        path: /nfs/storage-2/audiobooks
+        globalMounts:
+          - path: /audiobooks
+      downloads:
+        type: nfs
+        server: 192.168.178.52
+        # Create the dedicated category directory before deployment; see ../README.md.
+        path: /nfs/storage-2/plex/downloads/usenet/complete/shelfmark-audiobooks
+        globalMounts:
+          - path: /downloads
+            readOnly: true
+      tmp:
+        type: emptyDir
+        # Initial disk budget for staging/extraction; validate with realistic audiobooks.
+        sizeLimit: 20Gi
+        globalMounts:
+          - path: /tmp
+      home:
+        type: emptyDir
+        sizeLimit: 256Mi
+        # The non-root entrypoint resolves this from passwd, not from the HOME env var.
+        globalMounts:
+          - path: /home/shelfmark
+      scripts:
+        type: configMap
+        identifier: scripts
+        defaultMode: 0555
+        globalMounts:
+          - path: /scripts
+            readOnly: true

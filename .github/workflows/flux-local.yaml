@@ -19,6 +19,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Test Shelfmark scan hook
+        run: |
+          python3 -m venv "${RUNNER_TEMP}/shelfmark-tests"
+          "${RUNNER_TEMP}/shelfmark-tests/bin/python" -m pip install PyYAML==6.0.4
+          "${RUNNER_TEMP}/shelfmark-tests/bin/python" -B -m unittest discover -s kubernetes/apps/default/shelfmark/tests -v
+
       - name: Run flux-local test
         uses: docker://ghcr.io/allenporter/flux-local:v8.4.0
         with:
