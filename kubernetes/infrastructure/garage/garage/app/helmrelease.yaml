@@ -1,0 +1,66 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: garage
+spec:
+  interval: 30m
+  releaseName: garage
+  timeout: 10m
+  chartRef:
+    kind: OCIRepository
+    name: garage
+  values:
+    deployment:
+      replicaCount: 1
+    garage:
+      replicationFactor: "1"
+      s3:
+        api:
+          publicEndpoint: https://s3.denniseffing.de
+          publicEndpointPathStyle: true
+      secret:
+        create: false
+        name: garage-admin
+    persistence:
+      data:
+        storageClass: longhorn
+        size: 50Gi
+      meta:
+        storageClass: longhorn
+        size: 2Gi
+    clusterConfig:
+      enabled: true
+      buckets:
+        - name: backup-dannytextores
+          public: false
+      keys:
+        admin:
+          secretName: garage-admin
+          keyId: keyId
+          secretKey: secretKey
+          buckets:
+            - name: backup-dannytextores
+              read: true
+              write: true
+              owner: true
+        danny:
+          secretName: garage-danny
+          keyId: keyId
+          secretKey: secretKey
+          buckets:
+            - name: backup-dannytextores
+              read: true
+              write: true
+              owner: false
+      extraCommands:
+        - bucket set-quotas --max-size 50GiB backup-dannytextores
+    webui:
+      enabled: true
+      gatewayApi:
+        enabled: true
+        hostnames:
+          - s3.internal.denniseffing.de
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https

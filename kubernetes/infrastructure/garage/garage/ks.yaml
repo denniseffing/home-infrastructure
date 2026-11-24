@@ -1,0 +1,48 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app garage
+  namespace: flux-system
+  labels:
+    denniseffing.de/source: "public"
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: external-secrets-stores
+    - name: longhorn
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: garage
+      namespace: garage
+  interval: 30m
+  path: ./kubernetes/infrastructure/garage/garage/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  targetNamespace: garage
+  timeout: 10m
+  wait: false
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: garage-s3
+  namespace: flux-system
+  labels:
+    denniseffing.de/source: "public"
+spec:
+  dependsOn:
+    - name: garage
+  interval: 30m
+  path: ./kubernetes/infrastructure/garage/garage/s3
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  targetNamespace: garage
+  timeout: 5m
+  wait: false
