@@ -16,7 +16,7 @@ metadata:
   name: paperless-ngx-data
   labels:
     recurring-job.longhorn.io/source: enabled
-    recurring-job-group.longhorn.io/weekly-backup: enabled
+    recurring-job-group.longhorn.io/daily-backup: enabled
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:
@@ -31,7 +31,7 @@ metadata:
   name: paperless-ngx-media
   labels:
     recurring-job.longhorn.io/source: enabled
-    recurring-job-group.longhorn.io/weekly-backup: enabled
+    recurring-job-group.longhorn.io/daily-backup: enabled
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:

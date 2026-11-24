@@ -4,7 +4,7 @@ metadata:
   name: seerr-config
   labels:
     recurring-job.longhorn.io/source: enabled
-    recurring-job-group.longhorn.io/weekly-backup: enabled
+    recurring-job-group.longhorn.io/daily-backup: enabled
 spec:
   accessModes:
     - ReadWriteOnce
