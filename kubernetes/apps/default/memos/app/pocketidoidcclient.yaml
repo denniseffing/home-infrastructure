@@ -1,0 +1,13 @@
+apiVersion: pocketid.internal/v1alpha1
+kind: PocketIDOIDCClient
+metadata:
+  name: memos
+spec:
+  callbackUrls:
+    - https://notes.internal.denniseffing.de/auth/callback
+  clientID: memos
+  clientSecretRef:
+    name: memos-oidc-client
+    key: client-secret
+  name: Memos
+  pkceEnabled: true
