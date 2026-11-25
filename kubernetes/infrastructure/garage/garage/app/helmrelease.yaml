@@ -70,6 +70,11 @@ spec:
     gatewayApi:
       s3:
         api:
+          annotations:
+            gatus.home-operations.com/endpoint: |-
+              conditions:
+                - "[STATUS] == 403"
+                - "[BODY] == pat(*<Code>AccessDenied</Code>*)"
           enabled: true
           hostnames:
             - s3.denniseffing.de
